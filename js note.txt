@@ -1,0 +1,1910 @@
+Tip 1 - Write Code!
+Tip 2 - Ask Questions: 
+Tip 3 - Take your Time. Don't blow through the course without actually learning stuff.
+Tip 4 - Read the documentation from time to time. It gives you more grounded knowledge on the language and can open you to new possibilities you didn't consider before.
+Tip 5 -Keep your code lose. Editing one line of code or a variable shouldn't cause a catastrophe. Your functions should almost never rely on global variables. Pass variable requirements as arguments.
+
+Current Level:
+
+node filename.js
+After navigating to the folder of the js file in console, that command can be used to run any js file.
+------------------------------------------------------------------------
+''
+Use single quotes to create strings.
+------------------------------------------------------------------------
+()
+bracket open and close are called parenthesis.
+Always leave spaces before and after your parenthesis except when calling a function. E.g: if (a === 10) b = 20
+------------------------------------------------------------------------
+Identifier
+They are names. They are used to name variables.
+------------------------------------------------------------------------
+Fixed Values declared but unassigned are called literals. Variable values are called variables. 
+'Samuel Bayo' - Example of literal. It is a literal because its value is not assigned to anything and just declared. But variables are assigned an identifier and can be changed at any time. Literals exist only at the moment of declaring them and cannot be reused.
+------------------------------------------------------------------------
+camelCasing
+A naming style used in identifiers with multiple words. We start off all first letters in each word with a Capital Letter except for the first word. E.g: firstNameType
+------------------------------------------------------------------------
+= operator
+Used to assign a value (variable/function) to an identifier. It assigns what is on the right to the left.
+------------------------------------------------------------------------
++ operator
+Used for adding number variables and concatenating string variables. 
+------------------------------------------------------------------------
+;
+Used to terminate a statement. But semicolons are optional in JavaScript as we can rely on automatic semicolon insertion at runtime.
+------------------------------------------------------------------------
+=== - absolutely equal.
+Use === instead of == for equality and !== instead of != for not equal. In JavaScript the extra = means that it's checking if the variables/literals are both equal in value and type. 
+------------------------------------------------------------------------
+To use  single or double quote within a string, escape them. E.g: var phrase = 'He\'s hungry'
+------------------------------------------------------------------------
+Run JavaScript in strict mode while developing. Pay attention to every bug in your code; warning or error.
+To do so, add the line below at the top of the JS file:
+"use strict";
+------------------------------------------------------------------------
+Scope
+
+Scope defines the visibility of variables, functions and objects in a particular part of your code during runtime.
+JavaScript uses Lexical Scoping; which consists of one Global Scope and multiple/nested Local Scopes.
+------------------------------------------------------------------------
+Types of Scope:
+
+1. Global Scope:
+This is defined outside of all code blocks. Something like the "root scope". There is only one scope in a Javascript document.
+
+2. Local Scope:
+This is defined inside a code block. This could be a function or a block statement (conditional statements etc) depending on how the variables are declared.
+- All variables declared in a function are in the local scope.
+- Variables declared with var within a block statement will retain the scope the block statement exists in while variables declared with 'let' and 'const' are limited to the local scope within that block statement. 
+------------------------------------------------------------------------
+Variable Declaration
+------------------------------------------------------------------------
+var
+The var statement declares a variable, optionally initializing it to a value. 
+var sampleVar;
+var otherSampleVar = 2;
+
+var declarations, wherever they occur, are processed before any code is executed. This is called hoisting. 
+It means that the variables are accessible in their enclosing scope even before they are declared.
+
+For example, this block of code:
+
+function boy() {
+	console.log('I am a boy')
+}
+var a = 5;
+
+The code above is understood by the browser as:
+var a;
+function boy() {
+	console.log('I am a boy')
+}
+a = 5;
+
+Why? When a variable is declared with "var" in javacript, the declaration of that variable is "processed" before any code is executed within that scope. Any attempt to access a variable declared in var before it's declaration within code will return "undefined". While the variable is declared and processed at the beginning of execution, it is not assigned a value until the point where it was declared.
+
+--------------------
+
+let
+Allows you to declare variables that are limited in scope to the block, statement, or expression on which it is used. This is unlike the var keyword, which when called for example makes a variable accessible to an entire function regardless of block scope within the function.
+
+------------------------------------------------------------------------
+const
+Variables or functions declared with  the const keyword cannot be reassigned. However, const doesn't make the variable immutable so when an object is declared with const, even though another object cannot be assigned to it, the value of it's properties can be modified.
+
+
+------------------------------------------------------------------------
+Major Differences between var declaration vs let/const declaration.
+
+1. When you use let/const to declare a variable inside a code block, it is limited to that code block hence the local scope. When var is used however, the variable becomes a global variable and can be accessed within a code block or outside it. P.S: This only applies to block scopes. Variables declared within a function scope can only be used within the function.
+
+2. You can't use the let/const keyword with a variable identifier within a scope more than once.
+Simply put:
+var a = 5;
+var a = 5* 5;
+This is valid
+
+let a = 10
+let a = 10 * 11
+This will return an error: 'a' has already been declared
+
+const a = 20
+const a = 15
+This will also return an error:  'a' has already been declared
+For const, this is even more unique as you can't reassign a variable declared with the const keyword.
+
+3. Hoisting does not apply to them. let and const variables are not initialized before execution. Any attemt to access them before initialization will result in a Reference error.
+
+More on the differences:
+https://stackoverflow.com/questions/762011/whats-the-difference-between-using-let-and-var
+------------------------------------------------------------------------
+A global scope variable that is declared before a function will be accessible from within the function. The last value of the variable before the function call is maintained.
+
+At the end of this loop... 
+for (var i = 0; i<10; i++) {
+    console.log('In: ' + i)
+}
+The value of i will be 10 and not 9. Why? The loop will run until the value increases to 10 and when it does, the loop stops because 10 will no longer meet it's requirement.
+------------------------------------------------------------------------
+undefined - represents the absence of a value.
+- When an argument isn't provided when calling a function, it is assigned undefined as value.
+- When you try to retrieve the return value of a function that doesn't return any value, undefined is returned.
+- You can also set the value of a variable as undefined; but instead of doing this, it is recommended to set variables as null. Why? The go-to "value" for the absence of variable value by the JS engine is undefined and it will never set any variable as null. This way you're sure the value was set by you. In JS, null and undefined are equal in value but not in type.
+null == undefined
+null !== undefined
+------------------------------------------------------------------------
+Leave a space after a comma for formatting purposes.
+------------------------------------------------------------------------
+Return statements will work with or without parenthesis. But it is important to use parenthesis when a return statement spans multiple lines. Why?
+JavaScript will automatically insert a semicolon after a line with return statement. If the return value happens to be missing on that line, JavaScript will add a semicolon anyway.
+- E.g:
+return 
+	sample.call(text1, text2)
+- Becomes:
+return;
+	sample.call(text1, text2)
+- Instead Of:
+return sample.call(text1, text2);
+- So, write:
+return (
+	sample.call(text1, text2)
+)
+More - http://jamesknelson.com/JavaScript-return-parenthesis/
+------------------------------------------------------------------------
+Template Strings
+Template strings allow you to insert variables or JavaScript expressions in the middle of your string. Instead of printing out the variable identifier or direct js code, they print out the value of the expression.
+To use a template string, we use the backtick key. Located to the left of the 1 key and similar to the single quote but with a slight angle. - `
+To add an expression or variable, we use the format ${expressionhere} to insert them.
+Eg: console.log(`My name is ${name}, I am ${oldage + 2} years old.`)
+USE TEMPLATE STRINGS INSTEAD OF CONCATENATION.
+------------------------------------------------------------------------
+\n
+Inserts a New Line.
+------------------------------------------------------------------------
+Function Declaration
+
+There are 2 ways of declaring a function using the expression. Declaring it directly: function me() or creating an anonymous function 'function (arguments)' and storing it in a variable. e.g: 
+
+let me = function () { action() }
+
+The major difference between both is that with anonymous functions, you can store the function in a variable, and the function can be redefined later on. E.g:
+
+let me = function (a) { a * 2 }
+me = function (a) { a + 2 - 2 + 50 }
+
+P.s: Anonymous functions are functions that don't have a name. They can be used as callback functions or stored in a variable. They can't be declared 'stand-alone'.
+
+Note: Always remember to declare your variables.
+------------------------------------------------------------------------
+Objects
+- To create an object, we just open and close a set of curly braces. - {}
+- When creating an object, we use commas to separate the properties like we do when creating a function with parameters. E.g:
+let myBook = {
+    title: 'Ralia the Sugar Girl',
+    author: 'Oyeniji Sadeeq',
+    pageCount: 60
+}
+- We use dot notation to access or modify the properties of an object. e.g:
+myBook.title = 'Animal Farm'
+- Using objects is the most convenient way to return multiple values from a function. The functions are grouped into one object and returned as one. E.g:
+return {
+	val1: 'string',
+	val2: 24
+} 
+- When you pass an object to a function as an argument, you can modify the properties of the original object (in the outside scope) directly from the function as long as the object passed is not reassigned. Once you assign a new value to the object in the function, it breaks link with the original object outside the function scope and a new object limited to the function scope is created and used.
+
+let object1 = {val1: 'boy', val2: 'girl'}
+let function1 = function (object) {
+	object.val1 = 'man'
+	console.log('Function1 \n ' + object.val1)
+}
+let function2 = function (object) {
+	object = {val1: 'ogbeni', val2: 'omoge'}
+	console.log('Function2 \n ' + object.val1)
+}
+function1(object1)
+console.log('Object1 \n ' + object1.val1)
+function2(object1)
+console.log('Object1 \n ' + object1.val1)
+
+In the example above, function1 changes object1 but function 2 doesn't cause another object was created/assigned in the function. Unlike global primitive variables that can be reassigned directly from inside a function, when you try to "reassign" an "outer object" from inside a function scope, the "outer object" is left untouched. Instead a new object is created and limited to that scope.
+
+------------------------------------------------------------------------
+
+What is a method? An object's property whose value is a function.
+E.g:
+let object = {
+	prop1: 'Name',
+	method: function (age) {
+		return age + 1
+	}
+}
+The method is then called like this:
+object.method(20)
+
+Inside an object's method, we have access to the 'this' keyword. The 'this' keyword here represents the enclosing object the method is defined in.
+------------------------------------------------------------------------
+Using Square Bracket to access Object Property or Method
+
+Asides using dotNotation to access object properties and methods, square bracket notation can also be used.
+See demo object below: 
+
+let demoObject = {
+  name: 'Object 1',
+  demoMethod: function () {
+    console.log('You called it!');
+  },
+  oddMethod: function () {
+    console.log('Length is odd!');
+  },
+  evenMethod: function () {
+    console.log('Length is even!');
+  }
+}
+
+To use Square Bracket to access the name property:
+demoObject['name'];
+
+Example:
+console.log(demoObject['name']);
+console.log(demoObject.name);
+//These 2 lines will both output the Obect's name.
+
+To use Square Bracket to access a method:
+demoObject['demoMethod']();
+
+Example:
+demoObject['demoMethod']();
+demoObject.demoMethod();
+//These 2 lines will both output call demoMethod();
+
+Since the Square bracket notation allows the use of strings, we can use that to our advantage by combining literals and variables or sometimes even ternary statements while trying to access a property or method.
+
+Example:
+demoObject[`${this.name.length % 2 ? 'odd' : 'even'}Method`]();
+
+The code above fetches the length of the object demoObject, checks whether it is odd or even; then calls the respective method. It calculates length%2 whose result will always be 0 or 1. It's 0 when it's an even number and 1 when it's odd. 1 is truthy and 0 is falsy.
+------------------------------------------------------------------------
+Each condition in an if statement returns a true or false value that determines whether the block of code in the if statement is run or not. The same way we use those conditions in an if statement, we can use them to create boolean values directly.
+- Instead of:
+if (var1 <= var2)
+	return true
+else
+	return false
+- We can just write:
+return var1 <= var2
+------------------------------------------------------------------------
+Context
+
+Refers to the object to which a function (or method) belongs to. In other words; it is the value of the 'this' keyword in a defined scope during runtime.
+------------------------------------------------------------------------
+The JavaScript 'this' Keyword
+
+The JavaScript 'this' keyword refers to the object it belongs to.
+It has different values depending on where it is used:
+- In a method, 'this' refers to the owner object.
+- Alone, 'this' refers to the global object.
+- In a function, 'this' refers to the global object.
+- In a function, 'this' is undefined in strict mode, .
+- In an event, 'this' refers to the element that received the event.
+However, methods like call() and apply() can refer 'this' to any object.
+
+There are four major rules around the 'this' keyword. They are explored below:
+-----------------------
+1. Implicit Binding:
+-----------------------
+
+When a function is invoked. Look to the left of that function and that's what the 'this' keyword value is going to be.
+E.g: me.sayName()
+The value of the 'this' keyword in sayName is the object 'me'.
+-----------------------
+2. Explicit Binding (with call, apply, bind)
+-----------------------
+
+Using call()
+-----
+Example:
+const sayName = function () {
+	console.log('My name is ' + this.name)
+}
+const lola = {
+	name: 'Lola',
+	age: 20
+}
+sayName.call(lola)
+
+In the example above, we are explicitly stating that the function 'sayName' should be invoked using the object 'lola' as context. Hence, the value of 'this' while the function 'sayName' runs is the object 'lola'.
+
+When using the call method, the first argument passed is the context and the following argument(s), if they exist; are parameters for the function that is being invoked. E.g:
+
+const sayName = function (lang1, lang2) {
+	console.log('My name is ' + this.name + ' and I am ' + this.age + ' years old. I can speak ' + lang1 + ' and ' + lang2 + '.')
+}
+
+const lola = {
+	name: 'Lola',
+	age: 20
+}
+let languages = ['English', 'French']
+
+sayName.call(lola, languages[0], languages[1])
+In the example above using the call method; the first argument 'lola' is the context and the second and third arguments are passed as parameters lang1 & lang2  to the sayName function.
+
+We can further shorten the code above using the spread operator '...'
+E.g:
+sayName.call(lola, ...languages)
+
+The operator expands & passes the array of languages as lang1 & lang2 to the function sayName.
+
+
+Using apply()
+-----
+Instead of using the spread operator '...' in the example above, an alternative way of passing the whole array of arguments is using the apply method instead of call.
+
+Example:
+const sayName = function (lang1, lang2) {
+	console.log('My name is ' + this.name + ' and I am ' + this.age + ' years old. I can speak ' + lang1 + ' and ' + lang2 + '.')
+}
+const lola = {
+	name: 'Lola',
+	age: 20
+}
+let languages = ['English', 'French']
+sayName.apply(lola, languages)
+
+In summary, apply() does the exact same thing as call() except that it's second argument expects an array & passes the elements of that array as parameters to the function invoked.
+
+Like call(), the value of 'this' while the function runs  is the object passed to it as the first argument.
+
+
+Using bind()
+-----
+The bind method does almost the same thing as call(). However, instead of invoking the function on the object immediately, it returns a new function that can be passed to a variable and invoked at any time and as many times as possible.
+
+Example:
+const sayName = function (lang1, lang2) {
+	console.log('My name is ' + this.name + ' and I am ' + this.age + ' years old. I can speak ' + lang1 + ' and ' + lang2 + '.')
+}
+const lola = {
+	name: 'Lola',
+	age: 20
+}
+let languages = ['English', 'French']
+const whoAreYou = sayName.bind(lola, ...languages)
+whoAreYou()
+
+In the example above, a new function with context 'person' is returned and can be called as many times as possible. The array languages is spread and passed as parameters.
+
+Partially applied functions:
+To allow us to pass any value as parameter to the function any time we call it; we can use the bind method a bit differently.
+E.g:
+const whoAreYou = sayName.bind(lola)
+
+Now we can pass different value(s) as parameter whenever we call the function.
+E.g:
+whoAreYou(...languages)
+whoAreYou('Yoruba', 'Pidgin'
+)yo
+-----------------------
+3. new Binding
+-----------------------
+
+This rule states that when a function is invoked with the new keyword, the context inside that function is the new object being constructed.
+
+class Animal {
+	constructor (color, name, type) {
+		this.color = color
+		this.name = name
+		this.type = type
+	}
+}
+const zebra = new Animal ('black and white', 'Lobro', 'Zebra')
+
+-----------------------
+4. window Binding
+-----------------------
+
+This rule states that when a function that uses the 'this' keyword but is called on it's own; i.e it has no object to with a '.' to the left, the 'this' keyword inside that function defaults to the windows Object.
+E.g:
+const printHeight = function () {
+	console.log('Height: ' + this.innerHeight)
+}
+printHeight()
+
+In the example above; when the function printHeight() is called, the value of 'this' defaults to the Window global object and the innerHeight property is printed.
+
+However, if we try the same thing in strict mode, the value of 'this' defaults to undefined and we get the error: Cannot read property 'innerHeight' of undefined.
+------------------------------------------------------------------------
+Primitive Value
+- A primitive value or primitive data type is data that is not an object and has no method or property. In JS, there are 6 primitive data types: string, number, boolean, null, undefined, symbol (new in ES6).
+- All primitive values are immutable. I.e: they cannot be altered... but they can be reassigned.
+- Primitive values like "Bashiru Ismail" cannot have properties or methods; but with JavaScript, built-in methods and properties are also available to primitive values, because JavaScript treats them as objects when executing built-in methods and properties.
+------------------------------------------------------------------------
+How are they treated like objects?
+Every primitive value has a 'read-only wrapper object'. Whenever we try to access the property or method of a primitive, the wrapper object is used. This is why these properties can be accessed but not changed. For example:
+str = 'My name'
+'console.log(str.length)' is valid but 'str.length = 5' will return the  error:
+Uncaught TypeError: Cannot assign to read only property 'length' of string 'My name'
+------------------------------------------------------------------------
+String Methods
+//Length Property
+string.length - returns length of the string
+string.toUpperCase() - returns string in upper case.
+string.toLowerCase() - returns string in lower case.
+string.trim() - removes preceding and trailing white space from string. e.g: ' Man ' becomes 'Man'
+string.split('')  - It splits a string into an array of smaller strings or characters. The splitting character/string is passed as the method argument and is the breaking point for each string transition to array item. E.g: 'Babatunde Ismail'.split(' ') would return array ['Babatunde', 'Ismail'] 
+string.replace(' ', '') - it searches a string  for all 'characters or group of characters' that match with the 1st argument and replaces each match with the second argument.  The first argument also accepts regex as value.
+
+More - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String
+------------------------------------------------------------------------
+Passing an Object to a group of Variables.
+
+If we had an object demo and wanted to store it's properties in string variables.
+
+const demo = {
+	color: 'red',
+	size: 'big'
+}
+
+Instead of:
+let color = demo.color, size = demo.size;
+
+We can do:
+let {color, size} = demo
+------------------------------------------------------------------------
+Number/Maths Methods
+num.toFixed(decimalPlaces) - Takes a fixed integer as argument and returns a rounded up number. It rounds up the number it is called upon to a certain number of decimal places. When no argument is supplied, it defaults to 0 and rounds up to the nearest whole number. Number of decimal places must be btw 0 and 100. 
+
+More - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+The Math object is a predefined/built-in global JS object. Math Methods are also useful for dealing with numbers
+Math.round(value) - returns a rounded up value to the nearest whole number.
+Math.floor(value) - returns a rounded down value to the nearest whole number.
+Math.ceil(value) - forces a round up regardless of if the value of the decimal point is > than .5 or not. 
+Math.random()  - returns a random number between 0 and 1.
+
+More - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
+------------------------------------------------------------------------
+Arrays
+The JavaScript Array object is a global object that is used in the construction of arrays; which are high-level, list-like objects. Arrays are actually built-in-objects and as expected, come with built-in-methods. With arrays, we use square brackets - []
+
+array elements are accessed by their indexes which start from 0. E.g: books[0] accesses the first 'book'/element in the books array.
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+array.push('element') - Adds a new element to the end of an array.
+array.pop() - Removes the last element of the array
+array.unshift('element') - Adds a new element to the beginning of an array.
+array.shift() - Removes the first element of an array.
+
+When you shift or pop from an array, it returns the variable  that was removed. You can retrieve that as a variable. E.g: let removed = notes.pop();
+
+array.includes('asdasd') - checks if an array includes literal or variable in method argument and returns true or false. It can also be used on strings.
+
+array.splice(1, 2) - Used to remove any number of elements from an array starting at a certain position. In this example, it starts at index1 and removes 2 elements. i.e: index1 and index2.
+
+array.splice(1, 2, 'New element') - When you add a third argument to the splice function, it adds that variable or literal to the splice position after removing the elements specified. In this example after 2 elements starting from index1. It adds 'New element' at index1.
+
+notes[3] = 'Note 4' - Adds/Reassigns 'Note 4' to the array at index 3.
+When you add a new element that exceeds the original length of an array using this method, blank array entries are left between the previous length and the current position. If you try to access them, the value returned is undefined.
+
+forEach loop - For each element, do something. The forEach loop is a popular array method and receives a callback function as parameter.
+notes.forEach(function(element, index){
+  doSomething(element)
+  console.log(index)
+})
+This will call doSomething(element) and print out the current index for each element in the array called notes.
+
+For Loop
+for (initializeStatement, conditionStatement, finalExpression) {
+	doSomething()
+}
+initializerStatement - sets up the loop and kickstarts it.
+conditionStatement - checks that that condition is met before running each loop.
+finalExpression - executes after each loop.
+E.g:
+for (let count = 0; count <= 2; count++) {
+  console.log(count)
+}
+
+The code below  is used to illustrate js block scope declaration. There are 2 loops, one inside another using the same variable name, but with different values. Why? Because the variable declared in the inner scope has nothing to do with the outer scope as it only exists within that scope. If that variable wasn't redeclared with another let statement in the inner scope, it's value would have been identical with the one in the outer scope.
+
+for (let count = 0; count <= 2; count++) {
+  console.log('Line: ' + count + '\n') 
+  for (let count = 1; count <= 3; count++) {
+    console.log(count)
+  }
+  console.log('\n') 
+}
+------------------------------------------------------------------------
+array.indexOf('element') - Returns the position index of an array element. If the element exists more than once, it returns the position of the first item and if it doesn't exist, it returns -1.
+------------------------------------------------------------------------
+join() method - This is the opposite of the split() method which breaks all the characters of a string into an array of elements. The join() method combines all the elements in an array into a string. The join method takes a parameter, the separator. The sepaartor is the character inserted between each element in the string formation. When no parameter is provided, the default separator is a comma ','.
+------------------------------------------------------------------------
+Array .findIndex() method - Instead of indexOf, when dealing with an array of object, we use the findIndex array method.
+The findIndex method takes in a function as parameter. This function returns true if a certain condition is met. The findIndex method then returns the index of the element that returns true. Simply  put, it iterates through each element in the array and it returns the index of the first element that returns true from the function. It can be used for both string/number arrays or object arrays.
+
+Long Method of using findIndex:
+function checkelement (element) {
+	return element.name === 'goat'
+}
+let index = array.findIndex(checkelement)
+
+Short Method of using findIndex:
+let index = array.findIndex(function (element) {
+  return element.name === 'goat'
+})
+------------------------------------------------------------------------
+An alternative to the findIndex() method is the find() method which returns the array element and not just it's index. They both work the same way and take in a function as argument.
+------------------------------------------------------------------------
+Array .filter() method - Unlike the find and findIndex methods which return an array element/element's index, the filter method returns a new array of entries that match the filter conditions. Unlike the find() or findIndex() methods that immediately stop iterating once a match is  found, filter() will iterate to the last item and collect all matches.
+------------------------------------------------------------------------
+Array .sort() method - It sorts the element of an array based on a certain criteria and returns a new array. When dealing with an array of primitive elements, by default; it sorts 'alphabetically'. Numbers before strings, upper case alphabets before lower case alphabets. In most languages, upper case alphabets are 'lesser' than lower case alphabets and always come first...
+	
+Unlike find(), findIndex() and filter() above, the sort() method directly manipulates the array it is called on. Hence, there is no need for a return value. But if you return the value, it can still be captured in a variable.
+The sort method can also take a function as argument. This function is called the compare function and is used as a guide for sorting. When sorting an array of objects, calling sort without a compare function will achieve nothing.
+
+The compare function takes 2 arguments which are any 2 elements from the array in their original index order. i.e it could be (element1, element2) or (element30, element31). To sort between these 2 elements, the compare function can return one of 3 values.
+-1	means argument1 comes first. In the examples above: element1/element30 will come first and element2/element31 second.
+1		means argument2 comes first.  In the examples above: element2/element31 will come first and element1/element30 second.
+0		means both elements have the same position. In the final sorted result, they'll appear next to one and other.
+------------------------------------------------------------------------
+Array .every() method - This iterates through an array and returns true or false at the end. The every() method takes in a function as argument. This function returns true or false if the condition in it is met by all elements of the array.
+
+Simply put, it is used to check if all elements of an array match a condition.
+
+E.g:
+const finished = word.every((letter) => guessedLetters.includes(letter));
+Here, finished will only be set to true when every single element in word is found in guessedLetters.
+------------------------------------------------------------------------
+Array .map() method
+
+The map() method iterates through an array and runs a callback function on each array element. The callback function takes one argument, the current element in the loop. At the end of the loop, the method returns another array that is a collation of the results from the callback function.
+
+E.g:
+let names = ['John', 'Segun', 'Lasisi'];
+let namesUpper  = names.map(name => name.toUpperCase());
+//LONGER FORM
+namesUpper = names.map(function (name) {
+	return name.toUpperCase();
+})
+
+This creates a new array 'namesUpper' that consists of all the strings in the array 'names' but in Uppercase.
+
+P.S: The resulting array will always be the same length as the original array and if a value is not returned in the callback function, an array of undefined variables as elements will be created.
+------------------------------------------------------------------------
+Array .reduce() method
+
+The reduce() method takes 2 arguments, a callback function and a starting value. The starting value is the initial value of the accumulator. What is the accumulator? The accumulator is a variable returned on completion of the reduce method. It is the final result. The reduce method iterates through the array it is called upon and returns a final value collated based on the value of each element and the initial value of the accumulator.
+
+The callback function for the reduce method takes 2 argument, the accumulator and the current element. At the end of the loop, reduce accumulates the results of the callback into 1 variable and returns it.
+
+E.g:
+let ages = [10, 20, 30, 50];
+let ageSum = ages.reduce((accumulator, age)  =>  (accumulator += age), 0);
+//LONGER FORM
+ageSum = ages.reduce(function (accumulator, age)  {
+	return accumulator += age;
+}, 0)
+
+In the example above, the array ages is iterated through and the variable returned is the sum of all ages. Note that the accumulator starting value is set to 0. An existing variable could also have been used.
+
+Simply put, reduce is an easy way to generate a single value or object from an array. As the name implies, it is usually used to reduce an array to a "simpler" variable.
+------------------------------------------------------------------------
+Spread Operator
+
+The Spread Operator  takes either a string, array or an object and expands it into its set of items.
+
+E.g 1: Expanding Strings
+let word = 'boy';
+let letters = [..boy]
+//Result: ['b', 'o', 'y']
+
+This is the same thing as doing word.split('') as it takes the string word and expands it into an array of individual characters.
+
+E.g 2: Copying/Combining Arrays
+let array1 = ['Tunde', 'Yemi']
+let array2 = ['Tola', 'Segun']
+let array3 = [...array1, ...array2] 
+//Result: ['Tunde', 'Yemi']
+
+This is still based on the concept of "expanding". Basically, the spread operator allows you to expand one or more arrays into another array by copying and pasting into another array thereby combining multiple arrays into one.
+
+E.g 3: Copying/Combining Object Properties
+
+let object1 = {'name':'Yemi', age:'27'}
+let object2 = {'sex':'Male', 'weight':'75kg', 'age':'28'};
+let object = {...object1, ...object2}
+//Result: {name: "Yemi", age: "28", sex: "Male", weight: "75kg"}
+
+The spread operator can also be used to shallow copy and paste object's value and properties into another. Like in the example above, when there are duplicate properties, the property of the last object in the operation supercedes as it overrides the existing one.
+
+------------------------------------------------------------------------
+Destructuring Javascript Objects
+
+What is destructuring in JS? It's an expression that allows us to extract multiple properties from an object or multiple items from an array at once.
+
+Example 1:
+
+Considering this object person:
+const person = {
+	first: 'Bashiru',
+	last: 'Ismail',
+	country: 'Nigeria'
+}
+
+const first = person.first;
+const last = person.last;
+
+Instead of this repetitive code, where we need to make variables from an object, what we could do instead of creating multiple variables is we destructure them in a single line like this:
+
+const {first, last} = person;
+
+Example 2:
+
+We can also do this in deeply nested objects
+
+const person = {
+  first: 'Bashiru',
+  last: 'Ismail',
+  links: {
+    social: {
+      twitter: 'https://twitter.com/bashy_io',
+      facebook: 'https://facebook.com/bashy.io',
+    },
+    web: {
+      blog: 'https://bashiruismail.io'
+    }
+  }
+};
+
+Instead of:
+const twitter = person.links.social.twitter
+const facebook = person.links.social.facebook
+
+We do:
+const {twitter, facebook} = person.links.social
+------------------------------------------------------------------------
+Object "Equality"
+
+{} == {}
+{} === {}
+{name: 'Tunde'} === {name:'Tunde'}
+
+The 3 statements above equate to false. Why?
+
+Internally, JavaScript actually has two different approaches for testing equality. Primitives like strings and numbers are compared by their value, while objects like arrays, dates, and plain objects are compared by their reference.
+
+Therefore 2 objects can only ever be considered equal when there reference points to one object.
+
+E.g:
+let object1 = {}
+let object2 = object1
+object1 === object2
+Now, the line above would equate to true.
+
+JavaScript has no inbuilt concept of object equality. When checking object equality; the conditions can vary depending on the type of object or the intent of comparison. E.g: checking if the keys and value match perfectly or checking if the values in-turn contains objects and comparing those. It can get really complicated.
+
+To properly test object "value equality", the following tested libraries are recommended:
+
+Lo-Dash 			- http://lodash.com/docs#isEqual
+Underscore 	- http://underscorejs.org/#isEqual
+
+--------------------------------------------------------
+
+Shallow Copy vs Deep Copy
+
+When you use the assignment operator to assign one object to another variable in JavaScript, that object is not copied. the new variable just points to the same object reference. Due to this, when you alter the value of any of both object, the second object is also altered.
+
+E.g:
+
+let obj1 = {name: 'Tunde', age:'8'}
+obj2 = obj1
+obj2.name = 'Bola';
+console.log('Obj1 Name: ' + obj1.name);
+console.log('Obj2 Name: ' + obj2.name);
+
+In the example above, both objects will print out the same values to the console. Despite the fact that only the value of 1 was altered. Why? Both objects point to the same reference. Altering one automatically alters the other. They are different variables but they link to one object reference 
+
+To make a copy in JavaScript, you initiate a new variable with the same value(s). However, there is a phenomena in JavaScript that only applies to Composite Data types. Objects and Arrays (Technically, arrays are also objects so they behave in the same way), deep copying vs shallow copying
+
+Shallow Copy:  A shallow copy means that certain (sub-)values are still connected to the original variable.
+
+Different Methods:
+
+1. Spread Operator
+
+Introduced with ES2015, this operator is just great, because it is so short and simple. It ‘spreads’ out all of the values into a new object. You can use it as follows:
+
+const a = {
+  en: 'Bye',
+  de: 'Tschüss'
+}
+let b = {...a}
+b.de = 'Ciao'
+console.log(b.de) // Ciao
+console.log(a.de) // Tschüss
+
+You can also use it to merge two objects together, for example const c = {...a, ...b}
+
+-------
+
+2. Object.assign
+
+This was mostly used before the spread operator was around, and it basically does the same thing. The major difference is that the first object passed to the method is modified and returned so to avoid this pass the object as the second argument and pass an empty object as first argument.
+
+let object2 = object1.assign({}, a)
+
+P.S: The assign and spread method of copying are shallow because if one of the values of the object is a child object, it is not "cloned" and both child objects will point to the same reference.
+
+-----------------
+
+Deep Copy:
+
+A deep copy means that all of the values of the new variable are copied and disconnected from the original variable. A deep copy will duplicate every object it encounters. The copy and the original object will not share anything, so it will be a copy of the original.
+
+Different Methods:
+
+1. JSON
+We use JSON to stringify the original object, then parse it to the new one. E.g:
+let object2 = JSON.parse(JSON.stringify(object1))
+
+This way, the current object is extracted into JSON string then reconverted back into a new object  afterwards, thereby breaking all links to the original object.
+
+However, this method will fail if you have functions in the object. Also, all Date objects in the object will be destroyed and converted to string form.
+
+P.S: Sometimes instead of copy/copying, clone/cloning is used in the JS Community.
+
+To fully implement deep copying for complex usecases, some libraries that can be tested:
+
+1. lodash - https://lodash.com/docs/4.17.15#cloneDeep
+2. immutability-helper (For React) - https://github.com/kolodny/immutability-helper
+------------------------------------------------------------------------
+npm install -g live-server
+Uses NPM to install Live Server
+------------------------------------------------------------------------
+live-server app-name
+Serves up this application in the browser. What makes it even extra amazing is that it auto-renders in browser when you save changes.
+------------------------------------------------------------------------
+Ctrl+C - in cmder terminates the application running.
+------------------------------------------------------------------------
+The DOM
+Full meaning: Document Object Model.
+
+A webpage is a document. To enable us interacts and modify this document, we need the DOM. The DOM is an object-oriented representation of a webpage. It represents the document in objects and nodes. The global object is the windows object which is the first object to load. Right inside it, we have the screen object, the document object etc. JavaScript interacts with the webpage's window, documents and elements via the DOM.
+------------------------------------------------------------------------
+Window
+
+The window global object is the parent global object and contains all other DOM globals like document, location, console, localStorage etc.
+
+window.innerHeight - stores the height of the current active window.
+window.innerWidth - stores the width of the current active window.
+------------------------------------------------------------------------
+document
+
+The document object is a window property. It is the html, xml (or any other document) that is loaded into the browser.  It is accessed precisely via 'window.document' or preferably in short form using 'document'. Since it houses all the page elements, it is the most used global property when dealing with web pages in JS.
+------------------------------------------------------------------------
+.querySelector()
+
+This method selects an element in the DOM object document. The line below will select the first paragraph on the page.
+
+document.querySelector('p')
+------------------------------------------------------------------------
+.querySelectorAll()
+
+This method selects all elements that match the argument in the DOM. The line below  will select all paragraphs.
+
+document.querySelectorAll('p')
+
+The method stores all the elements in an array. We can use array notation on them and even iterate through them with the forEach Loop. E.g:
+
+document.querySelectorAll('p')[1] - selects the second paragraph.
+document.querySelectorAll('p').forEach(function(element){
+	alert()	
+})
+------------------------------------------------------------------------
+.remove()
+
+After selecting an element, we can remove it using the remove method. E.g:
+document.querySelector('p').remove()
+
+P.s: the remove() method only works on one element at a time. If a group of elements is selected using querySelectorAll for example, we'll have to iterate through each of them to use remove()
+------------------------------------------------------------------------
+.innerHTML
+
+This property stores the text content of a selected element.
+We can  use it to change or retrieve the inner HTML of an element e.g: 
+
+document.querySelector('div#content-here').innerHTML = ''
+
+In the example of emptying an element with innerHTML, benchmark scores prove that it's faster to iterate through with while and use remove() in modern browsers.
+
+el.innerHTML = ''  //instead of this
+while (el.lastChild) el.removeChild(el.lastChild); //do this
+https://jsperf.com/innerhtml-vs-removechild/418 - link proves that this is faster than setting innerHTML to empty
+
+
+It is advisable to avoid using innerHTML when creating/manipulating dom nodes that will be later referenced from JavaScript. 
+
+Before you innerHTML, you can:
+createElement() - https://developer.mozilla.org/En/DOM/Document.createElement
+appendChild() - https://developer.mozilla.org/En/AppendChild
+removeChild() - https://developer.mozilla.org/En/removechild
+replaceChild() - https://developer.mozilla.org/En/replacechild
+insertBefore() - https://developer.mozilla.org/En/insertbefore
+createTextNode() - https://developer.mozilla.org/en/DOM%3adocument.createTextNode
+------------------------------------------------------------------------
+.textContent
+
+This property stores the text content of a selected element.
+We can  use it to change or retrieve the text content of an element e.g: 
+
+document.querySelector('p').textContent = 'Sample Text'
+------------------------------------------------------------------------
+.value
+
+This property stores the value of elements that receive input. Usually form fields.
+We can use it to change or retrieve the value of the element.
+
+document.querySelector('input#lastname').value = 'Abiodun'
+------------------------------------------------------------------------
+.createElement()
+
+Creates a new element. The example below creates a new element 'p' and gives it text content 'Sample Paragraph'
+
+newElement = document.createElement('p')
+newElement.textContent = 'New Paragraph'
+------------------------------------------------------------------------
+.appendChild()
+
+This method moves an element to the DOM. It takes the new element and moves it to the last child element of a selected parent element. E.g:
+
+document.querySelector('body').appendChild(newElement) - moves New element and adds it as the last child element in the body
+
+Please note that a DOM node cannot be appended more than once as the node is "moved" around. Every time you want to append to the DOM, you need to create a new instance. To append a node more than once, you need to clone it.
+
+Similar:
+.append()
+------------------------------------------------------------------------
+.cloneNode()
+
+Since a DOM node cannot appear more than once in the Node tree, using methods like appendChild() with the same DOM node as argument more than once will failed. There are cases when a created DOM node might be needed more than once and to do this, it needs to be cloned.
+The cloneNode() method takes a true or false value as argument. This value sets the deep option to true or false. When set to true, the node is cloned with all it's children. When set to false, a shallow clone is done.
+
+E.g:
+let p = document.createElement('p');
+p.textContent = 'This is a pararaph';
+document.querySelector('body').appendChild(p);
+document.querySelector('body').appendChild(p.cloneNode(true));
+------------------------------------------------------------------------
+.addEventListener()
+
+This method is used to add an event listener to an element. An event listener is used to listen to a certain element for a particular action. When that action is initiated on the event, the listener launches a function. The method takes 2 arguments; first one is the 'type' of event to listen to e.g: action and the second event is the 'listener' function to be launched. The function can either be pre-declared and called afterwards or declared inline. E.g:
+
+Pre-declared:
+--
+const test = function () {
+	alert('Clicked!')
+}
+document.querySelector('button').addEventListener('click', test)
+
+Inline:
+--
+document.querySelector('button').addEventListener('click', function () {
+	alert('Clicked!')
+})
+
+When we use the event listener method to pass a function, the function passes an event argument.  The event argument contains details about the event that was just initialized and has several properties like the exact co-ordinates the event was initialized and the target element. The targetElement property of this argument references the element  that triggered the event listener. We can use this property to manipulate the target element. E.g: change the text content of a button on click.
+
+document.querySelector('button').addEventListener('click', function (e) {
+	e.target.textContent = 'Clicked!!'
+})
+------------------------------------------------------------------------
+In JS, '#'' represents ID and '.' represents class.
+
+document.querySelector('#create')
+document.querySelector('button#create') 
+document.querySelector('.formatted')
+document.querySelector('p.formatted')
+
+We can also use combinations of classes and id to select an element. E.g:
+
+document.querySelector('h1.formatted#create')
+------------------------------------------------------------------------
+EventListener: click
+
+Fires whenever the element is clicked.
+------------------------------------------------------------------------
+EventListener: change
+
+Fires whenever the value of a form element changes. The listener function however doesn't fire until the element is 'unselected' i.e when we click out of it or move to another element. Why? Because the value of an element is not registered as changed until input completion.
+------------------------------------------------------------------------
+EventListener: input
+
+Fires whenever the input value in a form element  is updated. The listener function fires right away as the element's input is modified; either when it's receiving input or losing input. Unlike the change listener, it is called right away and not until after the element is 'exited'.
+------------------------------------------------------------------------
+EventListener: submit
+
+This is attached to a form object. The listener function is fired whenever that form is submitted; either by a submit button or by hitting the enter key on the keyboard.
+------------------------------------------------------------------------
+ID:
+
+Unique Identifier. No 2 elements should have the same ID. Any function bound to an ID will execute on only one element.
+
+<button id='create'>Create</button>
+------------------------------------------------------------------------
+Class:
+
+Can be shared by multiple elements.  Any function bound to a class will execute on all of the elements sharing that class.
+An element can also have multiple classes. Each class is seperated by a space.
+
+<h2 class='formatted'>Hi there!</h2>
+<p class='formatted block another-class'>I am just an example paragraph</p>
+------------------------------------------------------------------------
+.preventDefault()
+
+The preventDefault method tells the browser not to execute the default behaviour of an event. For example we can apply it on a submit button or form to prevent the page from reloading. The method is called directly on an event object. e.g:
+
+e.preventDefault()
+------------------------------------------------------------------------
+.elements - Refers to the list of elements in a DOM object. E.g:
+
+document.querySelector('form').addEventListener('submit', function (e) {
+	e.target.elements.firstName.value = 'Babatunde'
+})
+
+The example above changes the value of the input field with name 'firstName' inside the form 'form' on submit.
+If for some reason, 2 fields have the same name/id, it selects multiple elements in an array. For example:
+let value = document.querySelector('form').elements[1].value
+------------------------------------------------------------------------
+HTML Note: Wrap your input fields with a label tag so when the label is clicked, the cursor can automatically focus in (for text fields) or select the input (for checkboxes or radio buttons)
+------------------------------------------------------------------------
+WEB STORAGE API
+
+The Web Storage API provides mechanisms by which browsers can securely store key/value pairs. Storage objects are simple key-value stores, similar to objects, but they stay intact through page loads. The keys and the values are always strings (note that, as with objects, integer keys will be automatically converted to strings). You can access these values like an object, or with methods.
+
+To store an array/object in the Web storage, we'd have to convert it to a string (JSON) first. After data retrieval, it can be converted back.
+
+The Web Storage uses 2 mechanisms. sessionStorage and localStorage. They store data the same way but with localStorage, data persists even when the browser is closed. sessionStorage are like sessions and localStorage are like cookies. The differences are: 
+- More storage size (up to 5mb)
+- The data stored is in the browser
+- Data is not included in every server requests and only used when directly requested by the app
+- Data can only be stored and accessed per domain.
+- Data size doesn't affect  page load.
+
+Side Note: JavaScript's web Storage api should be treated as a temporary storage option and not meant to function as 'long term or permanent storage'. It is just like your app data on your mobile device. I shouldn't lose my tweets from wiping data from my Twitter app. localStorage data will remain in the browser after closing it, but if browser data is wiped or corrupted, it'd be gone forever. Also, localStorage is openly accessible and should never be considered secure. Sensitive information like passwords, pins etc should never be stored on localStorage. Just like one shouldn't for sessions / cookies. Finally, when the browser goes into private browsing mode, a new, temporary database is created to store local storage data; this database is emptied and thrown away when private browsing mode is turned off. In some browsers, localStorage is not accessible in private mode.
+
+To listen to storage updates that happen on another tab/window, we can add an event listener to the window global object. The event to listen to is 'storage'. E.g:
+
+window.addEventListener('storage', function (e) {
+	if (e.key === 'value') console.log('Data Update!')
+})
+------------------------------------------------------------------------
+localStorage -  It is a window  property and is precisely accessed using window.localStorage or perferrably in short form with just 'localStorage' (this also applies to sessionStorage). The localStorage property is an object that we can use to access data in the web storage api. We use its methods to create and access data in the browser web storage. We can also access data via the localStorage object using object notation.
+------------------------------------------------------------------------
+.setItem
+
+A web storage method that is used to store a data entry; it creates and updates. The method receives 2 arguments; the entry's key and its value. E.g:
+
+localStorage.setItem('country', 'Nigeria')
+------------------------------------------------------------------------
+.getItem
+
+It is used to read a data entry from the web storage. It receives only 1 argument which is the data key. The method then returns the value. E.g:
+
+value = localStorage.getItem('country')
+
+To access storage data without using a method, we can simply use object notation e.g: localStorage.country
+
+Note: Although the values can be set and read using the standard JavaScript property access method, using the getItem and setItem methods utilizes the API and  is recommended as the localStorage object will be encapsulated and better protected from damage. Simply put, it ensures the localStorage is more secure.
+------------------------------------------------------------------------
+.removeItem
+
+It is used to delete a data entry from a given storage object (localSorage or sessionStorage). The method receives 1 argument, the entry key. E.g:
+
+localStorage.removeItem('country')
+------------------------------------------------------------------------
+.clear
+
+This method clears all entries from a given storage object. E.g:
+
+localStorage.clear()
+
+P.S: A web storage object is domain limited. Hence the clear method will only clear the storage object for that domain and not the browser's entire storage object.
+------------------------------------------------------------------------
+JSON
+
+Full meaning: JavaScript Object Notation
+JSON is an open-standard format that allows you to store objects in text form. When exchanging data between a browser and a server, the data can only be in text (string form). JSON bridges that divide. It is used to hold object data in storage formats that only allow you to store string data. E.g: Web Storage (localStorage, sessionStorage)
+
+JavaScript has a built-in JSON object with methods that allow you to convert object to JSON format and back.
+
+- JSON.stringify(object) - Takes in an object, converts it to JSON string representation and returns the string. E.g:
+
+const user = {
+    name: 'Babatunde',
+    age: 27
+}
+let userJSON = JSON.stringify(user)
+localStorage.setItem('user', userJSON)
+
+- JSON.parse(JSONstring) - Takes in a JSON string, converts it to an object and returns the object. E.g:
+
+let userData = localStorage.getItem('user')
+userData = JSON.parse(userData)
+console.log(`${userData.name} is ${userData.age}`)
+------------------------------------------------------------------------
+debugger
+
+When searching for errors or when trying to debug broken code; this line stops the JavaScript execution  at whatever point that it's called and allows one to explore the output and state of the app up to that point. Asides viewing how it renders at that stage,  one can check the current state of the variables etc. It creates an 'image' of the application up to that point.
+
+Furthermore, hitting the esc key when in debugger mode toggles the console. Here we can print out variables etc. All variables that we interact with contain values at the point of the 'debugger' calls. The debugger call will only execute when Developer Mode is open for that page. If it isn't, the code will run as usual.
+
+There is no limit to the number of debugger calls that can be made. To continue execution, hit the play button.
+
+Note: The debugger call is supported by all major browsers.
+------------------------------------------------------------------------
+P.S: Don't use innerText to add text to elements, use textContent. innerText was introduced by IE and is affected by certain use cases.
+
+Details: https://kellegous.com/j/2013/02/27/innertext-vs-textcontent/
+------------------------------------------------------------------------
+setAttribute - This method is used to set any attribute of a DOM element. It takes in 2 arguments; the attribute being set and the value it is being set to.
+
+document.querySelector('body').setAttribute('class', 'no-js')
+------------------------------------------------------------------------
+uuid - https://github.com/kelektiv/node-uuid
+
+JS Library used for auto-generating RFC4122 UUIDS.... Unique IDs.
+To use, download the script and include in your project using a script tag or optionally use a direct link from the project. (P.S: The project's server is known to have issues sometime. It is safer to include it locally)
+Generating is as simple as:
+
+let uid = uuidv5() //v5 is the current  version. v1-v5 are all available.
+------------------------------------------------------------------------
+location
+
+The location object is a window property. It holds information about  and is used to control behaviour related to the current web-address of a page. It is accessed precisely via 'window.location' or preferrably in short form using 'location'.
+
+location.assign('https://bashiruismail.io')
+
+The assign method takes a url destination as argument  The code above would change the web address of the current page and take the user to the url presented in the argument.
+
+location.hash
+retrieves the hash value of a url. The hash value is the '#'' symbol + the string that comes after it in a url.
+E.g in: 'https://bashiruismail.io#contact', the  value returned would be '#contact'.  
+------------------------------------------------------------------------
+.substring()
+
+This is a string method that returns a substring of the string it is called upon. It receives 2 arguments; the substring index starting point and the index end point. If the second argument is left blank, it returns the rest of the string starting from the first index point.
+
+let nick = 'Big Madame Cash'
+console.log(nick.substring(4)) //Would Print 'Madame Cash'
+console.log(nick.substring(4,6 )) //Would Print 'Madame'
+------------------------------------------------------------------------
+Date()
+
+This method creates a JavaScript Date instance that represents an exact moment in time. The object created is based on a time value that is the number of milliseconds since the Unix Epoch 1 January  1970 UTC .
+
+When the Date() method is called without an argument, the date object returned is created from the exact current time and date. However the Date() method can be used to create an object based on any date at all by providing the date as an argument in string form.
+
+E.g:
+let before = new Date('January 1 1990')
+let before = new Date('January 1 1990 10:00:00')
+
+The string can be in two formats. 'Date only' OR 'Date and Time'. The date must follow the string format 'Month Day Year' and the time must be in the '24-hour time format' with or without seconds. When time is not specified in the string, it is set to 00:00:00
+
+In applications, instead of passing around or creating Date objects with exact date strings, time stamps are used. 
+E.g: new Date(1547141826000)
+The time stamp is the exact number of milliseconds since the Unix Epoch 1 January  1970 UTC.
+------------------------------------------------------------------------
+A Date Object has several properties and methods.
+
+const now = new Date()
+
+now.toString()
+Returns full date in string form e.g: Thu Jan 10 2019 18:37:06 GMT+0100 (West Africa Standard Time)
+
+now.getFullYear()
+Returns the exact year. E.g: 2018
+
+now.getMonth()
+Returns the month in index form. E.g: 0 for January
+
+now.getDate()
+Returns the current day from the date. E.g: 10
+
+now.getHours()
+Returns the hour part of the time in 24 hours format. E.g: 18
+
+now.getMinutes()
+Returns the minute part of the time. E.g: 37
+
+now.getSeconds()
+Returns the seconds part of the time. E.g: 06
+
+now.getTime()
+This will return the time stamp (milliseconds) since the Unix Epoch (1 Jan 1970 UTC). E.g: 1547141826000
+------------------------------------------------------------------------
+moment.js - https://momentjs.com/docs/
+This is a library that makes it easier for us to work with time in JS.	
+Recommended for use in production: the moment with locale min file.  - https://momentjs.com/downloads/moment-with-locales.min.js
+Can be served  locally or on the f ly.
+https://momentjs.com/downloads/moment-with-locales.js
+
+
+let now = moment()
+let now = moment('January 1 2001')
+let now = moment('January 1 2001 12:00:01')
+let now = moment(1547141826000)
+
+Creates a datetime object using the date/time at that particular moment.
+Like Date(), moment can also create a datetime object from a string or timestamp (in milliseconds).
+
+To create a moment from a Unix timestamp:
+moment.unix(1318781876)
+
+now.toString()
+Prints out the date/time object in string form.
+
+now.day()
+Used to return/set the current day in integer form starting from 1. E.g: 5 for Friday.
+
+now.date()
+Used to return/set the day portion of the date. E.g: 11
+
+now.month()
+Used to return/set the month portion of the date in index form starting from 0. E.g: 0  for January. 
+
+now.year()
+Used to return/set the year portion of the date.
+
+now.hour()
+Used to return/set the hour in 24hr time format. E.g: 14
+
+now.minute()
+Used to return/set the number of minutes
+
+now.time()
+Used to return/set the number of seconds.
+------------------------------------------------------------------------
+Date/Time Manipulation with Moment
+
+.add() - a method used to add time/date to a current moment date/time object. It receives 2 variables, the number of time unit to be added, and the unit. E.g:
+
+now.add(1, 'hour')
+This adds 1 hour to the date/time.
+The method supports 'year, month, day, hour, minute, second' as unit options.
+
+.subtract() - The opposite of add. It is used to deduct time/date to a current moment date/time object. Just like .add(), it receives 2 variables, the number of time unit to be added, and the unit.
+
+moment supports method chaining to allow us simplify code. The return object  of one method is passed to the next and so on. E.g: now.add(1, 'minute').subtract(1, 'hour') 
+------------------------------------------------------------------------
+format() - Formatting Date/Time Output with Moment
+
+The format method is used to return a formatted date/time string for the user. It receives the format as an argument (string) and returns the formatted date/time output.
+
+See table for formats: https://momentjs.com/docs/#/displaying
+
+Examples:
+now.format('YYYY MM DD, HH:mm')
+2019 01 11, 13:50
+
+now.format('Do MMMM YYYY, h:mm a')
+Friday January 11th 2019, 1:50 pm
+------------------------------------------------------------------------
+.fromNow()
+
+This moment method is used to return how much time from the current time is a moment date/time object. 
+Example outputs are: 'some seconds ago', 'in 10 months', 'in 15 minutes', an hour ago', 'a month ago' etc.
+It is perfect for date/time in timeline viewing.
+E.g:
+now.fromNow()
+------------------------------------------------------------------------
+.valueOf()
+
+This moment method is used to generate a timestamp in milliseconds. Time stamps are used for comparisons and is very useful in comparing date/time.
+------------------------------------------------------------------------
+Arrow Functions
+They get their name from the syntax because the function call looks like an arrow:
+= () =>
+
+Short-hand arrow functions allow you to create one-liner functions that return a value.
+const square = (num) => (num * num);
+
+Basically, instead of typing the full return statement in a brace, you can just type the value it returns on the same line.
+
+Standard arrow functions are called similarly to regular functions but with a different syntax style.
+const squareLong = (num) => {
+  return num * num;
+}
+
+Asides the syntax difference, the major difference between regular functions and arrow functions are:
+- They don't bind arguments
+- They don't bind 'this'
+
+So they are not a "be all, end all" alternatives for functions. It's important to understand their use case when utilizing them.
+Coding Preference: Start every function as an arrow function, change to standard when this/argument is needed.
+------------------------------------------------------------------------
+Ternary Operator
+
+let ogbeni = {
+	name: 'Reno Omokri',
+	eyanPataki: 0,
+	status: ''
+}
+
+Use them in boolean like "if-else situations" when the following action based on a condition is oneliner and it's either one action/the other.
+E.g:
+ogbeni.status = ogbeni.eyanPataki == 1 ? 'Eyan Pataki Lomo!' : 'Eyan Eleribu ni o';
+console.log(ogbeni.status);
+
+We can also call functions/methods while using the operator. E.g:
+ogbeni.eyanPataki == 1 ? setStatus('Eyan Pataki Lomo!') : 'Eyan Eleribu ni o.'
+------------------------------------------------------------------------
+Truthy & Falsy Values
+
+Falsy Values
+Anything that resolve to false in boolean context. This includes:
+false, 0, empty string, null, undefined, NaN
+
+Truthy Values
+Anything that resolve to true in boolean context. Any value that is not a falsy value is truthy. This includes empty arrays and objects.
+
+Truthy & falsy values can be used directly in conditions. E.g if you wanted to check if a defined primitive variable contains something, instead of checking if it's empty; you can just type:
+
+if (variableName) {
+	console.log('Empty')
+}
+------------------------------------------------------------------------
+typeof
+
+There are cases where you want to check the type of data before handling it. E.g: user generated data, data from external sources etc. The typeof statement returns the type of a variable. The results are:
+number
+string
+object
+boolean
+
+P.s: JavaScript arrays are actually objects so arrays return 'object' when you use typeof.
+------------------------------------------------------------------------
+FUNCTIONS IN JAVASCRIPT: ADVANCED
+
+In JavaScript, functions are by default, first-class meaning that functions are treated like any other first-class object — they can be stored in variables, passed around, returned from other functions, and even hold their own properties.
+
+-----------------------------
+What does it mean for a function to be "First-Class"?
+-----------------------------
+A first-class object, sometimes referred to as a first-class citizen, is an object that supports all of the operations generally allowed to other objects. As JavaScript functions are themselves types of objects. A first-class function can thus be expected to support the same operations we would expect from other objects. So what are these operations? Generally, first-class objects can:
+- Be stored in a variable;
+- Be passed as arguments to functions;
+- Be returned by functions;
+- Be stored in some data structure; and,
+- Hold their own properties and methods.
+
+These operations are illustrated below:
+
+// Function definition and invocation
+function speak(string) {
+  console.log(string);
+}
+speak("Hello");                     // logs "Hello"
+
+// Store in a variable
+var talk = speak;
+talk("Hi");                         // logs "Hi"
+
+// Pass as an argument to a function
+// Return from a function
+function functionReturner(fn) {
+  return fn;
+}
+var chat = functionReturner(talk);
+chat("Good Morning");               // logs "Good Morning"
+
+// Store in a data structure
+var myFuncs = [talk];
+myFuncs[0]("Good Afternoon");       // logs "Good Afternoon"
+
+// Owns properties
+talk.myProperty = "bananas";
+console.log(talk.myProperty);       // logs "bananas"
+
+
+First-class functions give us a wide variety of flexible and powerful design patterns. These patterns let us write more readable, more dynamic, and more concise code. E.g:
+
+-----------------------------
+Callback Functions and Higher Order Functions
+-----------------------------
+
+A callback function is a function that is passed to another function as a parameter. The callback function passed can then be called (or executed) inside the function it is passed to.
+
+A higher-order function is one that either has a function as a parameter, or returns a function. In other words, higher-order functions do work on other functions. The classic example of higher-order functions are built-in functions that we use every day to manipulate JavaScript objects and data structures. These built-in functions do some kind of work such as iteration or transformation. Often, we supply such built-in functions (e.g: .map(), .reduce() etc) with anonymous functions as callback arguments, but we can also pass in existing functions. 
+
+Example of Callback/Higher-Order Functions
+
+//Testing Callbacks
+const aFunction = (value) => {
+	console.log(`I am ${value} bitch!`);
+}
+const mainFunction = (name, callBack) => {
+	callBack(name);
+}
+
+//Sample 1
+mainFunction('Bashy', function (name) {
+	console.log(name + ' Called Back')
+})
+
+mainFunction('Bashy', aFunction); //Sample2
+
+//Sample 3
+const titleFunction = (value) => {
+	return `${value} is the king fam!`;
+}
+const higherFunction = (name, callBack) => {
+	return callBack(name);
+}
+console.log(higherFunction('Bashy', titleFunction))
+
+In the example above; Sample 1 illustrates that mainFunction is a higher-order function as it takes an anonymous function as argument and executes it within its self. Sample 2 while still illustrating mainFunction as higher-order  also illustrats that 'aFunction' which has been declared already can be passed to mainFunction as a callback. A callback can either be a named function or an anonymous function. Sample 3 illustrates taking a callback function as argument then returning the value from the callback instead of just executing it.
+
+In practical examples, the result of the callback function executed within a higher-order function is usually required to fully  execute the higher-order function. Separating functions into callback and higher-order also allows for abstraction as we can combine multiple functions to solve one problem in one function without calling them one-by-one or writing repetitive.
+
+-----------------------------
+Closures
+-----------------------------
+
+A closure is the combination of a function and the lexical environment within which that function was declared. This environment consists of any local variables that were in-scope at the time the closure was created.
+
+A closure function has access to the local scope (it's own scope), the outer function's scope (function it was defined in) and the global scope.
+
+E.g:
+
+const outerFunction = (var1) => {
+	const innerFunction = (var2) => {
+		return var1 + var2;
+	}
+	return innerFunction;
+}
+
+let sample = outerFunction(10)
+let sample2 = outerFunction(-10)
+console.log(sample(20));
+console.log(sample2(20));
+
+E.g 2:
+
+const addTo = (passed)  => {
+	const add = (inner) => {
+		return passed + inner;
+	}
+	return add;
+}
+
+const addThree = addTo(3);
+addThree(10); //returns 13
+const addFour = addTo(4);
+addFour(12) //returns 16
+addTo(2)(3) //returns 5
+
+By breaking addTo into two an outer function and an inner function (closure), we are able to declare multiple instances of the function addTo that pass a different variable to the function add. Each instance of this function calls can only add to the original variable of passed. "Passed" remains preserved and cannot be changed from the outside.
+
+Closures are just functions with preserved data.
+
+P.S: The act of splitting a function with arguments into multiple functions one inside the other with each function taking a set of the arguments in order to limit the scopes of certain arguments is cal
+------------------------------------------------------------------------
+OOP in JavaScript
+-----------------------------
+JavaScript implements Prototypal Inheritance and not Class based Inheritance. JavaScript is one of the only object-oriented languages to use prototypal inheritance. Almost all other object-oriented languages are class based. As a result of this, JavaScript does not have "methods" in the form that class-based languages define them. 
+
+Classes
+----------------------
+Until recently, industrious developers used constructor functions to mimic an object-oriented design pattern in JavaScript. The language specification ECMAScript 2015, often referred to as ES6, introduced classes to the JavaScript language. Classes in JavaScript do not actually offer additional functionality, and are often described as providing “syntactical sugar” over prototypes and inheritance in that they offer a cleaner and more elegant syntax. Because other programming languages use classes, the class syntax in JavaScript makes it more straightforward for developers to move between languages.
+
+Before delving into how to use the Class Syntax, here is a run-down of how JavaScript objects  can be created using different methods:
+
+1. Object Literal Notation bracket syntax
+----------------------
+const randomObject = {
+	foo: 1,
+	"bar": "some string",
+	baz: function(){
+	//some method code here.
+	}
+}
+Simply put, the object literal notation is basically an array of key:value pairs with a colon separating key and value and commas after every value except the last.  By using the object literal notation, an object is immediately instantiated and assigned to the variable name.  While this method is fine for creating singletons; it is not suitable when you want to create multiple instances of an object with shared behaviour.
+
+2. Factory Functions
+----------------------
+const factoryFunction = function () {
+	return {
+		foo: 1,
+		"bar": "some string",
+		baz: function(){
+		//some method code here.
+		}
+	}
+}
+
+Factory functions are functions that are used in conjuctions with object literals to create multiple objects with the same structure. By doing this, we mimic the behaviour of classes.
+
+Using a factory function is as simple as wrapping an object in a function and returning it. Every time that function is called, it creates a new object with identical methods and properties. The downside to this is that it causes memory bloat. Each object created using a factory function is independent of the other . They are not new instances. Becuase of this, the properties and methods are all redeclared again. Ideally with instances, all the objects share one copy of functions and properties. What differentiates each instance is value.
+
+
+3. Using Prototypes
+----------------------
+Eveything that is not a primitive variable in JavaScript is an object; including arrays and functions. By default, all JavaScript objects inherit properties and methods from a prototype. As a result of this, very object in JavaScript have an internal property known as a prototype. It is simply a reference to another object and contains common attributes/properties across all instances of the object.
+
+Prototype Chain
+Asides traditional objects, many JavaScript objects don’t directly have Object.prototype as their prototype, but instead have another object that provides a different set of default properties available exclusively to it. A child of a prototype isn’t a copy of its prototype, nor is it an object with the same shape as its prototype. The child has a living reference to the prototype, and any prototype property that doesn’t exist on the child is a one-way reference to a property of the same name on the prototype. Functions derive from Function.prototype, and arrays derive from Array.prototype and so on. When trying to access a property of an object, the property will first be checked directly on the object, when it is not found, it will be sought on the prototype of the object, then the prototype of the prototype, and so on until either a property with a matching name is found or the end of the prototype chain is reached.
+
+Object: 			myObject 	-->		Object.prototype 		-->		null
+Array:				myArray		-->		Array.prototype 			-->		Object.prototype 	-->		null
+Function:	 		myFunc		-->		Function.prototype 	-->		Object.prototype 	-->		null
+
+Changes to the Object prototype object are seen by all objects through prototype chaining, unless the properties and methods subject to those changes are overridden further along the prototype chain. This provides a very powerful although potentially dangerous mechanism to override or extend object behavior. It is potentially dangerous because if you modify the prototypes of standard JavaScript objects, it could lead to unexpected behaviour and break your code. 
+Warning: Only modify your own prototypes. Never modify the prototypes of standard JavaScript objects.
+
+To implement "classes and object type behaviour" using prototypes, we folow the following steps:
+
+We create a constructor function that initializes the object.
+
+//Object Constructor
+const randomObject = function () {
+	this.foo = 1;
+	this.bar = 2;
+	this.string;
+}
+
+Since functions are objects and  have a prototype, we can add methods to this object by adding it to it's prototype property.
+
+//Object Method - baz under randomObject
+randomObject.prototype.baz = function (argument) {
+	this.string = argument;
+}
+
+This method  is thereby automatically inherited by any instance of the object created above. The object instances are initialized using the new keyword:
+
+const randomInstance = new randomObject();
+randomInstance.baz(argument);
+
+4. Using ES6 (ECMASCript2015) Classes
+----------------------
+
+ECMAScript 2015 introduced a new set of keywords implementing classes. The new keywords include class, constructor, static, extends, and super. The syntax is simpler to write and is an implementation of objects & classes introduced in JS to make things look less obscure especially for programmers who are well rooted in class based syntax. It’s simple and clean, it’s fast, and it provides every feature that once upon a time only factories could deliver. However, behind the scenes; a JavaScript class is simply a type of function. 
+
+class randomClass {
+	constructor () {
+		this.foo = 1;
+		this.#bar = 2; //using # before property declares it as private.
+		this.string;
+	}
+	baz (argument) {
+		this.argument = argument;
+	}
+}
+
+class subClass extends randomClass () {
+	constructor () {
+		super();
+		this.boo = 10;
+	}
+}
+
+let randomObject = new subClass ();
+randomObject.vaz();
+
+However JavaScript’s class keyword doesn’t come with any of the guarantees that a class is meant to provide as it is majorly just change in "syntax". Behind the scenes, prototypes are implemented.
+
+----------------------
+PRIVATE PROPERTIES AND STATIC METHODS
+
+Private Properties
+They are properties cannot be accessed publicly and need to be returned by a public method.
+
+Static Methods
+By default, methods declared in a class belong to instances of that class (objects) and not the class itself.
+However, a static method is a method that belongs to the class itself rather than the instance of the class.
+
+class Person {
+	#age;
+	static species() {
+		return 'Homo Sapiens';
+	}
+	constructor (name, age) {
+		this.name = name
+		this.#age = age
+	}
+	callInfo() {
+		return 'My name is ' + this.name + ' and I am ' + this.#age + ' years old'
+	}
+	ageCategory() {
+		return this.#age >= 30 ? '30+ Twitter' : 'Under 30 Twitter'
+	}
+	whoImBe() {
+		return `Hin name na ${this.name}. E dey ${this.ageCategory()}`
+	}
+}
+
+const boy = new Person('Bayo', 35)
+
+console.log(boy.name)
+console.log(boy.age)
+console.log(boy.callInfo())
+console.log(boy.whoImBe())
+console.log(Person.species())
+console.log(boy.species())
+
+Result:
+console.log(boy.name)	//Bayo
+console.log(boy.age)		//undefined
+console.log(boy.callInfo())		//My name is Bayo and I am 35 years old
+console.log(boy.whoImBe()) //Hin name na Bayo. E dey 30+ Twitter
+console.log(Person.species()) //Homo Sapiens
+console.log(boy.species())		//Uncaught TypeError: boy.species is not a function
+
+//ageCategory should be a private method. Private Properties and Methods are still in experimental stages and have not been passed as official so may trigger an error in some browsers. Private Properties is most likely to.
+------------------------------------------------------------------------
+
+HTTP Status Codes
+A numerical value that represents the result of an HTTP Request.
+
+https://httpstatuses.com/
+
+Link contains a list of HTTP Status Codes with explanations that are very useful and can guide in the creation of an API.
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
+Another valuable link breaking down HTTP Requests and sheds more light on how they work.
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+led currying. Currying is useful to create functions with a 'preserved' base value.
+------------------------------------------------------------------------
+Promises
+
+A Promise is an object used to represent the eventual completion/failure of an asynchronous operation. Promises wait till an asynchronous operation is completed before they run. To create a promise, you call the Promise initialize keyword "new Promise()", then pass into it a function with 2 variables; resolve and reject. After setting up the asynchronous action in the promise, use resolve() to return success and reject() to return an error. Variables can be passed to both functions.
+
+E.g 1:  
+const promiseInit = new Promise (function (resolve, reject) {
+	//do something asynchronous here
+
+	//resolve(someValue)
+	//reject(message)
+})
+
+E.g 2:
+const promiseInit = new Promise((resolve, reject) => {
+	//do something asynchronous here
+
+	//resolve(someValue)
+	//reject(message)
+})
+
+---------------
+.then()
+
+After a promise has been resolved, the then method is executed. It accepts up to 2 functions as arguments. The 1st function is initialized if the promise succeeds and the second function is initialized if the promise fails. The first function is called onFulfilled and the second one onRejected.
+
+Promise.then(onFulfilled, onRejected)
+
+The onFulfilled function takes one argument, the fulfillment value. 
+
+The onRejected function has one argument, the rejection reason. The onRejected function is only optional and when it's not called, it is internally replaced with a thrower function which throws an error message than can be caught.
+
+To pass a fulfilled value alongside the promise returned by the then method whether from onFulfilled or onRejected, return a value from them.
+
+E.g 1:
+const testPromise = (num) => new Promise ((resolve, reject) => {
+	if (num < 2) {
+		reject('Number less than 2')
+	} else {
+		resolve(num * 2)
+	}
+})
+
+/* To pass parameters to a promise, you wrap the promise inside a function that returns it. The promise can now access the variables from the wrapper function (because, closures). */
+
+testPromise(1).then((value) => {
+	console.log(value)
+}, (error) => {
+	console.log(error)
+})
+//In the example above, the second function (onRejected) will catch the error message from the resolve function "Number less than 2" and print it in the console.
+
+testPromise(1).then((value) => {
+	console.log(value)
+	return value
+})
+//In the example above, an uncaught error is printed to the console.
+
+---------------
+.catch()
+When a promise is rejected, the catch method is executed. It is also executed when an error is thrown in the promise. Why? When you throw an error within a promise, it ignores the defined reject method (if one exists) and returns a promise with the error. This promise is then caught by the catch method.
+
+The catch method doesn't have access to the value the promise it is chained to resolves to; however it returns  a promise on execution. It can also return a value from the function it takes as argument with the promise.
+
+E.g:
+
+const promiseTest = (param) => new Promise ((resolve, reject) => {
+  if (param < 2) {
+    throw Error('Less than 2')
+  }
+})
+
+promiseTest(1).catch((e) => {
+  console.log(e)
+})
+
+---------------
+.finally()
+
+Unlike then() and catch(), the finally method is executed once a promise is settled; whether it is resolved or rejected. This provides a way to avoid duplicating code in both the then() and catch() handlers.
+
+Like catch(), finally() doesn't have access to the value the promise it is chained to resolves to but it can also return a promise (with a value if required).
+
+E.g:
+
+const promiseTest = (param) => new Promise ((resolve, reject) => {
+  if (param < 2) {
+    throw Error('Less than 2')
+  } else {
+  	resolve (param * 2)
+  }
+})
+
+promiseTest(1).then((value) => {
+	console.log('Result: ' + value)
+}).catch((e) => {
+  console.log(e)
+}).finally(()=> {
+	console.log('E don finish. Final Destination!')
+})
+
+promiseTest(2).then((value) => {
+	console.log('Result: ' + value)
+}).catch((e) => {
+  console.log(e)
+}).finally(()=> {
+	console.log('E don finish. Final Destination!')
+})
+
+While catch is executed in the first test and then is executed in the second, finally is executed in both.
+---------------
+Promise Chaining:
+
+The then(), catch() and finally() methods all return a promise. This allows us to be able to chain any of them to the next as many times as we want to as they are methods of the Promise prototype object. 
+
+However, it is important to keep in mind that to pass a value from one chain to the next, it needs to returned the value from it's argument function.
+
+E.g 1:
+promiseWrapper.then((value) => {
+	return value * 2;
+}).then((value) => {
+	return Promise.reject('Oh No!')
+}).catch((error) => {
+	console.log('Error Is: ' + error);
+}).then(() => {
+	console.log('Chain still continues after a catch');
+}).catch((error) => {
+	console.log('Error Is: ' + error);
+})
+
+E.g 2:
+const squarer = (value) => new Promise ((resolve, reject) => {
+	if (typeof value === 'number') {
+		resolve (value * value)	
+	} else {
+		reject('Multiplier failed: Invalid Number')
+	}
+})
+
+squarer(2).then((value) => {
+	return squarer(value)
+}). then((value) => {
+	return squarer(value)
+}).then((value) => {
+	return squarer(value)
+}).then((value) => {
+	console.log('Final Result is: ' + value)
+}).catch((error) => {
+	console.log(error)
+})
+
+/* The following function calls the promise initializer 4 times. The first promise calls is initialized on '2', the second and third return a new promise passing the result of the last call as variable while the final call prints the result. An error catcher is then added at the end of the chain. It'll catch the error at any point of the promise calls that the reject is returned. */
+
+Error Throwing:
+To return an error from any one of the chained then methods, we use the throw keyword. This executes the catch method with the error thrown.
+
+In the example below, after the first promise is completed, an error is thrown in the second promise and the third promise is ignored.
+
+E.g:
+promiseWrapper.then(function (value) {
+	return promiseWrapper(value);
+}).then(function (value) {
+	throw new Error ('Unexpected Error');
+}).then(function(value) {
+	console.log('Final Result is: ' + value);
+}).catch(function(error) {
+	console.log('Error Is: ' + error);
+})
+
+E.g 2:
+const squarer = (value) => new Promise ((resolve, reject) => {
+	if (typeof value === 'number') {
+		resolve (value * value)	
+	} else {
+		reject('Multiplier failed: Invalid Parameter Sent')
+	}
+})
+
+squarer(2).then((value) => {
+	return squarer(value)
+}). then((value) => {
+	return squarer(value)
+}).then((value) => {
+	if (value > 200) {
+		throw new Error ('Maximum Limit Reached');
+	} else {
+		return squarer(value)
+	}
+}).then((value) => {
+	console.log('Final Result is: ' + value)
+}).catch((error) => {
+	console.log(error)
+})
+
+------------------------------------------------------------------------
+THE FETCH API
+
+The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline, such as requests and responses. It also provides a global fetch() method that provides an easy, logical way to fetch resources asynchronously across the network. Unlike the XMLHttpRequest method, we don't have to worry about the ready state of the http request as the fetch method uses promises and won't return until the request is complete after which it executes the attached then/catch method.
+
+Things to note:
+- The fetch API never throws an error automatically except the requests fails due to a network failure hence it is recommended to check your response status and throw an error when it's not successful yourself.
+- To check the status of a fetch request, we use the .status property of the response.
+-  The response object returned after a successful fetch request is just an HTTP response of course, not the actual JSON. To extract the JSON content from the response, we use the json() method. The json() method returns a promise; so to use it properly, we return it and chain a then method after the fetch call to retrieve the data.
+
+A Fetch Request Backbone Example:
+
+fetch(urlHere, {}).then((response) => {
+	if (response.status === 200) {
+		return response.json();
+	} else {
+		throw new Error('Error Fetching Data');
+	}
+}).then((data) => {
+	console.log('Fetch Data: ' + data);
+}).catch((error) => {
+	//print error here
+})
+
+------------------------------------------------------------------------
+ASYNC AWAIT
+
+The async function declaration defines an asynchronous function, which returns an AsyncFunction object. An asynchronous function is a function which operates asynchronously and returns its result as a Promise when completed.
+
+The async keyword:
+This can be used to turn a function into an aysnchronous function. It's as simple as placing the keyword async in front of a function declaration.
+
+E.g:
+const aTest = async function () {
+	return 'Tester';
+}
+
+The code above declares an asynchronous function aTest which runs asynchronously in the background and returns a promise with value 'Tester'. The function can be called like:
+
+aTest().then((value) => {
+	console.log(value);
+}).catch((error) => {
+  console.log(error);
+});
+
+The code above outputs the value 'Tester' to the console.
+
+The await operator:
+The await operator is used to wait for a Promise. It can only be used inside an async function. It causes the async function execution to wait for a promise until it resumes execution. When resumed, the value of the await expression is that of the fulfilled Promise; but if the Promise is rejected, it throws the rejected value.
+
+P.S: You don't need to add then() to the await expression because the value returned is the "fulfilled promise".
+
+const returnNameLate = () => {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			resolve('Bashy') ;
+		}, 2000)
+	})
+}
+
+const aTest = async () => {
+	let value = await returnNameLate();
+	console.log(value);
+}
+
+aTest().catch((error) => {
+	console.log('Error: ' + error);
+})
+------------------------------------------------------------------------
+return false - unique usage
+
+You can use return false to exit a function on an edge condition instead of nesting code in an if/else statement.
+Once you return false, all code underneath within that scope is ignored.
+
+------------------------------------------------------------------------
+Object quick Syntax Improvement
+
+When the property and value of an object have identical names, JS allows you to shorten that. E.g:
+
+const name = 'Babatunde'
+const age = 28
+
+//Instead of:
+let user = {
+  name: name,
+  age: age,
+  location: 'Lagos'
+}
+
+//You can do:
+let user = {
+  name,
+  age,
+  location: 'Lagos'
+}
+------------------------------------------------------------------------
+Object Destructuring Assignment:
+
+Object destructuring makes it easier to unpack properties from an object into  variables.
+
+Example:
+
+const product = {
+  label: 'Red Notebook',
+  price: 3,
+  stock: 201
+}
+
+//Instead of:
+let label = product.label
+let stock = product.stock
+let price = product.price
+
+//You can do:
+let { label, stock, price} = product
+-------------------------
+Advanced Example:
+
+let {
+  label: productLabel,
+  stock,
+  rating = 5
+} = product
+
+productLabel takes the value of the label property in the product object.
+stock takes the value of stock in the product object.
+While rating is assigned its own value '5'. Please note that if the product object had a property namedrating with a defined value, it would be assigned instead instead of 5.
+-------------------------
+More Advanced Example:
+
+We can use Object destructuring  to destructure arguments when receiving an object as argument. E.g:
+
+let book = {
+	title: 'Get Rich Quick',
+	price: 500,
+	isbn: 1234-5678
+}
+
+One can destructure the object inside the function like this:
+
+const print = (book) => {
+	let {title, price} = book
+	console.log(title)
+	console.log(price)
+}
+
+Or destructure it right from the argument list:
+
+const print = ({title, price}) => {
+	console.log(title)
+	console.log(price)
+}
+
+------------------------------------------------------------------------
+9ff2ea1c1882e7
+//https://ipinfo.io/json?token=9ff2ea1c1882e7

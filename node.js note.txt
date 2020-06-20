@@ -1,0 +1,743 @@
+HOW TO INSTALL NODE.JS
+- Visit nodejs.org
+- Download
+- Install
+- Confirm Installation by running "node-v" in command prompt.
+
+UPDATING NODE.JS:
+- Install Chocolatey
+- Install NVM
+- Update Node
+https://docs.antora.org/antora/2.3/install/windows-requirements/
+https://phoenixnap.com/kb/update-node-js-version
+*Use runas instead of sudo on Windows
+
+--------------------------------------------------------------------------------------------------------------------
+
+What is Node.js?
+
+Node.js is a JavaScript runtime built on Chrome's V8 JavaScript Engine. Node.js uses an event-driven, asynchronous non-blocking I/O model. Simply put, Node.js is a platform that executes server-side JavaScript programs that can communicate with I/O sources like networks and file systems
+
+More:
+https://www.freecodecamp.org/news/node-js-what-when-where-why-how-ab8424886e2/
+
+--------------------------------------------------------------------------------------------------------------------
+Modules
+
+Module in Node.js is a simple or complex functionality organized in single or multiple JavaScript files which can be reused throughout the Node.js application.
+Each module in Node.js has its own context, so it cannot interfere with other modules or pollute global scope. Also, each module can be placed in a separate .js file under a separate folder.
+
+Node.js includes three types of modules:
+
+- Core (Built-In) Modules:
+	They are built-in and include basic functionalities of node.js. These core modules are compiled into its binary distribution and load automatically when Node.js process starts. However, you first need to import it using the require() function.
+
+- Local Modules:
+	Local modules are modules created locally in your Node.js application. They are mainly used for specific projects and include different functionalities of your application locally available in separate files or folders within the project folder.
+
+- Third Party Modules:
+	The third party module can be downloaded by npm (Node Package Manager). These type of modules are developed by others for us to that in our project. 3rd party modules can be install inside the project folder or globally.
+
+More: https://www.fullstacktutorials.com/tutorials/nodejs/nodejs-core-modules.html
+--------------------------------------------------------------------------------------------------------------------
+npm
+
+npm is a package manager for the JavaScript programming language. It is the default package manager for the JavaScript runtime environment Node.js. It consists of a command line client, also called npm, and an online database of public and paid-for private packages, called the npm registry. 
+----------
+To start using npm in a project, we need to initialize it in the project directory.
+How? By running a simple command:
+
+npm init
+
+npm will ask for information to populate various fields in the Configuration file.
+
+To skip the questionaire and answer yes to all questions, use:
+
+npm init -y
+
+Doing this creates a package.json file in the project directory with config information.
+----------
+P.S:
+
+package.json
+Lists out all the project dependencies and their configurations
+
+package-lock.json
+Lists out the exact version of all of the dependencies in the project
+
+.gitignore
+Lists out the different files and folders that git should ignore when tracking a project and monitoring changes
+
+npm start
+“npm start” is a run command from your scripts located in your package.json file. Usually “npm start” runs your server file. If you don't have a “start” script in your package. json file this command will run the default “node server.
+
+Ctrl + C
+To stop the application running in the terminal
+----------
+
+Installing an npm module
+
+Code format:
+npm install modulename@versionNumber
+
+We can also use i as a shorthand for install.
+
+Example:
+npm i validator@10.8.0
+
+We can also install without adding @versionNumber, this way npm automatically installs the latest version.
+E.g: 
+npm i validator
+
+When we install an npm module, Node automatically creates a node_modules directory and adds the module to it.
+To use an npm module, we turn to its documentation.
+----------
+npm install flags
+
+Adding certain flags to npm install can change the behaviour of the installer.
+
+E.g:
+
+-g
+Installs a module globally and not into the project directory. The module is downloaded and installed on your PC's operating system as against in your local project. When this is used, the package is not added to your dependencies.
+--------------------------------------------------------------------------------------------------------------------
+
+require()
+
+Used to load modules or other files. The require module is available on the global scope — so; no need to require('require').
+Node Modules that are not available on the global scope by default have to be required.
+
+How to require a Node module:
+----------
+1. Without specifying a path
+const config = require('find-me');
+
+When we require a 'find-me' module, without specifying a path:
+
+- Node checks if "find-me" is a Node.js Core Module and loads it up.
+
+- If it's not, Node will look for find-me.js in all the paths specified by module.paths — in order. The paths list is basically a list of node_modules directories under every directory from the current directory upwards to the root directory. 
+
+- In a case where multiple directories within a project have the a find-me.js file in their node_module directory, node will prioritise by loading the file in the directory closest to the current directory. It basically checks the current directory first, then continues upwards.
+
+- Asides checking for a find-me.js file, Node will also check for a find-me directory. Why? Modules can also be folders and not files. In the same manner it checks for a find-me.js file, it looks for a 'find-me' folder in the node_modules directories. When it finds the closest one; by default, it uses the folder's index.js file. However, we can control what file name to start with under the folder using the main property in package.json within that folder.
+
+If Node can’t find a matching file or folder, it will throw a “cannot find module error.”
+
+----------
+2. Specifying a path:
+const config = require('/path/to/file');
+
+Besides resolving modules from within the node_modules directories, we can also place the module anywhere we want and require it with either relative paths (./ and ../) or with absolute paths starting with /. The require statement simply fetches the file required from the path specified.
+
+While specifying a path, it is not compulsory to add the .js extension at the end of the path. When we do this, node checks if the path matches a js file or directory and loads the module accordingly.
+----------
+
+When using the require statement, it is important to keep in mind that each module has a different scope. The variables in a module have a separate scope from the variables in the file they are loaded from. If a variable is defined in a module and is called directly from the source file, we will get an error. To access variables from a module, we need to explicitly export what we want the module to share with other files. 
+------------------------------------------------------------------
+Exporting from a module
+
+Since all modules have a different scope, we use the export property to specify what they'd like to share with other files or modules that may require them. We can export anything. Variables, functions etc. The exports property can store one variable or an object (when we need to export multiple things).
+
+E.g:
+
+module.exports = getNotes
+
+OR
+
+module.exports = {
+  getNotes: getNotes,
+  addNote: addNote
+}
+
+------------------------------------------------------------------
+Ctrl+C - to terminate running applications (batch job) in command prompt
+------------------------------------------------------------------
+process.argv
+
+The process.argv property is an inbuilt application programming interface of the process module in node which is used to get the arguments passed to the node.js process when run in the command line. It returns an array containing the arguments passed to the process when run in the command line. The first element is the process execution path and the second element is the path for the js file.
+
+It can be used to pass commands to the js file as commands are also split into the array. They can be accessed from the third element, argv[2] upwards.
+
+E.g:
+
+node app.js add 2 3
+
+argv[0] - /path/to/node.exe
+argv[1] -  /path/to/app.js
+argv[2] - add
+argv[3] - 2
+argv[4] - 3
+
+------------------------------------------------------------------
+Yargs
+
+Yargs is a node.js library built to parse complex arguments from the command line in a much more refined manner.
+
+To install: npm install yargs
+------
+With yargs, we can access more complex arguments by using options to pass strings etc.
+
+E.g:
+
+node note.js --title="Things to buy"
+
+can be accessed like this:
+
+yargs.argv['title']
+------
+Options are additional pieces of information passed along with the command.
+By default, yargs comes with 2 options: --help and --version
+While 1.0.0 is the default version number, it can be customized.
+
+E.g:
+
+yargs.version('1.1.1')
+
+------
+Yargs allows you to create custom commands and set up options for them using the builder property as shown below:
+
+yargs.command({
+  command: 'add',
+  describe: 'Add New Student',
+  builder: {
+    name: {
+      describe: 'Name',
+      demandOption: true,
+      type: 'string'
+    },
+    age: {
+      describe: 'Age',
+      demandOption: true,
+      type: 'number'
+    }
+  },
+  handler: function (argv) {
+    console.log('Name: ' + argv.name)
+    console.log('Age: ' + argv.age)
+  }
+})
+------------------------------------------------------------------
+fs - File System Module in Node. Will be used a lot when interacting with files. 
+To use in a js file, it needs to be required first.  (like all node modules)
+
+const fs = require('fs')
+
+fs.writeFileSync('filename', data) //usually a string
+fs.readFileSync('filename') //reads a file in bytes
+fs.readFileSync('filename').toString() //reads a file and converts the data to string
+fs.appendFileSync('filename', data) //appends to end of file.
+--------------------------------------------------------------------------------------------------------------------
+Node Debugger
+
+Node built-in debugging tool integrates which integrates with V8 and the Chrome browser.
+
+How To Use:
+- Like console.log(), we need to add the debugger statement at a specific point in the application. What Statement?
+	debugger
+	Yes. It's that simple.
+- After adding debugger and running our code in node; by default nothing happens.
+- To start debugging, we add inspect after node to run the file. E.g: node inspect app.js
+	Node let's us know that the debugger is running and we can now head on to Chrome to actually inspect the application.
+- Open chrome and visit this url:
+	chrome://inspect
+- Under Remote Target, we'll find a link to your app. (click on inspect)
+- When debugging in Chrome, it's recommended to add the folder to workspace.
+	Under "Sources > Filesystem", Click on the plus icon to add the folder. (It'll ask for permission, accept)
+- When we click on the play button, the app runs and pauses at any point we add the statement. 
+	There we can go through the Scope and Call Stack to see the scope of the application at that point.
+- If we class the inspect tab, and want to go back to debugging again, we can run "restart" in the terminal while the debug application (debug>) is running.
+- To end debugging, Ctrl + C - twice.
+
+--------------------------------------------------------------------------------------------------------------------
+Asynchronous Node.js
+
+Making Http Requests
+-----------
+The request package used to be the favourite package for making http requests (https://www.npmjs.com/package/request) but it has been depecrated and is no longer being managed by the author. The next best thing is postman-request package which keeps request alive and uses similar terminologies: https://www.npmjs.com/package/postman-request
+
+Using postman-request
+-----------
+- Install it in your project:
+	npm i postman-request
+- Include it in your app:
+	const request = require('postman-request')
+- Make the request:
+	The request method takes 2 arguments, an object containing request details like the url and a callback function with error and response as arguments.
+	
+	const url = 'http://api.weatherstack.com/current?access_key=3f1f748c33aa52ad4bf627f16250e1d5&query=New%20York'
+	request({
+	  url: url
+	}, (error, response) => {
+		if (error) {
+			console.log('Unable to connect to weather service.')
+		} else {
+			const data = JSON.parse(response.body)
+			console.log(data)
+		}
+	})
+
+------------------------------------------------------------------------
+Making HTTP Requests in Node without a Library
+
+Simply put: It's not fun.
+
+const http = require('http')
+const url = 'http://api.weatherstack.com/current?access_key=3f1f748c33aa52ad4bf627f16250e1d5&query=6.5,3.4&units=m'
+
+const request = http.request(url, (response) => {
+  let data = ''
+
+  response.on('data', (chunk) => {
+    data = data + chunk.toString()
+  })
+
+  response.on('end', () => {
+    const body = JSON.parse(data)
+    console.log(body)
+  })
+
+})
+
+request.on('error', (error) => {
+  console.log('Error: ', error)
+})
+
+request.end()
+--------------------------------------------------------------------------------------------------------------------
+INTRODUCTION TO EXPRESS
+
+Express is a Fast, unopinionated, minimalist web framework for Node.js
+
+To install:
+npm install express --save
+
+---------------
+Routing:
+
+Routing refers to how an application’s endpoints (URIs) respond to client requests. You define routing using methods of the Express app object that correspond to HTTP methods; for example, app.get() to handle GET requests and app.post to handle POST requests. You can also use app.all() to handle all HTTP methods and app.use() to specify middleware as the callback function.
+
+These routing methods specify a callback function (sometimes called “handler functions”) called when the application receives a request to the specified route (endpoint) and HTTP method.
+
+A route method is derived from one of the HTTP methods, and is attached to an instance of the express class.
+
+The following code is an example of the route defined for the GET method to the root of the app.
+
+// GET method route
+app.get('/', function (req, res) {
+  res.send('GET request to the homepage')
+})
+
+---------------
+Setting Up Example:
+
+In src/app.js
+---
+const express = require('express')
+const app = express()
+
+//Simple route method to set up the primary endpoint  for the home page
+app.get('/', (req, res) => {
+  res.send('Hello express!')
+}) //req - request, rep - response
+
+//Simple route method to set up to set up a /help endpoint
+app.get('/help', (req,res) => {
+	res.send('Help Page!')	
+})
+
+//Sets up the listening port for the app in the browser.
+app.listen(3000, () => {
+  console.log('Server is up on port 3000.')
+})
+---------------
+Now run in console:
+node src/app.js
+
+To keep server running while making changes:
+nodemon src/app.js
+
+To allow nodemon to monitor extensions asides the default (js) and auto-restart on changes, we add the e flag (extensions)
+nodemon src/app.js -e js,hbs
+---------------
+In the setup example above, we serve direct text to the browser when these endpoints are accessed in the Web Server. But we can do a lot more like render html, serve images, other files etc. It's something like configuring htaccess reWRITES on an Apache Web Server.
+---
+To serve html code:
+app.get('/', (req, res) => {
+	res.send('<h1>Welcome!</h1><p>You are the right place Chief!</p>')
+})
+Express auto-detects that we're sending html code and sends back an html response.
+---
+To serve an object using json
+app.get('/help', (req, res) => {
+  res.send({
+    name: 'Help Page',
+    data: 'Sample Information'
+  })
+})
+Express auto-detects that we're sending an object and automatically converts it to json. Please note that this will also work for arrays and arrays of objects. E.g:
+
+app.get('/test', (req, res) => {
+  res.send(['Help Page', 'Home Page'])
+})
+
+OR
+
+app.get('/all', (req, res) => {
+  res.send([{
+    name: 'Help Page',
+    data: 'Help Information'
+  }, {
+    name: 'Home Page',
+    data: 'Welcome Information'
+  }])
+})
+---------------
+Working with files and directories:
+
+Let's assume that we are dealing with project whose folder is set up like this:
+src/
+	app.js
+	**other modules and scripts**
+public/
+	index.html
+	about.html
+		images/
+			app.png
+		css/
+			styles.css
+	**other files that will be used in the public view**
+
+Now, we want to serve up the public folder when this project is launched from app.js in the src folder.
+To do this, we use the path built-in node module as it allows us to work with file/folder paths better.
+
+E.g:
+
+const path = require('path')
+const express = require('express')
+
+const app = express()
+const publicDirPath = path.join(__dirname, '../public')
+
+app.use(express.static(publicDirPath))
+
+app.listen(3000, () => {
+  console.log('Server is up on port 3000.')
+})
+---
+P.S: __dirname is a keyword in node that contains the path of the currently executing file. */
+
+This will serve up the public directory on the home endpoint with the index.html file as default.
+Also, all other files in that public folder will be accessible from the browser.
+
+
+------------------------------------------------------------------
+Template/View Engine for NodeJs/Express
+
+hbs - https://www.npmjs.com/package/hbs
+hbs is an express.js vie engine for handlebars.js
+(We use hbs instead of handlebars.js because  handlebars.js doesn't support express)
+
+---------------
+To install:
+npm i hbs
+---------------
+Setting up:
+
+All we need to do is set the view engine:
+app.set('view engine', 'hbs')
+just before declaring the static publicDirPath
+
+Full Example:
+
+const path = require('path')
+const express = require('express')
+
+const app = express()
+const publicDirPath = path.join(__dirname, '../public')
+
+app.set('view engine', 'hbs') //Addition
+app.use(express.static(publicDirPath))
+
+app.listen(3000, () => {
+  console.log('Server is up on port 3000.')
+})
+
+---------------
+Creating Views:
+
+Now that we've setup our view engine, we need to create views.
+To do this, we create a views folder in our project base dir.
+
+For the template files, we use the .hbs extension instead of .html.
+E.g:
+
+views/
+	index.hbs
+	about.hbs
+---------------
+Serving up Template Files:
+
+To serve up template files instead of static files, we need to set up endpoints in the app.
+For example setting up a endpoint for the homepage file index.hbs:
+
+app.get('/', (req, res) => {
+	res.render('index', {
+		title: 'Home Page',
+		name: 'Bashy'
+	})
+})
+
+The code above renders the index.hbs file for the endpoint '/' which is the home page.
+
+The res.render() method takes 2 arguments:
+- The first one is the filename of the template file (no need to add the .hbs extension).
+- The second one is an object containing all the values we want to use in the template file.
+
+Now, to access the values from the object in the template file (index.hbs), it is as easy as referencing the object property and enclosing it in 2 curly braces.
+This way we can pass dynamic values to the template files.
+
+Full Example:
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="text/javascript" src="js/app.js"></script>
+</head>
+
+<body>
+  <h1>{{title}}</h1>
+  <p>You are in the right place {{name}}!</p>
+</body>
+</html>
+---------------
+Customizing the Views Directory:
+
+If we renamed the views folder to template for example, the app would fail as Express by default looks up the views folder for our template files.
+How do we tell Express the folder is "templates" and not "views"? By setting the views path: app.set('views', 'directory path here').
+
+Full Example:
+
+const path = require('path')
+const express = require('express')
+
+const app = express()
+const publicDirPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates')
+
+app.set('view engine', 'hbs') //Addition
+app.set('views', viewsPath)
+app.use(express.static(publicDirPath))
+
+app.listen(3000, () => {
+  console.log('Server is up on port 3000.')
+})
+---------------
+Advanced Templating (Setting up Partials)
+
+When walking with templates, we'll discover that a lot of the code across the template files will be reused.
+To keep code DRY and make managing the template files easier, we use partials.
+Partials are incomplete template files that can be reused across multiple views.
+
+---
+
+Folder Structure:
+
+public/
+	static files here
+src/
+	app.js
+	other js files here
+templates/
+	partials/
+		header.hbs
+	views/
+		index.hbs
+		about.hbs
+
+---
+
+Next, we need to specify the partials path alongside other hbs configuration in app.js. E.g:
+
+const partialsPath = path.join(__dirname, '../templates/partials')
+hbs.registerPartials(partialsPath)
+
+Full Example (app.js):
+
+
+const path = require('path')
+const express = require('express')
+const hbs = require('hbs')
+
+const app = express()
+const publicDirPath = path.join(__dirname, '../public')
+const viewsPath = path.join(__dirname, '../templates/views')
+const partialsPath = path.join(__dirname, '../templates/partials')
+
+//Setup handlebars
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
+hbs.registerPartials(partialsPath)
+
+//Static directory to serve
+app.use(express.static(publicDirPath))
+
+app.get('/', (req, res) => {
+  res.render('index', {
+    title: 'Weather App',
+    name: 'Bashy'
+  })
+})
+
+app.get('/about', (req, res) => {
+  res.render('about', {
+    title: 'About Us',
+    name: 'Bashy'
+  })
+})
+
+app.listen(3000, () => {
+  console.log('Server is up on port 3000.')
+})
+
+---
+
+How to use partials:
+
+Unlike full view templates, a partial file may just contain a certain number of html elements.
+
+E.g (header.hbs):
+<h1>{{title}}</h1>
+<div>
+	<a href="/">Home</a>
+	<a href="/about">About</a>
+</div>
+
+The amazing thing about partials is that we can access values passed to the main template files directly from the partial the same way we'd access them in template files.
+In the example above, we are accessing the title variable passed to index and about in app.js
+
+This partial can then be included in index.hbs and about.hbs wherever we want the partial file to be loaded. It is included similarly to how we include variables:
+{{>header}}
+
+Full Example (index.hbs):
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script type="text/javascript" src="js/app.js"></script>
+</head>
+
+<body>
+  {{>header}}
+  <p>Welcome to our website.</p>
+</body>
+
+</html>
+
+In more advanced examples, we can use partials to load page resources (css,js etc); or display: top-menus, footers, sidebars etc.
+
+---------------
+Setting up 404 error page:
+
+When an endpoint that wasn't setup in our app is visited, we are shown an error page with a Cannot GET message.
+However, we can setup a custom 404 page with a UI that matches the rest of our application.
+
+To do this, we set up the 404 endpoint last after defining all other endpoints using the wildcard '*' which means 'match everything that hasn't been matched so far'.
+
+app.get('*', () => {
+  res.render('404', {
+    title: 'Page not found',
+    name: 'Bashy',
+  })
+})
+
+The example above will render a custom 404.hbs page instead of the default error page.
+
+P.S: The wildcard must be defined after all other endpoints else it will overwrite any endpoint it appears before and serve up the 404 page instead.
+
+We can also use the wild card to set up more advanced 404 messages e.g:
+
+app.get('/help/*', () => {
+  res.render('404', {
+    title: 'Help article not found.',
+    name: 'Bashy',
+  })
+})
+
+In the example above, when we access a page not found under the 'help/' uri, the 404 page is displayed but with a more specific title.
+--------------------------------------------------------------------------------------------------------------------
+ACCESSING API FROM THE BROWSER
+
+To make an external api call from endpoints in our app from  the browser, it's simple; we create an endpoint for that api, set up a query string (or strings) make the request from the backend and then send back the result.
+
+app.get('/location', (req, res) => {
+	const address = req.query.address
+	//We return an error object to let the browser know that we need the location query sent.
+	if (!address) {
+	  return res.send({
+	    error: 'Please provide address.'
+	  })
+	}
+
+	//Make the request and return data
+	fakeRequestCall(address, (error, data) => {
+		if (error) {
+	      return res.send({
+	      	error: error
+	      })
+	    } else {
+		    res.send({
+		    	address: address,
+		        data: data
+	        })
+	    }
+	})
+})
+
+We can then access the endpoint from the browser using the Fetch API
+-------------------------------
+
+THE FETCH API
+
+The Fetch API is a browser-only API that provides a JavaScript interface for making http requests.
+
+fetch(urlHere, {}).then((response) => {
+	if (response.status === 200) {
+		return response.json();
+	} else {
+		throw new Error('Error Fetching Data');
+	}
+}).then((data) => {
+	console.log('Fetch Data: ' + data);
+}).catch((error) => {
+	//print error here
+})
+
+-------------------------------
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+Please find an updated invoice attached.
+Here's to looking forward to another payment soon so we can continue with Yabalytics as planned.
+Best Regards,
+
+it is better to abstract your requests to a separate module. In the example above, we make the requests via a 'fakeRequestCall' method and sends data back to the browser depending on the result returned.
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------
+RANDOMS
+
+Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download
+Good resource that talks about Introduction to Node, testing, hosting etc. - https://medium.com/javascript-scene/introduction-to-node-express-90c431f9e6fd

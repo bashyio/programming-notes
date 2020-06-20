@@ -1,0 +1,872 @@
+What is React?
+
+React is a JavaScript library for building user interfaces. It lets you compose complex UIs from small and isolated pieces of code called “components”.
+
+React can work by itself but it can also work with a tremendous variety of other libraries, packages, servers and databases.
+
+Generally, ReactJS  is split into 2 seperate libraries.
+The base 'React' library has the core tools intended to be shared by React on Different Platforms (e.g. React Native for Mobile Apps)
+while The 'ReactDOM' library is DOM-Specific. It's primary function is to render Components in the DOM.
+
+----------------------------------------------------------
+
+Create React App
+
+Installing Global Package:
+npm install -g create-react-app
+
+Generating a Project:
+npx create-react-app myapp
+//This Creates a new React App in Directory: myapp
+
+Remove Global Package:
+npm uninstall -g create-react-app
+
+-g means "globally". When installed globally, the installed package can be "initialized" anywhere afterwards.
+
+Alternative Command:
+npx create-react-app myapp
+//Using npx doesn't require an initial declaration of npm as it will check whether the "command or package" exists in a path first and then execute it if that is the case. If it wasn't previously installed; it 
+
+npm install webpack --save-dev
+npm install webpack
+This command is used to install dependencies for your project in node.
+--save-dev tells npm that webpack, the dependency being installed above is "development only" i.e it won't be required in a production environment.
+
+--save tells npm the dependency will be required in both development and production environment.
+
+----------------------------------------------------------
+
+React uses JSX.
+JSX is an XML/HTML-like syntax used by React that extends ECMAScript(ES) so that XML/HTML-like text can co-exist with JavaScript/React code. The syntax is intended to be used by preprocessors (i.e. transpilers like Babel) to transform HTML-like text found in JavaScript files into standard JavaScript objects that a JavaScript Engine will parse.
+
+Major Differences between HTML and JSX
+
+1. JSX can easily reference JavaScript Variables. All you have to do is enclose the variable name in curly braces. E.g:
+<p>{finalValue}</p>
+
+This also applies to function. If a function returns a value that is needed in JSX code, the function can be called directly.
+<p>{finalResult()}</p>
+
+When trying to render text, only strings, numbers and arrays are recommended to be used like this. When the value is an array, JSX will print the concatenated value of the array elements. But when it's an object, it throws an error.
+
+However, we can access properties of an object using dotNation. E.g:
+<p>{collection.value}</p>
+
+
+2. Adding Custom Styling to an element uses different syntax. E.g:
+<p style="color: red; line-height: 2em"></p>
+becomes:
+<p style={{color:'red', lineHeight:'2em'}}></p>
+
+Why?
+	- The outer curly braces indicates that we want to reference a JavaScript variable inside JSX.
+	- The inner curly braces indicates a javascript object.
+	- The css code is written like a javascript object and the css key names are changed from kebab-case to camelCase.
+
+An alternative way of using styles in JSX is to store the style object in a variable, then insert the variable in JSX. E.g:
+const pStyle = {color:'red', lineHeight:'2em'}
+<p style={pStyle}></p>
+
+3. Instead of using class attribute, we use className in JSX. E.g:
+<label class="label">
+becomes:
+<label className="label">
+
+The reason why we use className instead of class in JSX is to avoid collisions with JavaScript Classes which use the 'class' keyword for declaration.
+
+----------------------------------------------------------
+
+Import Keyword
+
+node.js doesn't currently support import-export statements by default (still in experimental stages) and requires a module bundler like webpack.
+
+Breakdown of the Import Statement:
+E.G:
+import React from 'react'
+
+import - We want to get code from some other file or dependency.
+React - The variable we want to assign this import to (Can be any name)
+from - We are about to specify the name of library or file we're importing from
+'react' - The name of the dependency or path to the file we are importing.
+
+When a dependency is listed, the server will go through the node_modules  directly and will try to find a folder named react.
+
+To import using path, the exact path of the module folder relative to the file calling the import statement is used. E.G:
+
+import MyModule from './my_module.js';
+
+----------------------------------------------------------
+
+PERSONAL EXERCISE (Maybe write about this when you're a pro)
+
+Why do we extend from React.Component? Is it a subclass within the React Class? Is that even possible? This code aims to recreate this syntax behaviour in an attempt to further understand what happens behind the scene.
+
+class Baba {
+	constructor() {
+		this.origin = "A Being";
+	}
+}
+
+Baba.Component = class Component extends Baba {
+		constructor() {
+			super();
+			this.identity = "Baba"
+		}
+	}
+
+class Omo extends Baba.Component {
+	constructor() {
+		super()
+		this.identity += '\'s Child!'
+	}
+	identify() {
+		console.log('I am ' + this.identity);
+	}
+}
+
+babatunde = new Omo()
+console.log(babatunde.origin)
+babatunde.identify()
+
+As tested in the example above; the React.Component class is merely a subclass of an existing class that was namespaced to be identified as a React.Component. It's likely that Component is a subclass of the React class but without looking at the origin code there is no way to say for sure. It might as well be a stand-alone class that was just namespaced to be identified as "React.Component".
+
+----------------------------------------------------------
+React Components (write about this when you're a pro)
+
+Components are the building blocks of any React app and a typical React app will have many of these. Simply put, a component is a JavaScript class or function that optionally accepts inputs i.e. properties(props) and returns a React element that describes how a section of the UI (User Interface) should appear. We can also use components to create an event handler. Event handlers are used to detect user interaction and respond to it.
+
+React Components are named like Classes. Each new word is written in Title Case with no space or character btw.  E.g: CommentSection. TestComponent.
+
+Simple Example of a Function Based Component:
+
+const App = () => {
+	return <div>Hi there!</div>
+}
+
+Simple Example of a Class Based Component:
+
+class App extends React.Component {
+    render() {
+        return <div>Hi there!</div>
+    }
+}
+
+Generally speaking, we should use functional components when creating simple content with not much application logic behind but class components should be used when creating complex components. Example of such complex components are components that make server requests, use event listeners etc.
+----------------------------------------------------------
+Three Tenets of React Components
+
+1. Component Nesting:
+A component can be shown inside of another.
+
+2. Component Reusability
+React components should be designed for easy reusability throughout the application.
+
+3. Component Configuration
+Since components will be reused, they should be designed in a way that allows configuration on creation.
+----------------------------------------------------------
+
+Component Nesting
+
+Component Nesting is when we refer to one or more components inside other components.  When nesting components, we treat the child component like a JSX tag. E.g:
+
+const OuterComponent = () => {
+	return (
+		<div>
+			<InnerComponent />
+		</div>
+	)	
+}
+
+----------------------------------------------------------
+
+React's Props System (write about this when you're a pro)
+----------
+It's a system of passing data from a parent component to a child/nested component. The main goal of the prop system is customizing and configuring child components to allow for multiple reuse.
+
+When passing properties from parent to child in JSX, we structure it like HTML Attributes. E.g:
+
+<ChildComponent prop1="value"  prop2="value" />
+
+All the properties passed from the parent component are then received in the child component as one object and can be accessed in object notation. For functional components, the properties are received in the first argument defined in the function declaration or expression.
+
+The object is E.g:
+
+const ChildComponent = (props) => {
+	return (
+		<p>{props.prop1}</p>
+		<p>{props.prop2}</p>
+	)
+}
+
+Full Example:
+
+const StudentList = () => {
+	return (
+		<p>Student List:	</p>
+		<ul>
+			<Student name="Tobi" age="19" />
+			<Student name="Segun" age="40" />
+			<Student name="Femi" age="16" />
+		</ul>
+	)
+}
+
+const Student = (props) => {
+	return (
+		<li>My name is {props.name} and I am {props.age} years old.</li>
+	)
+}
+
+Passing props in Class Components:
+----------
+When an instance of a class component is declared, the property props is defined and can be accessed in any method within the component. E.g:
+
+class Student extends React.Component {
+	render () {
+		return (
+			<li>My name is {this.props.name} and I am {this.props.age} years old.</li>
+		)
+	}
+}
+
+Passing a Component to Another Component:
+----------
+Asides passing data in the form of "HTML-like Attributes" to a React Component in JSX, we can also pass a component to another component.
+
+We basically insert the component that is to be passed like an "HTML Child Element". The component passed is then accessed in the parent component as props.children.
+
+Example:
+
+const App = () => {
+	return (
+		<PopUp title="Student Data">
+			<Student name="Segun" sClass="JS3A">
+		</PopUp>
+	)
+}
+
+const PopUp = (props) => {
+	return (
+		<div className="popup">
+			<p>Title: {props.title}</p>
+			<div>
+				{props.children}
+			</div>
+		</div>
+	)
+}
+
+const Student = (props) => {
+	return (
+		<p>Name: {props.name}</p>
+		<p>Class: {props.sClass}</p>
+	)
+}
+
+<div className="popup">
+	<p>Title: Student Data</p>
+	<div>
+		<p>Name: Segun</p>
+		<p>Class: JS3A</p>
+	</div>
+</div>
+
+----------------------------------------------------------
+Components in Files
+
+React is all about re-using code, and it can be smart to insert some of your components in separate files.  To do that, we create a new file with a .js extension in our source folder. React Component Files are named like Classes. Each new word is written in Title Case with no space or character btw.  E.g: FileComponent.js, CommentSection.js
+
+The files are saved in the src folder.
+
+Sample Component file content:
+---------
+import React from 'react'
+import ReactDom from 'react-dom'
+
+const CommentSection = () => {
+	return (
+		<p>Comments:</p>
+		<div>List of Comments will appear here</div>
+	)
+}
+
+export default CommentSection;
+---------
+Note that the file must start by importing React (as before), and end with exporting the Component as default.
+----------------------------------------------------------
+Class-Based Components
+
+The major differences between Class Based Components and Function Based Components are:
+
+1. Easier Code Organization. With complex Function Based Components, we have to usually create helper functions to be used by the component. But with Class Based Components, these functions are just declared as methods within the Class. This makes it easier and cleaner to organize code.
+
+2. Can use State
+
+3. Understand LifeCycle Events
+
+Reasons 2 and 3 are.... well... we'll touch on them as we proceed.
+----------------------------------------------------------
+React State
+
+In React,  “state” is an object that represents the parts of the app that can change. React components have a built-in state object. Each component can maintain its own state, which lives in an object called this.state. The state is where you store property values that belong to the component. When the state object changes, the component automatically re-renders.
+
+State Rules:
+- Usually only usable with class components but technically can be used with functional components using the 'hooks' system.
+- It is a JS Object that contains data relevenat to a component
+- State must be initialized when a component is created (constructor).
+- State can only be updated using the function 'setState'
+- Updating state on a component causes the component to (almost) instantly re-render.
+
+State Example:
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      latitude: null,
+    };cd
+    this.fetchLocation();
+  }
+  fetchLocation() {
+    window.navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({ latitude: position.coords.latitude });
+      },
+      (error) => console.log(error)
+    );
+  }
+  render() {
+    return <div>Latitude: {this.state.latitude}</div>;
+  }
+}
+----------------------------------------------------------
+
+Component Lifecycle (write about this when you're a pro)
+
+A component lifecycle is a combination of all the stages a react component passes through  from "start" to "finish". They include:
+- Initialization: When it is created
+- Mounting: When it is inserted into the DOM
+- Updating: When it's contents are updated
+- Unmounting: When it is removed from the DOM.
+
+Throughout a component's lifecycle; we use lifecycle methods to monitor it's different stages. These methods are important as we can use them to execute specific actions everytime any of the methods are triggered by the component.
+
+Lifecycle Methods:
+----------------
+
+- constructor: It is called when the instance of our component is created.
+
+- render: Renders the component and makes its content visible on screen. (render is the only lifecycle method that must be defined for a component to be valid).
+
+- componentDidMount: This method is only called the first time the component is rendered. (P.S: Every single time the content of a component changes, it is re-rendered.)
+
+- shouldComponentUpdate: This method determines whether the component should be re-rendered or not. By default, it returns true. But if we want a component to re-render conditionally, this is the method to use.
+
+- componentDidUpdate: This method is called every time a mounted component is re-rendered.
+
+- componentWillUnmount: This method is called just before a component is unmounted and disappears from the screen.
+
+- shouldComponentUpdate
+
+- getDerivedStateFromProps
+
+- getSnapshotBeforeUpdate
+
+----------------
+
+When to use Lifecycle Methods in a Practical Application:
+
+- constructor: Good place to do one-time component setup.
+
+- render: Avoid doing anything here besides returning JSX.
+
+- componentDidMount: Good place to do initial data loading when a component is mounted.
+
+- componentDidUpdate: Good place to do more data loading when state/props change.
+
+- componentWillUnmount: Good place to cleanup. (especially for non-react stuff like css etc)
+
+While initial data loading can be done in the constructor method, it is considered a React Best Practice to do it in the componentDidMount method as it makes the code more readable.
+----------------
+
+Some lifecycle methods that were previously used in React have stopped beein supported in React 17.
+
+They include:
+componentWillMount - called just before a component is rendered.
+componentWillUpdate - called just before an already mounted component is re-rendered.
+componentWillReceiveProps - called as soon as the component's props are updated and before re-rendering.
+
+They should be avoided.
+
+More on React Lifecycle Methods:
+https://reactjs.org/docs/react-component.html
+http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+https://itnext.io/react17-or-how-to-get-rid-of-componentwillreceiveprops-c91f9a6f6f03
+
+----------------------------------------------------------
+
+
+Alternate State Initialization:
+
+In a scenario where a component constructor only contains state initialization, there is an alternative method to initialize the state that is much shorter.
+
+E.g:
+
+class App extends React.Component {
+	state = { title: null, error: null }
+	render () {
+		return(
+			<p>Sample Component</p>
+		)
+	}
+}
+
+This method of initializing the state works because Babel then transpiles this code and expands it to use the constructor method instead. Ultimately, it's just a faster way to get it done.
+----------------------------------------------------------
+defaultProps
+
+While most React components receive their props from a parent component, it's also possible to specify default props to ensure a clean fallback when the parent component doesn't specify it.
+
+----------------
+Default Props for Functional Components
+
+There is only one way to define default props for functional components. Using object notation to define defaultProps as a property of that component. E.g:
+
+const DemoComponent = (props) => {
+	return <p>{props.message}</p>
+}
+
+DemoComponent.defaultProps = {
+	message: 'Welcome B*tches!'
+}
+
+----------------
+Default Props for Class Components
+
+There are 2 ways to define default props for class components.
+
+1. Using static methods:
+
+Since static properties in JS belong to the class and not the object of that class. We can define defaultProps of a class component using them. E.g:
+
+class DemoComponent = (props) => {
+	static defaultProps = {
+		message: 'Welcome B*tches!'
+	}
+	render() {
+		return <p>{props.message}</p>
+	}
+}
+
+
+2. Using object notation:
+
+Just like we do for Functional Components. E.g:
+
+class DemoComponent = (props) => {
+	render() {
+		return <p>{props.message}</p>
+	}
+}
+DemoComponent.defaultProps = {
+	message: 'Welcome B*tches!'
+}
+
+----------------------------------------------------------
+Event Handlers
+
+Event Handling in React components is similar to event handling with DOM Elements. But there are some syntax differences:
+
+1. React events are named using camelCase and not lowercase.
+2. With JSX, when you pass a function as the event handler, you don't include brackets. Why?  When you include parenthesis, it calls the function immediately the component renders instead of adding it as a  listener. E.g:
+
+HTML:
+<button onlick="fetchData()">Search</button>
+
+REACT:
+<button onClick={fetchData}>Search</button>
+
+To prevent the default behaviour of an element in react, e.g: a submit button or a link; we cannot return false in the function. Instead, we call preventDefault. E.g:
+
+fetchData (e) {
+	e.preventDefault();
+	console.log('Fetch Data')
+}
+------------------------
+
+Understanding 'this' in Class Components (write about this when you're a pro)
+
+In Class Components, the default of value of this in an event handler function is not bound to the instance of that Component. Because of this, when we assign an event handler in React, we can run into issues because by default, the value of this will be undefined.
+
+Example of this problem:
+
+class SearchBar extends React.Component {
+	fetchData() {
+		console.log(this)
+	}
+	render() {
+		return (
+      <div>
+        <input type="text" />
+        <button onClick={this.fetchData}>Search</button>
+      </div>
+		)
+	}
+}
+
+In the code above, when we click on the Search button, we expect the instance of the Class SearchBar to be logged in the console, but instead we'll get undefined.
+
+To get around this issue there are a few options:
+
+1. Explicitly bind the value of this to the fetchData method so it's value of this at all times will be the instance of SearchBar. E.g:
+
+constructor() {
+	super()
+	this.fetchData = this.fetchData.bind(this)
+}
+
+2. Using Arrow Functions - Method a
+
+In JS, Arrow Functions lexically bind their context so 'this' refers to the originating context. This means that if we write fetchData as an arrow function, the value of this will always be the SearchBar instance as it is the originating context. E.g:
+
+fetchData = () => {
+    console.log(this);
+  }
+
+3. Using Arrow Functions - Method b
+
+Instead of writing the event handler function as an arow function, we can call call it as an arrow function instead. This will also automatically bind the value of this to the originating context, which again is the  SearchBar instance E.g:
+
+<button onClick={() => this.fetchData()}>Search</button>
+
+------------------------
+
+We can also use arrow functions generally with a React Event Handler. E.g:
+<button onClick={(e) => console.log('test')}>Search</button>
+
+----------------------------------------------------------
+P.S:
+Never write conditional logic in the render method. 
+Use a helper function that is then called in render instead.
+----------------------------------------------------------
+Uncontrolled vs Controlled Components (write about this when you're a pro)
+
+------------------------
+Uncontrolled Elements
+
+By default when using Javascript, to know the value of form data, we have to access the DOM to fetch it. React Components that require you to fetch form Data from the DOM are called "Uncontrolled Components"
+
+Example:
+
+class SearchBar extends React.Component {
+  render() {
+    return (
+      <div className="search-field">
+        <form>
+          <input type="text" />
+          <input type="button" value="Search" onClick={(e) => this.getSearch()} />
+        </form>
+      </div>
+    );
+  }
+  getSearch() {
+    console.log(document.querySelector(".search-field input").value);
+  }
+}
+
+In the component SearchBar above, to fetch the content of the text input field in getSearch(), we had to access the DOM
+------------------------
+Controlled Elements
+
+In Controlled Components, form data are handled by a React Component and not the DOM. To fetch data from a Controlled Component, you would not need to access the DOM but the Component's state object. 
+
+Example:
+
+class SearchBar extends React.Component {
+  state = {
+    searchField: "",
+  };
+  getSearch = () => {
+    console.log(this.state.searchField);
+  }
+  render() {
+    return (
+      <div className="search-field">
+        <form>
+          <input
+            type="text"
+            value={this.state.searchField}
+            onChange={(e) => this.setState({ searchField: e.target.value })}
+          />
+          <input
+            type="button"
+            value="Search"
+            onClick={this.getSearch}
+          />
+        </form>
+      </div>
+    );
+  }
+}
+
+Here, because the value of the input field is tied to the state, we can easily get the content of this field without having to access the DOM
+------------------------
+
+In React, Controlled Components are recommended. An exception to this rule is the file input component "<input type='file' />" because its value can only be set by a user, and not programmatically.
+
+----------------------------------------------------------
+
+Invoking Callbacks in Child Component.
+
+Sometimes we want a method in the Parent Component to run when a particular condition is fulfilled or action is executed in the child component. The easiest way to do this is to pass the method as a prop to the child component and then call it whenever the condition is fulfilled.
+
+For Example:
+
+class App extends React.Component {
+  onSearchSubmit = (term) => {
+    console.log("Search for: " + term);
+  };
+  render() {
+    return (
+      <div>
+        <SearchBar onSearch={this.onSearchSubmit} />
+      </div>
+    );
+  }
+}
+
+class SearchBar extends React.Component {
+  state = {
+    searchField: "",
+  };
+  getSearch = () => {
+    this.props.onSearch(this.state.searchField)
+  }
+  render() {
+    return (
+      <div className="search-field">
+        <form onSubmit={this.getSearch}>
+          <input
+            type="text"
+            value={this.state.searchField}
+            onChange={(e) => this.setState({ searchField: e.target.value })}
+          />
+        </form>
+      </div>
+    );
+  }
+}
+
+In the example above, we pass the method onSearchSubmit as a props with key onSearch to the SearchBar child component. This method can then be invoked using this.props.onSearch in the SearchBar component
+
+----------------------------------------------------------
+USING APIS & FETCHING DATA IN REACT
+
+Most Popularly Used:
+
+- fetch: Function built into Modern Browsers
+- axios: Stand Alone 3rd party package that can be built into a react app using the npm
+-------
+Using Axios to fetch make a request:
+
+We use the axios.get method to make api requests.
+It takes 2 main arguments, the request url and a config object.
+The object argument usually consists of params & headers but this ultimately depends on the request being made and the API you're requesting from.
+
+E.g:
+
+axios.get("https://api.unsplash.com/search/photos", {
+	params: { query: term },
+	headers: {
+		Authorization: "Client-ID IJ9hgl81y7tSa-yZHa8p0RVtrYrup7EWWjsvzR5bIEw",
+	},
+});
+
+axios returns a promise on completion of a request to there are 2 ways to get the request results:
+
+1. Chaining a then method
+
+axios.get("https://api.unsplash.com/search/photos", {
+	params: { query: term },
+	headers: {
+		Authorization: "Client-ID IJ9hgl81y7tSa-yZHa8p0RVtrYrup7EWWjsvzR5bIEw",
+	},
+}).then((response) => {
+	display(response.data.results)
+})
+
+2. using async... await
+
+async axiosWrapper (term) {
+	const response = await axios.get("https://api.unsplash.com/search/photos", {
+		params: { query: term },
+		headers: {
+			Authorization: "Client-ID IJ9hgl81y7tSa-yZHa8p0RVtrYrup7EWWjsvzR5bIEw",
+		},
+	})
+	display(response.data.results)
+}
+
+OR
+
+axiosWrapper = async (term) => {
+    const response = await axios.get("https://api.unsplash.com/search/photos", {
+      params: { query: term },
+      headers: {
+        Authorization: "Client-ID IJ9hgl81y7tSa-yZHa8p0RVtrYrup7EWWjsvzR5bIEw",
+      },
+    });
+    display(response.data.results)
+  };
+----------------------------------------------------------
+The Purpose of Keys in Lists
+
+While working with a list of images in JSX, I got the following error: Each child in a list should have a unique "key" prop
+
+When making updates to a list, adding key to each entry in the list makes it easier/faster for React to make render changes to that list.
+For example: If the items in a list didn't have unique keys and say if one of them were to change, React would have to re-create the whole list on re-render as against just altering the item that has changed.
+
+----------------------------------------------------------
+React Refs (write about this when you're a pro)
+
+Refs provide a way to access DOM nodes or React elements created in the render method.
+However, The React documentation recommends to not use refs for anything that can be done declaratively.
+Refs are escape hatches for React developers, and we should try to avoid using them as much as possible.
+-------
+When to Use Refs
+There are a few good use cases for refs:
+
+- Managing focus, text selection, or media playback.
+- Triggering imperative animations.
+- Integrating with third-party DOM libraries.
+-------
+Creating Refs:
+Refs are created using React.createRef() and attached to React elements via the ref attribute.
+
+E.g:
+class ImageCard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.imageRef = React.createRef()
+  }
+  render() {
+    const { description, urls } = this.props.image
+    return <img ref={this.imageRef} alt={description} src={urls.regular} />
+  }
+}
+-------
+Accessing Refs:
+When a ref is passed to an element in render, a reference to the node becomes accessible. The ref itself is a JavaScript object that has a current property. And the current property references a DOM node.
+
+We can either extract data from this DOM node or manipulate it depending on our use case.
+
+E.g:
+
+componentDidMount() {
+	console.log(this.imageRef.current)
+}
+
+----------------------------------------------------------
+REDUX! - MWAHAHAHAHAHAHA!
+
+Redux is a predictable state container for JavaScript apps, and a very valuable tool for organizing application state. It’s a popular library to manage state in React apps, but it can be used just as well with Angular, Vue.js or just plain old vanilla JavaScript.
+
+What does Predictable State Container mean really?
+A State Container holds all the state of your application. It doesn't let you change that state directly, but instead forces you to describe changes as plain objects called "actions". Redux is a Predicatable State Container because Actions can be recorded and replayed later. You always know where the state comes from; the store, and who will be able to update it; Actions.
+
+
+WHEN TO USE REDUX?
+
+The bigger and more complex your app gets, the more likely it’s going to be that you’d benefit from using Redux. If you’re starting to work on an app and you anticipate that it’ll grow substantially, it can be a good idea to start out with Redux right off the bat so that as your app changes and scales you can easily implement those changes without refactoring a lot of your existing code.
+----------------------------------------------------------
+
+Redux Cycle:
+Action Creator -> Action -> Dispatch -> Reducers -> State
+
+----------------------------------------------------------
+
+Action:
+Actions are plain JavaScript objects that send data from your application to your store. Actions have a type and an optional payload.
+In layman terms, Actions are like forms. They have a type that describes the purpose of the form and a payload that provides information and context to what the form is trying to do.
+Conventionally, the action type is a string written in UPPER CASE and uses underscores instead of spaces; UPPER_SNAKE_CASE.
+
+E.g: {
+	type: 'BLA_BLA_BLA',
+	payload: 'Optional Information Here'
+}
+-------------
+Action Creator:
+An action creator is a function that returns an Action object. The action object returned from an action creator is sent to all of the different reducers in the app.
+
+Here's an example of an Action Creator and Action:
+
+const addToDo(task) {
+	return {
+		type: 'ADD_TODO',
+		payload: {
+			task,
+			completed: false
+		}
+	}
+}
+
+In the example above, the function addToDo is the action creator and it returns an action object with type "ADD_TODO" and a payload object that holds information on the To Do item being added.
+-------------
+Dispatch:
+
+dispatch is a function of the Redux store used to dispatch an action and trigger state changes to the store. It is part of the Redux l ibrary itself.
+-------------
+Reducers:
+
+A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change. Redux relies heavily on reducer functions that take the previous state and an action in order to execute the next state.
+
+Reducer Example:
+
+const toDoReducer = (state = [], action) => {
+	switch (action.type) {
+		case 'ADD_TODO':
+			const newState = [...state, payload.task]
+			return newState
+
+		//we can add more cases here for different action types
+
+		default:
+			return state
+	}
+}
+
+In the example above, the state holds the list of To-Do Item. when the toDoReducer receives the state with action 'ADD_TODO', it updates it with a new task passed in the payload and returns the newly updated state.
+----------------------------------------------------------
+GENERAL REACT-REDUX NOTE:
+
+Using the Redux to Manage State generally means less class-based components and more functional components.
+To learn more about how state conventions and if/when to manage state in components while using Redux: https://redux.js.org/faq/organizing-state
+
+
+Directory Structure in src for React-Redux Applications:
+
+/src
+	/actions 				- Contains files related to action creators
+	/components 	- Contains files related to components
+	/reducers 			- Contains files related to reducers
+	index.js 				- Set up both the react and redux sides of the app
+
+
+----------------------------------------------------------
+
+Semantic UI:
+https://semantic-ui.com/
+https://cdnjs.com/libraries/semantic-ui
+
+----------------------------------------------------------
+
+1. POSSIBLE CHALLENGES:
+
+Fun interview question.
+Build a minimal redux implementation having just the store and it's reducer.
+Even better if the candidate doesn't know what this is. You the interviewer can get to walk through problem scenarios until you both build out the implementation.
+
+2. 
+
+----------------------------------------------------------
