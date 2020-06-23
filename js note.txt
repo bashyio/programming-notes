@@ -1904,7 +1904,232 @@ const print = ({title, price}) => {
 	console.log(title)
 	console.log(price)
 }
-
 ------------------------------------------------------------------------
+GENERATOR FUNCTIONS
+
+A generator is a function that can stop midway, then continue execution from the stopping point. Generator functions behave like an iterator. They are declared almost identically to regular functions with just one excemption. The asterik '*'. To declare generator functions, we need the function syntax. This means that we can't declare them using arrow function syntax.
+
+You can do:
+
+function* generator1() {
+	//code here
+}
+const generator2 = function *() {
+	//code here	
+}
+
+But, if you try to do this, you'll get a syntax error:
+
+const generator3 = *() => {
+	//code here
+}
+
+Which is sad because arrow functions are sexy. 😢
+Petition to allow arrow syntax for generator functions!! 🌚
+-------------------------------
+How are generator functions different from regular functions?
+
+Regular Functions in JavaScript run until "return" or function end. But Generator Functions run until "yield", "return" or function end. Calling a generator function doesn't return a value. Instead, it returns an object that can be used to iterate over the yield statements using the next() method.
+
+What is yield? What is next() ??
+
+When you use the return keyword in a regular function, you get a single value returned on function call and the function is exited. But the yield keyword in a generator function allows us to execute a section of code to a temporary stopping point, pass back a value (in object form) before continuing execution again the next time we call the next() method on the generator function. Simply put, they allow you to "exit" your function temporarily with a value then continue execution as many times as the yield statement is used.
+
+That sounds crazy right? 
+
+Well, here's an example to illustrate how it works:
+
+function regularFunction() {
+  return 8
+}
+
+function* generatorExample() {
+  console.log('Executing 1...')
+  yield 8
+  console.log('Executing 2...')
+  yield 9
+  console.log('Executing 3...')
+  yield 10
+  console.log('Executing 4...')
+}
+
+const generator = generatorExample()
+const regular = regularFunction()
+
+console.log(regular) //returns 8
+console.log(generator) //returns iterator object
+//'Executing 1...' is printed here.
+console.log(generator.next()) //returns object with value 8 and done: false
+//'Executing 2...' is printed here.
+console.log(generator.next()) //returns object with value 9 and done: false
+//'Executing 3...' is printed here.
+console.log(generator.next()) //returns object with value 10 and done: false
+//'Executing 4...' is printed here.
+console.log(generator.next()) //returns value undefined and done: true
+
+We can see in the example above the major difference between a generator function and a regular function.
+
+Explanation:
+
+- When we make the generator function call, no line in the function is executed, instead the iterator object is returned. This object is then passed to a variable so we can make a next method call on it. 
+- The first time we call the next method, the generator executes up to the first yield statement, pauses execution and sends back an object containing the yield value and the parameter "done". What is the use of the done parameter? It is used to signify if we've completed the iteration or not. It is set to false because we're yet to complete iterating.
+- The next series of times we call the next method, the function resumes execution from the last yield statement and pauses again.
+- In our example, three are 3 yield statements but we make 4 next method calls, this is done deliberately to illustrate that although there are no more yield statements, if we didn't make an extra next call; 'Executing 4' would not get printed and we would not have gotten to the end of the generator function.
+- The last next call returns undefined as value because there were no more yield statements. Since there are no more yield statments to temporarily halt execution, the function continues to the end and done is then set to true.
+
+-------------------------------
+Return statement in a generator function
+
+The return statement still works in a generator function.
+When used without a value, it simply exits the function.
+When used with a value, that value becomes the last value in the generator iterable.
+All yield statements after the return statement will be ignored in a generator function.
+
+E.g 1:
+
+function* generatorExample() {
+  yield 8
+  return
+  yield 9
+}
+
+const generator = generatorExample()
+
+console.log(generator.next()) //returns object with value 8 and done: false
+console.log(generator.next()) //returns value undefined and done: true
+
+The yield statement after the return statement is ignored as the function is exited immediately. This is why the value of the second next call is undefined.
+
+E.g 2:
+
+function* generatorExample() {
+  yield 8
+  yield 9
+  return 20
+  yield 10
+}
+
+const generator = generatorExample()
+
+console.log(generator.next()) //returns object with value 8 and done: false
+console.log(generator.next()) //returns object with value 9 and done: false
+console.log(generator.next()) //returns object with value 20 and done: true
+console.log(generator.next()) //returns value undefined and done: true
+
+The second next call returns object with value 20 which is the value passed with the return statement. Like in the previous example, the yield statement after the return statement is ignored. But in this example, the value of done is automatically set to true on the return statement before the extra next() call. That is because the return statement automatically ends the iteration.
+
+If it was a yield statement, it'd still be set to false as the generator function will not be done until "function end". This might seem like unexpected behaviour but it is important to remember that we can still have code unexecuted after the last yield statement in a generator function. They won't be executed until the extra next() call.
+-------------------------------
+Using the for loop to iterate over a generator function
+
+It is a common practice to iterate over a generator function using the for loop. This way we can automatically move to the next iteration based on the yield keyword.
+However, please note that using the for loop only returns the value and doesn't let you know the status of the iteration whether done is false or true.
+
+Example:
+
+function* generatorExample() {
+  console.log('I dey here')
+  yield 8
+  yield 9
+  yield 10
+  yield 11
+}
+
+const generator = generatorExample()
+
+for  (let n of  generator) {
+	console.log(n)
+}
+
+This will print out the yielded values one by one.
+
+Please Note:
+
+While the for loop will always execute to the end of the generator function, it behaves differently when dealing with the return statement. Unlike the next() method that allows you to retrieve the value of the return statement, the for loop ignores the value it returns altogether.
+
+Example:
+
+function* generatorExample() {
+  console.log('Start')
+  yield 8
+  yield 9
+  yield 10
+  yield 11
+  console.log('After all yields')
+  return 20
+}
+
+const generator = generatorExample()
+
+for  (let n of  generator) {
+	console.log(n)
+}
+
+Output:
+Start
+8
+9
+10
+11
+After all yields
+
+As we can see in the example above, the for loop continues execution after the last yield statement to the end of the function, but doesn't receive the value 20 returned. The las value it receives is 11 which is passed by a yield statement.
+
+-------------------------------
+Demonstrating the usage of variables in a generator function
+
+One of the things that make a generator function so special is how they maintain variable value on pause. Their context (variable bindings) is saved across re-entrances.
+
+Example:
+
+function* testVariables() {
+  let n = 0;
+  while (true && n < 4) {
+    n++;
+    yield n;
+  }
+  n = 20
+  yield n
+}
+
+const generator = testVariables()
+
+console.log(generator.next().value)
+console.log(generator.next().value)
+console.log(generator.next().value)
+console.log(generator.next().value)
+console.log(generator.next().value)
+
+As illustrated in the example above, when the generator function pauses execution after a yield statement, the value of the variables will not change and will be maintained until the function resumes.
+
+-------------------------------
+Talking Back to Generators
+
+Communication with generators can happen in both directions. Asides receiving values from a generator, we can also inject values back into the function using the next() method. This values can be received using the yield statement.
+
+E.g:
+
+function* whoAmI() {
+  let reply, solved = false
+  const answer = 'Bashy'
+
+  while (!solved) {
+    if (reply !== answer) {
+      reply = yield 'Wrong Answer! Try again.'
+    } else {
+      solved = true
+      yield 'Awesome! You got it.'
+    }
+  }
+}
+
+const ask = whoAmI()
+console.log(ask.next('Segun').value)
+console.log(ask.next('Tunde').value)
+console.log(ask.next('Bashy').value)
+
+In the example above, the function will continue yielding 'Wrong Answer! Try again' until the right name is guessed. We pass the value to the generator using the next() method.
+------------------------------------------------------------------------
+
 9ff2ea1c1882e7
 //https://ipinfo.io/json?token=9ff2ea1c1882e7

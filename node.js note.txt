@@ -30,13 +30,13 @@ Each module in Node.js has its own context, so it cannot interfere with other mo
 Node.js includes three types of modules:
 
 - Core (Built-In) Modules:
-	They are built-in and include basic functionalities of node.js. These core modules are compiled into its binary distribution and load automatically when Node.js process starts. However, you first need to import it using the require() function.
+  They are built-in and include basic functionalities of node.js. These core modules are compiled into its binary distribution and load automatically when Node.js process starts. However, you first need to import it using the require() function.
 
 - Local Modules:
-	Local modules are modules created locally in your Node.js application. They are mainly used for specific projects and include different functionalities of your application locally available in separate files or folders within the project folder.
+  Local modules are modules created locally in your Node.js application. They are mainly used for specific projects and include different functionalities of your application locally available in separate files or folders within the project folder.
 
 - Third Party Modules:
-	The third party module can be downloaded by npm (Node Package Manager). These type of modules are developed by others for us to that in our project. 3rd party modules can be install inside the project folder or globally.
+  The third party module can be downloaded by npm (Node Package Manager). These type of modules are developed by others for us to that in our project. 3rd party modules can be install inside the project folder or globally.
 
 More: https://www.fullstacktutorials.com/tutorials/nodejs/nodejs-core-modules.html
 --------------------------------------------------------------------------------------------------------------------
@@ -234,18 +234,18 @@ Node built-in debugging tool integrates which integrates with V8 and the Chrome 
 
 How To Use:
 - Like console.log(), we need to add the debugger statement at a specific point in the application. What Statement?
-	debugger
-	Yes. It's that simple.
+  debugger
+  Yes. It's that simple.
 - After adding debugger and running our code in node; by default nothing happens.
 - To start debugging, we add inspect after node to run the file. E.g: node inspect app.js
-	Node let's us know that the debugger is running and we can now head on to Chrome to actually inspect the application.
+  Node let's us know that the debugger is running and we can now head on to Chrome to actually inspect the application.
 - Open chrome and visit this url:
-	chrome://inspect
+  chrome://inspect
 - Under Remote Target, we'll find a link to your app. (click on inspect)
 - When debugging in Chrome, it's recommended to add the folder to workspace.
-	Under "Sources > Filesystem", Click on the plus icon to add the folder. (It'll ask for permission, accept)
+  Under "Sources > Filesystem", Click on the plus icon to add the folder. (It'll ask for permission, accept)
 - When we click on the play button, the app runs and pauses at any point we add the statement. 
-	There we can go through the Scope and Call Stack to see the scope of the application at that point.
+  There we can go through the Scope and Call Stack to see the scope of the application at that point.
 - If we class the inspect tab, and want to go back to debugging again, we can run "restart" in the terminal while the debug application (debug>) is running.
 - To end debugging, Ctrl + C - twice.
 
@@ -259,23 +259,23 @@ The request package used to be the favourite package for making http requests (h
 Using postman-request
 -----------
 - Install it in your project:
-	npm i postman-request
+  npm i postman-request
 - Include it in your app:
-	const request = require('postman-request')
+  const request = require('postman-request')
 - Make the request:
-	The request method takes 2 arguments, an object containing request details like the url and a callback function with error and response as arguments.
-	
-	const url = 'http://api.weatherstack.com/current?access_key=3f1f748c33aa52ad4bf627f16250e1d5&query=New%20York'
-	request({
-	  url: url
-	}, (error, response) => {
-		if (error) {
-			console.log('Unable to connect to weather service.')
-		} else {
-			const data = JSON.parse(response.body)
-			console.log(data)
-		}
-	})
+  The request method takes 2 arguments, an object containing request details like the url and a callback function with error and response as arguments.
+  
+  const url = 'http://api.weatherstack.com/current?access_key=3f1f748c33aa52ad4bf627f16250e1d5&query=New%20York'
+  request({
+    url: url
+  }, (error, response) => {
+    if (error) {
+      console.log('Unable to connect to weather service.')
+    } else {
+      const data = JSON.parse(response.body)
+      console.log(data)
+    }
+  })
 
 ------------------------------------------------------------------------
 Making HTTP Requests in Node without a Library
@@ -343,7 +343,7 @@ app.get('/', (req, res) => {
 
 //Simple route method to set up to set up a /help endpoint
 app.get('/help', (req,res) => {
-	res.send('Help Page!')	
+  res.send('Help Page!')  
 })
 
 //Sets up the listening port for the app in the browser.
@@ -364,7 +364,7 @@ In the setup example above, we serve direct text to the browser when these endpo
 ---
 To serve html code:
 app.get('/', (req, res) => {
-	res.send('<h1>Welcome!</h1><p>You are the right place Chief!</p>')
+  res.send('<h1>Welcome!</h1><p>You are the right place Chief!</p>')
 })
 Express auto-detects that we're sending html code and sends back an html response.
 ---
@@ -397,16 +397,16 @@ Working with files and directories:
 
 Let's assume that we are dealing with project whose folder is set up like this:
 src/
-	app.js
-	**other modules and scripts**
+  app.js
+  **other modules and scripts**
 public/
-	index.html
-	about.html
-		images/
-			app.png
-		css/
-			styles.css
-	**other files that will be used in the public view**
+  index.html
+  about.html
+    images/
+      app.png
+    css/
+      styles.css
+  **other files that will be used in the public view**
 
 Now, we want to serve up the public folder when this project is launched from app.js in the src folder.
 To do this, we use the path built-in node module as it allows us to work with file/folder paths better.
@@ -473,8 +473,8 @@ For the template files, we use the .hbs extension instead of .html.
 E.g:
 
 views/
-	index.hbs
-	about.hbs
+  index.hbs
+  about.hbs
 ---------------
 Serving up Template Files:
 
@@ -482,10 +482,10 @@ To serve up template files instead of static files, we need to set up endpoints 
 For example setting up a endpoint for the homepage file index.hbs:
 
 app.get('/', (req, res) => {
-	res.render('index', {
-		title: 'Home Page',
-		name: 'Bashy'
-	})
+  res.render('index', {
+    title: 'Home Page',
+    name: 'Bashy'
+  })
 })
 
 The code above renders the index.hbs file for the endpoint '/' which is the home page.
@@ -548,16 +548,16 @@ Partials are incomplete template files that can be reused across multiple views.
 Folder Structure:
 
 public/
-	static files here
+  static files here
 src/
-	app.js
-	other js files here
+  app.js
+  other js files here
 templates/
-	partials/
-		header.hbs
-	views/
-		index.hbs
-		about.hbs
+  partials/
+    header.hbs
+  views/
+    index.hbs
+    about.hbs
 
 ---
 
@@ -613,8 +613,8 @@ Unlike full view templates, a partial file may just contain a certain number of 
 E.g (header.hbs):
 <h1>{{title}}</h1>
 <div>
-	<a href="/">Home</a>
-	<a href="/about">About</a>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
 </div>
 
 The amazing thing about partials is that we can access values passed to the main template files directly from the partial the same way we'd access them in template files.
@@ -680,27 +680,27 @@ ACCESSING API FROM THE BROWSER
 To make an external api call from endpoints in our app from  the browser, it's simple; we create an endpoint for that api, set up a query string (or strings) make the request from the backend and then send back the result.
 
 app.get('/location', (req, res) => {
-	const address = req.query.address
-	//We return an error object to let the browser know that we need the location query sent.
-	if (!address) {
-	  return res.send({
-	    error: 'Please provide address.'
-	  })
-	}
+  const address = req.query.address
+  //We return an error object to let the browser know that we need the location query sent.
+  if (!address) {
+    return res.send({
+      error: 'Please provide address.'
+    })
+  }
 
-	//Make the request and return data
-	fakeRequestCall(address, (error, data) => {
-		if (error) {
-	      return res.send({
-	      	error: error
-	      })
-	    } else {
-		    res.send({
-		    	address: address,
-		        data: data
-	        })
-	    }
-	})
+  //Make the request and return data
+  fakeRequestCall(address, (error, data) => {
+    if (error) {
+        return res.send({
+          error: error
+        })
+      } else {
+        res.send({
+          address: address,
+            data: data
+          })
+      }
+  })
 })
 
 We can then access the endpoint from the browser using the Fetch API
@@ -711,32 +711,21 @@ THE FETCH API
 The Fetch API is a browser-only API that provides a JavaScript interface for making http requests.
 
 fetch(urlHere, {}).then((response) => {
-	if (response.status === 200) {
-		return response.json();
-	} else {
-		throw new Error('Error Fetching Data');
-	}
+  if (response.status === 200) {
+    return response.json();
+  } else {
+    throw new Error('Error Fetching Data');
+  }
 }).then((data) => {
-	console.log('Fetch Data: ' + data);
+  console.log('Fetch Data: ' + data);
 }).catch((error) => {
-	//print error here
+  //print error here
 })
 
--------------------------------
 
 
 --------------------------------------------------------------------------------------------------------------------
 
-
-Please find an updated invoice attached.
-Here's to looking forward to another payment soon so we can continue with Yabalytics as planned.
-Best Regards,
-
-it is better to abstract your requests to a separate module. In the example above, we make the requests via a 'fakeRequestCall' method and sends data back to the browser depending on the result returned.
-
-------------------------------------------------------------------
-------------------------------------------------------------------
---------------------------------------------------------------------------------------------------------------------
 RANDOMS
 
 Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download

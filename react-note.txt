@@ -859,6 +859,8 @@ Semantic UI:
 https://semantic-ui.com/
 https://cdnjs.com/libraries/semantic-ui
 
+Writing Clean Components:
+https://itnext.io/write-clean-er-components-jsx-1e70491baded
 ----------------------------------------------------------
 
 1. POSSIBLE CHALLENGES:
