@@ -1905,6 +1905,8 @@ const print = ({title, price}) => {
 	console.log(price)
 }
 ------------------------------------------------------------------------
+A Simple Introduction to Generator Functions
+
 GENERATOR FUNCTIONS
 
 A generator is a function that can stop midway, then continue execution from the stopping point. Generator functions behave like an iterator. They are declared almost identically to regular functions with just one excemption. The asterik '*'. To declare generator functions, we need the function syntax. This means that we can't declare them using arrow function syntax.
@@ -1978,7 +1980,7 @@ Explanation:
 - The last next call returns undefined as value because there were no more yield statements. Since there are no more yield statments to temporarily halt execution, the function continues to the end and done is then set to true.
 
 -------------------------------
-Return statement in a generator function
+Return Statement in a Generator Function
 
 The return statement still works in a generator function.
 When used without a value, it simply exits the function.
@@ -2028,17 +2030,17 @@ However, please note that using the for loop only returns the value and doesn't 
 Example:
 
 function* generatorExample() {
-  console.log('I dey here')
-  yield 8
-  yield 9
-  yield 10
-  yield 11
+  console.log('I dey here');
+  yield 8;
+  yield 9;
+  yield 10;
+  yield 11;
 }
 
-const generator = generatorExample()
+const generator = generatorExample();
 
 for  (let n of  generator) {
-	console.log(n)
+	console.log(n);
 }
 
 This will print out the yielded values one by one.
@@ -2076,7 +2078,7 @@ After all yields
 As we can see in the example above, the for loop continues execution after the last yield statement to the end of the function, but doesn't receive the value 20 returned. The las value it receives is 11 which is passed by a yield statement.
 
 -------------------------------
-Demonstrating the usage of variables in a generator function
+Demonstrating the Usage of Variables in a Generator Function
 
 One of the things that make a generator function so special is how they maintain variable value on pause. Their context (variable bindings) is saved across re-entrances.
 
@@ -2088,17 +2090,17 @@ function* testVariables() {
     n++;
     yield n;
   }
-  n = 20
-  yield n
+  n = 20;
+  yield n;
 }
 
-const generator = testVariables()
+const generator = testVariables();
 
-console.log(generator.next().value)
-console.log(generator.next().value)
-console.log(generator.next().value)
-console.log(generator.next().value)
-console.log(generator.next().value)
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().value);
+console.log(generator.next().value);
 
 As illustrated in the example above, when the generator function pauses execution after a yield statement, the value of the variables will not change and will be maintained until the function resumes.
 
@@ -2110,23 +2112,23 @@ Communication with generators can happen in both directions. Asides receiving va
 E.g:
 
 function* whoAmI() {
-  let reply, solved = false
-  const answer = 'Bashy'
+  let reply, solved = false;
+  const answer = 'Bashy';
 
   while (!solved) {
     if (reply !== answer) {
-      reply = yield 'Wrong Answer! Try again.'
+      reply = yield 'Wrong Answer! Try again.';
     } else {
-      solved = true
-      yield 'Awesome! You got it.'
+      solved = true;
+      yield 'Awesome! You got it.';
     }
   }
 }
 
-const ask = whoAmI()
-console.log(ask.next('Segun').value)
-console.log(ask.next('Tunde').value)
-console.log(ask.next('Bashy').value)
+const ask = whoAmI();
+console.log(ask.next('Segun').value);
+console.log(ask.next('Tunde').value);
+console.log(ask.next('Bashy').value);
 
 In the example above, the function will continue yielding 'Wrong Answer! Try again' until the right name is guessed. We pass the value to the generator using the next() method.
 ------------------------------------------------------------------------

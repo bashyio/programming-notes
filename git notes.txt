@@ -1,0 +1,109 @@
+Why use Heroku or Github? Version Control
+
+What is Version Control? A system that recods changes to files in your projects so you can recall specific "working" versions later.
+
+HEROKU
+--------------------------------------------
+Install Heroku
+https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+Download and Run Installer
+
+To Confirm Install, Launch (re-launch if open already) Command Line
+heroku - v
+Should print out version if installed successfully
+
+heroku login
+Conncets you to the heroku cli using the browser.
+
+
+VERSION CONTROL WITH GIT
+--------------------------------------------
+Pro-Git (free book that explains how git works)
+https://git-scm.com/book
+
+Install Git 
+https://git-scm.com/
+Download and Run Installer - (On windows, ensure to check option to install git bash)
+
+git --version
+Should print out version if installed successfully
+
+git init
+Command ran in the root directory of a project.
+Initializes an empty git repository and adds a .git folder to it.
+
+To make the git folder visible in VSCode
+File -> Preferences -> Settings -> Commonly Used  (User) -> Files:Exclude
+remove **/.git from the list
+
+Create a .gitignore file in the root folder
+Used to ignore certain directories or files.
+E.g:
+node_modules/
+
+git status
+Lets you know the status of a git project. Modified files unstaged for a commit, untracked files etc.
+
+git add .
+Will add all untracked files to the staging area.
+
+git commit -m "Message briefly describing changes made to the project"
+
+SETTING UP SSH
+--------------------------------------------
+On windows, you need to use the git bash program
+
+Open Git Bash (if on Windows)
+
+cd "path/to/project/here"
+To switch to project directory
+
+ls -a
+Lists out the files in the project including hidden files.
+(Lists in column view by default)
+
+ls -a -l
+Lists out the files in row view (line by line)
+
+ls -a -l ~/.ssh
+Checks if you have ssh keys set up in your project directory.
+If the file list contains a file called "id_rsa" and another called "id_rsa.pub" then it means a set of ssh keys already exist for that project.
+
+ssh-keygen -t rsa -b 4096 -C "babatundebash@gmail.com"
+Breaking it down:
+* Generates ssh keypair using the type (-t) rsa.
+* "RSA (Rivest–Shamir–Adleman) is an algorithm used by modern computers to encrypt and decrypt messages. It is an asymmetric cryptographic algorithm. Asymmetric means that there are two different keys. This is also called public key cryptography, because one of the keys can be given to anyone."
+rsa is very secure and is the recommended type.
+* -b 4096 specifies the number of bits for the key (most common)
+* -C "babatundebash@gmail.com" adds a comment for the key which is my e-mail
+After running, Command will ask for:
+* file location to save the keys (press enter for default or change if desired)
+* ssh passphrase (press enter for empty passphrase or enter passphrase and press enter)
+The key is then generated.
+
+eval "$(ssh-agent -s)"
+Lists out your agent PID
+
+ssh-add ~/.ssh/id_rsa	(Windows and Linux)			ssh-add -K ~/.ssh/id_rsa		(Mac)
+The ssh-add command prompts the user for a private key password and adds it to the list maintained by ssh-agent. Once you add a password to ssh-agent, you will not be prompted for it when using SSH or scp to connect to hosts with your public key.
+
+git remote add origin git@github.com:username/project-name.git
+Connects an existing local repository to a remote repository
+
+To enable pushing to github (remote), it is important to add the SSH Keys to the Github account first.
+* On github.com
+* Settings -> SSH and GPG Keys -> New SSH Keys
+* Enter Title
+* Enter Key
+
+To get the SSH Key - in Command Prompt or git bash for windows
+cat ~/.ssh/id_rsa.pub
+This will paste the ssh string to the console. It's really long. Highlight, Copy and Paste in github.
+Complete the adding process (it may ask for password confirmation)
+
+ssh -T git@github.com
+This will test the ssh with github servers. If it works, it has been setup successfully.
+P.S: Enter yes when asked to continue connecting.
+
+git push -u origin master
+Pushes contents of the repository to the remote origin (github) master branch
