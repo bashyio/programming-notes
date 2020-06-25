@@ -48,6 +48,11 @@ git add .
 Will add all untracked files to the staging area.
 
 git commit -m "Message briefly describing changes made to the project"
+Commits the tracked files to the repo
+
+git rm -r --cached .
+Clears the repository
+(This is useful when you want to remove gitignore files already added to the repo. It should be followed by the add and commit command)
 
 SETTING UP SSH
 --------------------------------------------
@@ -87,8 +92,8 @@ Lists out your agent PID
 ssh-add ~/.ssh/id_rsa	(Windows and Linux)			ssh-add -K ~/.ssh/id_rsa		(Mac)
 The ssh-add command prompts the user for a private key password and adds it to the list maintained by ssh-agent. Once you add a password to ssh-agent, you will not be prompted for it when using SSH or scp to connect to hosts with your public key.
 
-git remote add origin git@github.com:username/project-name.git
-Connects an existing local repository to a remote repository
+------------
+DEPLOYING TO GITHUB
 
 To enable pushing to github (remote), it is important to add the SSH Keys to the Github account first.
 * On github.com
@@ -101,9 +106,16 @@ cat ~/.ssh/id_rsa.pub
 This will paste the ssh string to the console. It's really long. Highlight, Copy and Paste in github.
 Complete the adding process (it may ask for password confirmation)
 
+git remote add origin git@github.com:username/project-name.git
+Connects an existing local repository to a remote repository
+
 ssh -T git@github.com
 This will test the ssh with github servers. If it works, it has been setup successfully.
 P.S: Enter yes when asked to continue connecting.
 
 git push -u origin master
 Pushes contents of the repository to the remote origin (github) master branch
+
+------------
+DEPLOYING TO HEROKU
+
