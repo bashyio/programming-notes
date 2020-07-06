@@ -16,17 +16,13 @@ Installing Global Package:
 npm install -g create-react-app
 
 Generating a Project:
-npx create-react-app myapp
+create-react-app myapp
 //This Creates a new React App in Directory: myapp
 
 Remove Global Package:
 npm uninstall -g create-react-app
 
 -g means "globally". When installed globally, the installed package can be "initialized" anywhere afterwards.
-
-Alternative Command:
-npx create-react-app myapp
-//Using npx doesn't require an initial declaration of npm as it will check whether the "command or package" exists in a path first and then execute it if that is the case. If it wasn't previously installed; it 
 
 npm install webpack --save-dev
 npm install webpack
@@ -180,7 +176,7 @@ const OuterComponent = () => {
 
 ----------------------------------------------------------
 
-React's Props System (write about this when you're a pro)
+React's Props System
 ----------
 It's a system of passing data from a parent component to a child/nested component. The main goal of the prop system is customizing and configuring child components to allow for multiple reuse.
 
@@ -668,7 +664,10 @@ Most Popularly Used:
 - fetch: Function built into Modern Browsers
 - axios: Stand Alone 3rd party package that can be built into a react app using the npm
 -------
-Using Axios to fetch make a request:
+Using Axios to make a request:
+
+Install
+npm install axios --save
 
 We use the axios.get method to make api requests.
 It takes 2 main arguments, the request url and a config object.
@@ -768,6 +767,221 @@ componentDidMount() {
 }
 
 ----------------------------------------------------------
+HIGHER-ORDER COMPONENTS
+
+Higher-order components (HOCs) in React were inspired by higher-order functions in JavaScript. A HOC is an advanced technique for reusing logic in React components. It is a pattern created out of React’s compositional nature.
+
+Higher-order functions in JavaScript take some functions as arguments and return another function. They enable us to abstract over actions, not just values, They come in several forms, and they help us to write less code when operating on functions and even arrays.
+
+A higher-order component (HOC) is an advanced element for reusing logic in React components. Components take one or more components as arguments, and return a new upgraded component. Sounds familiar, right? They are similar to higher-order functions, which take some functions as an argument and produce a new function.
+
+FACTS ABOUT HOCS
+- We don’t modify or mutate components. We create new ones.
+- A HOC is used to compose components for code reuse.
+- A HOC is a pure function. It has no side effects, returning only a new component.
+
+A HOC is structured like a higher-order function:
+
+- It is a component.
+- It takes another component as an argument.
+- Then, it returns a new component.
+- The component it returns can render the original component that was passed to it.
+
+The snippet below shows how a HOC is structured in React:
+
+
+import React from 'react';
+// Take in a component as argument WrappedComponent
+const higherOrderComponent = (WrappedComponent) => {
+// And return another component
+  class HOC extends React.Component {
+    render() {
+      return <WrappedComponent />;
+    }
+  }
+  return HOC;
+};
+
+More: https://www.smashingmagazine.com/2020/06/higher-order-components-react/
+
+----------------------------------------------------------
+REACT HOOKS SYSTEM
+
+React hooks are a way to write reusable code instead of more classic techniques like Inheritance in Functional Components. They are in-built functions that allow React developers to use state and lifecycle methods inside functional components, they also work together with existing code, so they can easily be adopted into a codebase.
+
+They allow React Developers to enjoy the following benefits:
+- Improved code reuse;
+- Better code composition;
+- Better defaults;
+- Sharing non-visual logic with the use of custom hooks;
+- Flexibility in moving up and down the components tree.
+
+Primitive Hooks (Hooks that Come Shipped with React):
+----------------
+1. useState
+
+Function that lets you use state in a functional component
+
+const [variable, variableSetter] = useState(initialValue)
+
+Calling useState in a functional component returns an array of 2 values; the state variable and the setter function. The setter is used to update the value of the state variable within the component. useState takes an argument that is used to set the initial value of the state variable.
+
+E.g:
+
+import React, { useState } from "react";
+
+const itemList = ({items}) => {
+	const [activeIndex, setActiveIndex] = useState(0) 
+	//useState is used above to create a state variable activeIndex with default value 0. Anytime we want to change the value of activeIndex, we call setActiveIndex(value)
+	const switchActive = (index) => {
+		setActiveIndex(index)
+		//Here setActiveIndex is used to set the state variable activeIndex
+	}
+	const renderedList =  items.map((item, index) => {
+		const active = activeIndex === index ? ' active' : ''
+		return (
+			<React.Fragment key = {item.key}>
+				<li class=`${active}` onClick={() => switchActive(index)}>{item.title}</li>
+			</React.Fragment>
+		)
+	})
+}
+
+
+----------------
+2. useEffect
+
+Function that lets you use something like lifecycle methods in a functional component
+We can configure the useEffect hook to run some code automatically in 1 of 3 scenarios.
+
+1. - When the component is rendered for the first time (only).
+2. - When the component is rendered for the first time and whenever it rerenders.
+3. - When the component is rendered for the first time and whenever it rerenders and some piece of data in the component has changed.
+
+useEffect takes 2 arguments:
+- a function to be executed
+- a variable that determines when the function is executed
+
+How does this variable determine when the function is executed?
+- When it's an empty array []
+ 	Runs at initial render
+- When we don't pass any variable at all
+	Runs at initial render
+	Runs after every rerender
+- When it's an array with variables (they are usually state variable) [var1, var2]
+	Runs at initial render
+	Runs after every rerender only if the value of any of the variables in the array has changed.
+
+E.g:
+
+import React, { useState, useEffect } from "react";
+
+const Search = () => {
+  const [term, setTerm] = useState("");
+
+  useEffect(() => {
+    console.log(
+      "I RUN AT FIRST AND AFTER EVERY RENDER IF THE VALUE OF TERM CHANGES"
+    );
+  }, [term]);
+
+  return (
+    <div>
+      <div className="ui form">
+        <div className="field">
+          <label>Enter Search Term</label>
+          <input
+            className="input"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Search;
+
+//P.S: An async function cannot be passed as useEffect argument. However we can have an async function inside of it or use promises.
+
+------
+Returning a Function from useEffect
+
+Every effect may return a function that cleans up after it.
+
+When we return a function from useEffect(), react executes that function when the component unmounts. This phase of a component is called the 'cleanup' phase. A function returned from useEffect is equivalent to using componentWillUnmount in Class Components. Hence this is the best time to do cleaning up as the function returned still has access to the current value of variables and state in the component just before unmounting.
+
+E.g: 
+
+useEffect(() => {
+    console.log(
+      "I RUN AT FIRST AND AFTER EVERY RENDER IF THE VALUE OF TERM CHANGES"
+    );
+    return () => {
+    	console.log('I run just before unmounting')
+    }
+  }, [term]);
+
+More: https://reactjs.org/docs/hooks-effect.html
+----------------
+3. useRef:
+
+Function that lets you create a 'ref' in a function component
+
+
+
+
+----------------
+4. useContext
+5. useReducer
+6. useCallback
+7. useMemo
+8. useImperativeHandle
+9. useLayoutEffect
+10. useDebugValue
+
+
+Custom Hooks:
+Custom Hooks let you extract component logic into reusable functions.
+
+More: https://reactjs.org/docs/hooks-intro.html
+----------------------------------------------------------
+DANGEROUSLY SET INNERHTML
+
+There are times when we may find ourself dealing with direct html code inside our react app. For example when working with 3rd party libraries or making API requests that return html code.
+When this happens, we have to first convert the html string to JSX before it can render properly or else all html tags in the code will be converted to escape characters and the result will just be typed out html code.
+
+How to do this?
+Create an empty html element object in JSX and pass the html string as an attribute via an object.
+E.g:
+
+const htmlstring = 'You be goat? <b>No dey do this kind thing!</b>'
+
+return (
+	<div>
+		<h1>Stop am!</h1>
+		<span dangerouslySetInnerHTML={{ __html: htmlstring }}></span>
+	</div>
+)
+-------------
+Now, there is a reason why this attribute is deliberately called dangerouslySetInnerHTML.
+Why? When injecting html code directly into a react app like this, we are creating a serious security loophole as we are vulnerable to cross-site scripting (XSS) attacks without proper sanitizing first.
+
+To protect against xss attacks form 3rd party platforms in this manner, it is important to sanitize the HTML first.
+We can use sanitizer libraries like dompurify. https://github.com/cure53/DOMPurify
+
+More on this:
+https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb
+----------------------------------------------------------
+
+See Online for Course Number:
+138
+153
+
+Suits
+
+----------------------------------------------------------
 REDUX! - MWAHAHAHAHAHAHA!
 
 Redux is a predictable state container for JavaScript apps, and a very valuable tool for organizing application state. It’s a popular library to manage state in React apps, but it can be used just as well with Angular, Vue.js or just plain old vanilla JavaScript.
@@ -815,7 +1029,7 @@ In the example above, the function addToDo is the action creator and it returns 
 -------------
 Dispatch:
 
-dispatch is a function of the Redux store used to dispatch an action and trigger state changes to the store. It is part of the Redux l ibrary itself.
+dispatch is a function of the Redux store used to dispatch an action and trigger state changes to the store. It is part of the Redux library itself.
 -------------
 Reducers:
 
@@ -840,7 +1054,7 @@ In the example above, the state holds the list of To-Do Item. when the toDoReduc
 ----------------------------------------------------------
 GENERAL REACT-REDUX NOTE:
 
-Using the Redux to Manage State generally means less class-based components and more functional components.
+Using the Redux to Manage State generally means very few class-based components and more functional components.
 To learn more about how state conventions and if/when to manage state in components while using Redux: https://redux.js.org/faq/organizing-state
 
 
@@ -854,13 +1068,57 @@ Directory Structure in src for React-Redux Applications:
 
 
 ----------------------------------------------------------
+Named vs Default  Import/Exports
+------
+Default:
+
+//module file
+const namedModule = () => {
+	return 'bla bla bla'
+}
+export default namedModule
+
+//file importing to
+import  namedModule from filelocation
+------
+Named:
+
+//module file
+export const namedModule = () => {
+	return 'bla bla bla'
+}
+
+//file importing to
+import { namedModule } from filelocation
+
+----------------------------------------------------------
+Provider
+
+The <Provider /> makes the Redux store available to any nested components that have been wrapped in the connect() function.
+
+Since any React component in a React Redux app can be connected, most applications will render a <Provider> at the top level, with the entire app’s component tree inside of it.
+
+Normally, you can’t use a connected component unless it is nested inside of a <Provider>.
+
+----------------------------------------------------------
+RESOURCES TO REVISIT:
 
 Semantic UI:
 https://semantic-ui.com/
 https://cdnjs.com/libraries/semantic-ui
 
+Great article on React Redux: https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
+React separation of concerns (Smart and Dumb Components): https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0
+Getting closure on React Hooks: https://www.youtube.com/watch?v=KJP1E-Y-xyo&feature=emb_title
+https://www.netlify.com/blog/2019/03/11/deep-dive-how-do-react-hooks-really-work/
+
 Writing Clean Components:
 https://itnext.io/write-clean-er-components-jsx-1e70491baded
+
+Folder Structure:
+https://reactjs.org/docs/faq-structure.html
+https://www.robinwieruch.de/react-folder-structure
+https://medium.com/@Charles_Stover/optimal-file-structure-for-react-applications-f3e35ad0a145
 ----------------------------------------------------------
 
 1. POSSIBLE CHALLENGES:
@@ -868,7 +1126,5 @@ https://itnext.io/write-clean-er-components-jsx-1e70491baded
 Fun interview question.
 Build a minimal redux implementation having just the store and it's reducer.
 Even better if the candidate doesn't know what this is. You the interviewer can get to walk through problem scenarios until you both build out the implementation.
-
-2. 
 
 ----------------------------------------------------------

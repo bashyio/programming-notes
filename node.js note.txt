@@ -100,6 +100,19 @@ E.g:
 
 -g
 Installs a module globally and not into the project directory. The module is downloaded and installed on your PC's operating system as against in your local project. When this is used, the package is not added to your dependencies.
+
+--save
+This saves the module as a dependency. It is updated in the package.json file. P.S: This is enabled by default.
+
+--savedev
+This saves the module as a dev dependency.
+
+-save-optional
+This saves the module as an optional dependency.
+----------
+To uninstall a module from a project
+
+npm uninstall projectname
 --------------------------------------------------------------------------------------------------------------------
 
 require()
@@ -723,10 +736,6 @@ fetch(urlHere, {}).then((response) => {
 })
 
 
-
 --------------------------------------------------------------------------------------------------------------------
 
-RANDOMS
-
-Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download
 Good resource that talks about Introduction to Node, testing, hosting etc. - https://medium.com/javascript-scene/introduction-to-node-express-90c431f9e6fd

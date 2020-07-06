@@ -1,0 +1,413 @@
+Mongo DB and NoSQL Databases
+
+NoSQL - Not only Structured Query Langauge
+
+An alternative to traditional relational databases in which data is placed in tables and data schema is carefully designed before the database is built. NoSQL databases are especially useful for working with large sets of distributed data.
+
+SQL VS NOSQL
+
+The five critical differences of SQL vs NoSQL:
+SQL databases are relational, NoSQL are non-relational.
+SQL databases use structured query language and have a predefined schema. NoSQL databases have dynamic schemas for unstructured data.
+SQL databases are vertically scalable, NoSQL databases are horizontally scalable.
+SQL databases are table based, while NoSQL databases are document, key-value, graph or wide-column stores.
+SQL databases are better for multi-row transactions, NoSQL are better for unstructured data like documents or JSON.
+
+HOW DATA IS STORED
+
+  SQL: 
+  Data is stored in a table and the database  can have as many tables as possible.
+  E.g
+  id - 1
+  name - Bashy
+  email - email@email.com
+  In SQL, a data entry is known as a row or record and the table fields are known as columns.
+
+  NoSQL:
+  Data is stored in a collection and the database can have as many collections as possible. They look like JSON objects.
+  E.g:
+  [
+    {
+      "id": "1",
+      "name": "Bashy",
+      "email": "email@email.com"
+    }
+  ]
+  In NoSQL, a data entry is known as a document. The fields are known as "fields".
+
+More on SQL vs NoSQL - https://www.xplenty.com/blog/the-sql-vs-nosql-difference/
+
+
+INSTALLATION:
+Download here - https://www.mongodb.com/try/download/community
+(zip or msi version)
+Community Version is Free. Enterprise is Paid.
+
+Zip Installation Procedure (WIndows):
+- Extract zip to folder named mongodb in C:\Program Files
+- Create folder named mongodb-data in C:\Program Files
+
+To run Mongo DB in  CMD/Powershell (as administrator) and run the following command:
+C:\Progra~1\mongodb\bin\mongod.exe --dbpath=C:\Progra~1\mongodb-data
+
+Some lines to the end you should see: waiting for connections on port 27017. That's the MongoDB default port.
+(Keep in running in console)
+
+MONGODB DATABASE VIEWER:
+
+Robo3T (formally RoboMongo)
+Download here: https://robomongo.org/download
+Extract zip to a named folder  C:\Program Files (windows)
+
+Run Robo3T and create a new connection for localhost.
+Name it "Local MongoDB Database".
+Click on test to confirm it's working (Ensure mongod.exe is running in cmd or that the mongodb service is running)
+Click Save
+Click Connect
+
+To run commands, Right click on the Connection Title on Left-hand panel and click on "Open Shell"
+E.g:
+Type: db.version()
+Click Play button
+
+NPM MODULE:
+https://www.npmjs.com/package/mongodb
+npm i mongodb
+--------------------------------------------------------------------------------------------------------------------
+MONGODB SYNTAX
+
+------------------------------------------------------------------
+Sample Start Syntax:
+
+const {
+  MongoClient,
+  ObjectID
+} = require('mongodb')
+
+const connectionURL = 'mongodb://127.0.0.1:27017'
+const databaseName = 'task-manager'
+
+MongoClient.connect(connectionURL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}, (error, client) => {
+  if (error) {
+    return console.log('Unable to Connect to DB')
+  }
+  const db = client.db(databaseName)
+
+  //database code here
+})
+
+------------------------------------------------------------------
+INSERTING
+
+Insert One:
+
+db.collection('users').insertOne({
+  name: 'Bashy',
+  age: 28
+}, (error, result) => {
+  if (error) {
+    return console.log('Unable to Insert user')
+  }
+  console.log(result.ops)
+})
+
+
+Insert Many:
+
+db.collection('tasks').insertMany([{
+  description: 'Learn Node',
+  completed: true
+}, {
+  description: 'Learn Express',
+  completed: true
+}, {
+  description: 'Learn MongoDB',
+  completed: false
+}], (error, result) => {
+  if (error) {
+    console.log('Unable to insert documents')
+  }
+  console.log(result.ops)
+})
+
+------------------------------------------------------------------
+FETCHING
+
+Find One:
+
+db.collection('users').findOne({
+  name: 'Bashy',
+  age: 28
+}, (error, user) => {
+  console.group(user)
+})
+
+Find One using ObjectID:
+
+db.collection('users').findOne({
+  _id: new ObjectID('5efbe6a191436f266090b529')
+}, (error, user) => {
+  console.group(user)
+})
+
+FInd Many:
+
+db.collection('users').find({
+  age: 28
+}).toArray((error, users) => {
+  console.log(users)
+})
+
+Note: find itself doesn't return an array of the results directly. Instead it returns a cursor for a query that can be used to iterate over the results. This is because the next action after running a fins is not always to fetch the array of results directly. There are several other things that can be done like count the result. We can even run 2 actions on a find cursor. E.g:
+
+let users = db.collection('users').find({
+  age: 28
+})
+users.count((error, count) => {
+  console.log(count)
+})
+users.toArray((error, users) => {
+  console.log(users)
+})
+
+This will print out the no of results first then an array of results next.
+
+------------------------------------------------------------------
+UPDATING
+
+Update One:
+
+db.collection('users').updateOne({
+    _id: new ObjectID('5efbe6a191436f266090b529')
+  }, {
+    $set: {
+      name: 'Dammy'
+    }
+  }).then((result) => {
+    console.log(result.modifiedCount)
+  }).catch((error) => {
+    console.log(error)
+  })
+
+P.S:
+The $set object is known as an update operator. There are different update operators in node.
+Some other popular ones:
+$unset - removes a field from a document
+$rename - renames a field
+$inc - increments the value 
+More: https://docs.mongodb.com/manual/reference/operator/update/index.html
+
+Update Many:
+
+db.collection('users').updateMany({
+    age: 30
+  }, {
+    $inc: {
+      age: 1
+    }
+  }).then((result) => {
+    console.log(result.modifiedCount)
+  }).catch((error) => {
+    console.log(error)
+  })
+
+------------------------------------------------------------------  
+DELETING
+
+Delete One:
+
+db.collection('tasks').deleteOne({
+  _id: new ObjectID('5efc0280aa336dbea1307f55')
+}).then((response) => {
+  console.log(response.deletedCount)
+}).catch((error) => {
+  console.log(error)
+})
+
+Delete Many:
+
+db.collection('users').deleteMany({
+  age: {
+    $gt: 38
+  }
+}).then((result) => {
+  console.log(result.deletedCount)
+}).catch((error) => {
+  console.log(error)
+})
+
+This example uses a comparison query operator to fetch the documents that will be deleted. Instead of setting a direct value to age, an object with operator $gt which means "greter than" that then holds the value is passed. This means that all documents with age greater than 38 will be deleted.
+
+------------------------------------------------------------------
+MongoDB GUID
+
+MongoDB Documents have an automated id field '_id' called GUID.
+
+While id is auto-generated when we insert a document into a collection, we can also generate one.
+
+How to Generate a GUID and inserting with it.
+
+First of all, ensure mongodb's ObjectID has been imported and defined. E.g:
+
+const {MongoClient, ObjectID} = require('mongodb')
+
+Generating the id and inserting:
+
+const id = new ObjectID()
+
+db.collection('users').insertOne({
+  _id: id,
+  name: 'Segun',
+  age: 38
+})
+
+P.S: This is just for testing purposes. There is no need to generate an id just for inserting as it's simply extra code and MongoDB is capable of doing this automatically.
+
+--------------------------------------------------------------------------------------------------------------------
+MONGOOSE  ODM (Npm Module)
+
+Mongoose is an object data modeling (ODM) library that provides a rigorous modeling environment for your data, enforcing structure as needed while still maintaining the flexibility that makes MongoDB powerful.
+
+Mongoose’s main value is that you can define schemas for your collections which are then enforced at the ODM layer by Mongoose. Mongoose.js also has utilities for simplifying Node’s callback patterns that make it easier to work with than the standard driver alone.
+
+In general, Mongoose makes it even easier to use MongoDB with Node.js.
+
+------------------------------------------------------------------
+Working with a Bare Bones Mongoose Model
+
+1. Import Mongoose
+
+const mongoose = require('mongoose')
+
+------
+
+2. Connect
+
+const server = '127.0.0.1:27017'
+const database = 'task-manager-api'
+
+mongoose.connect(`mongodb://${server}/${database}`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
+
+------
+
+3. Create Model
+
+To do this, we use the mongoose.model method and pass it 2 arguments:
+  - The name of the model
+  - The model schema
+    The schema describes the organization of data we want the module to handle by defining each field and specifying its data type. We use the schema to set up type casting, data validation etc. That way, we don't pass have models with boolean fields storing string values etc. 
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String
+  },
+  age: {
+    type: Number
+  }
+})
+
+const User = mongoose.model('User', userSchema)
+
+Alternatively, we can use this shorthand Method where the schema is passed directly as an object:
+
+const User = mongoose.model('User', {
+  name: {
+    type: String
+  },
+  age: {
+    type: Number
+  }
+})
+
+------
+
+4. Instantiate Model
+
+const me = new User({
+  name: 'Bashy',
+  age: 28
+})
+
+------
+
+5. Save Instance to Database
+
+me.save().then(() => {
+  console.log(me)
+}).catch((error) => {
+  console.log('Error!', error)
+})
+
+P.S:
+On saving a model instance to the database, mongodb auto adds a __v field that stores the version of the document.
+--------------------------------------------------------------------------------------------------------------------
+Mongoose Built-in Validation
+
+Mongoose has built-in validators that can be defined in the model schema.
+
+Examples:
+
+type: specifies field data type e.g Number, String etc
+required: specifies if the field is required or optional. true or false boolean.
+min: minimum (for numbers)
+max: maximum (for numbers)
+minLength: string minimum length 
+maxLength: string maximum length 
+
+Example Usage:
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    minLength: 2,
+    maxLength: 300
+  },
+  age: {
+    type: Number,
+    required: true,
+    min: 18
+  }
+})
+
+Learn  More: https://mongoosejs.com/docs/validation.html#built-in-validators
+
+--------------------------------------------------------------------------------------------------------------------
+Mongoose Validation Method
+
+Mongoose built-in validation is not enough to fully validate a model. We can however set up custom validation for a model while defining the model schema
+
+The format is: 
+
+const sampleSchema = new mongoose.Schema({
+  field: {
+    type: Number,
+    validate(value) {
+      if (value < 0) {
+        throw new Error('Number must be positive')
+      }
+    }
+  }
+})
+
+------
+Using the npm validator package
+
+https://www.npmjs.com/package/mongoose
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download
+Github API Doc: https://mongodb.github.io/node-mongodb-native/
+MongoDB Manual: https://docs.mongodb.com/manual/

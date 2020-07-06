@@ -114,8 +114,24 @@ This will test the ssh with github servers. If it works, it has been setup succe
 P.S: Enter yes when asked to continue connecting.
 
 git push -u origin master
-Pushes contents of the repository to the remote origin (github) master branch
+Pushes our latest commits in the local repository to the remote origin (github) master branch
 
 ------------
 DEPLOYING TO HEROKU
+
+heroku keys:add
+Will search for ssh keys on the PC and ask to confirm if we want to add them to our heroku account.
+
+heroku create application-name
+Creates a new application on the heroku server and returns 2 urls. One to view the project on heroku and the other the git repository url to push to.
+
+Setup Start script in package.json
+Examples:
+"start": "node src/app.js"
+
+To test start script
+npm run start
+
+git push heroku master
+Pushes our latest commits in the local repository to the heroku remote repository
 

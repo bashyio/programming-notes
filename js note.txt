@@ -1905,6 +1905,27 @@ const print = ({title, price}) => {
 	console.log(price)
 }
 ------------------------------------------------------------------------
+SELF INVOKING FUNCTIONS:
+
+Self invoking functions are functions that run immediately.
+Basically, they save you the extra step of decalring the function first before executing it.
+
+Instead of:
+
+const  run = (a, b) => {
+	console.log(a + b);
+}
+run(2, 2);
+
+We can do:
+
+((a,b) => {
+	console.log(a + b);
+})(2, 2)
+
+P.S: SELF INVOKING FUNCTIONS ARE NOT REUSABLE AS THEY ARE NOT PASSED TO A VARIABLE. ONLY USE THEM WHEN YOU WANT TO RUN A FUNCTION ONLY ONCE
+
+------------------------------------------------------------------------
 A Simple Introduction to Generator Functions
 
 GENERATOR FUNCTIONS
