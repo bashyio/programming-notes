@@ -835,6 +835,27 @@ replaceChild() - https://developer.mozilla.org/En/replacechild
 insertBefore() - https://developer.mozilla.org/En/insertbefore
 createTextNode() - https://developer.mozilla.org/en/DOM%3adocument.createTextNode
 ------------------------------------------------------------------------
+DOM contains() Method
+
+The contains() method returns a Boolean value indicating whether a DOM node is a descendant of a specified DOM node.
+
+E.g:
+
+Giving this DOM structure:
+
+<div id="myDIV">
+	<h3>Title</h3>
+	<div class="div-content">
+		<span id="mySPAN">Hey there</div>
+	</div>
+</div>
+
+And JS:
+
+let contains = document.getElementById("myDIV").contains(document.getElementById("mySPAN"));
+
+The value of contains would be true
+------------------------------------------------------------------------
 .textContent
 
 This property stores the text content of a selected element.

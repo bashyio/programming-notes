@@ -93,42 +93,7 @@ To import using path, the exact path of the module folder relative to the file c
 import MyModule from './my_module.js';
 
 ----------------------------------------------------------
-
-PERSONAL EXERCISE (Maybe write about this when you're a pro)
-
-Why do we extend from React.Component? Is it a subclass within the React Class? Is that even possible? This code aims to recreate this syntax behaviour in an attempt to further understand what happens behind the scene.
-
-class Baba {
-	constructor() {
-		this.origin = "A Being";
-	}
-}
-
-Baba.Component = class Component extends Baba {
-		constructor() {
-			super();
-			this.identity = "Baba"
-		}
-	}
-
-class Omo extends Baba.Component {
-	constructor() {
-		super()
-		this.identity += '\'s Child!'
-	}
-	identify() {
-		console.log('I am ' + this.identity);
-	}
-}
-
-babatunde = new Omo()
-console.log(babatunde.origin)
-babatunde.identify()
-
-As tested in the example above; the React.Component class is merely a subclass of an existing class that was namespaced to be identified as a React.Component. It's likely that Component is a subclass of the React class but without looking at the origin code there is no way to say for sure. It might as well be a stand-alone class that was just namespaced to be identified as "React.Component".
-
-----------------------------------------------------------
-React Components (write about this when you're a pro)
+React Components ***
 
 Components are the building blocks of any React app and a typical React app will have many of these. Simply put, a component is a JavaScript class or function that optionally accepts inputs i.e. properties(props) and returns a React element that describes how a section of the UI (User Interface) should appear. We can also use components to create an event handler. Event handlers are used to detect user interaction and respond to it.
 
@@ -338,7 +303,7 @@ class App extends React.Component {
 }
 ----------------------------------------------------------
 
-Component Lifecycle (write about this when you're a pro)
+Component Lifecycle ***
 
 A component lifecycle is a combination of all the stages a react component passes through  from "start" to "finish". They include:
 - Initialization: When it is created
@@ -491,7 +456,7 @@ fetchData (e) {
 }
 ------------------------
 
-Understanding 'this' in Class Components (write about this when you're a pro)
+Understanding 'this' in Class Components ***
 
 In Class Components, the default of value of this in an event handler function is not bound to the instance of that Component. Because of this, when we assign an event handler in React, we can run into issues because by default, the value of this will be undefined.
 
@@ -546,7 +511,7 @@ P.S:
 Never write conditional logic in the render method. 
 Use a helper function that is then called in render instead.
 ----------------------------------------------------------
-Uncontrolled vs Controlled Components (write about this when you're a pro)
+Uncontrolled vs Controlled Components ***
 
 ------------------------
 Uncontrolled Elements
@@ -669,9 +634,12 @@ Using Axios to make a request:
 Install
 npm install axios --save
 
-We use the axios.get method to make api requests.
-It takes 2 main arguments, the request url and a config object.
-The object argument usually consists of params & headers but this ultimately depends on the request being made and the API you're requesting from.
+-------
+axios.get
+
+We use axios.get to make get api requests.
+It takes 2 main arguments, the request url and the query object.
+The query object usually consists of params & headers but this ultimately depends on the request being made and the API you're requesting from.
 
 E.g:
 
@@ -681,6 +649,26 @@ axios.get("https://api.unsplash.com/search/photos", {
 		Authorization: "Client-ID IJ9hgl81y7tSa-yZHa8p0RVtrYrup7EWWjsvzR5bIEw",
 	},
 });
+
+-------
+axios.post
+
+We use axios.post to make get post requests.
+It takes 3 main arguments, the request url, the body and the query object.
+The body is where we usually send data that is submitted to the api e.g JSON objects etc.
+Just like in get, the query object usually consists of params & headers but this ultimately depends on the request being made and the API you're requesting from.
+
+E.g:
+
+axios.post('/user', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+}, {
+  headers: {'X-Custom-Header': 'value'}
+})
+
+Some apis may request that you send all data in your post request in the query object
+-------
 
 axios returns a promise on completion of a request to there are 2 ways to get the request results:
 
@@ -718,6 +706,11 @@ axiosWrapper = async (term) => {
     });
     display(response.data.results)
   };
+
+
+More:
+https://www.npmjs.com/package/axios
+https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
 ----------------------------------------------------------
 The Purpose of Keys in Lists
 
@@ -727,7 +720,7 @@ When making updates to a list, adding key to each entry in the list makes it eas
 For example: If the items in a list didn't have unique keys and say if one of them were to change, React would have to re-create the whole list on re-render as against just altering the item that has changed.
 
 ----------------------------------------------------------
-React Refs (write about this when you're a pro)
+React Refs ***
 
 Refs provide a way to access DOM nodes or React elements created in the render method.
 However, The React documentation recommends to not use refs for anything that can be done declaratively.
@@ -845,9 +838,11 @@ const itemList = ({items}) => {
 			</React.Fragment>
 		)
 	})
+
+	return <div>{renderList()}</div>;
 }
-
-
+---
+P.S: Yes, you can render an array of jsx "html" objects.
 ----------------
 2. useEffect
 
@@ -871,7 +866,7 @@ How does this variable determine when the function is executed?
 - When it's an array with variables (they are usually state variable) [var1, var2]
 	Runs at initial render
 	Runs after every rerender only if the value of any of the variables in the array has changed.
-
+------
 E.g:
 
 import React, { useState, useEffect } from "react";
@@ -902,7 +897,6 @@ const Search = () => {
 };
 
 export default Search;
-
 //P.S: An async function cannot be passed as useEffect argument. However we can have an async function inside of it or use promises.
 
 ------
@@ -911,7 +905,7 @@ Returning a Function from useEffect
 Every effect may return a function that cleans up after it.
 
 When we return a function from useEffect(), react executes that function when the component unmounts. This phase of a component is called the 'cleanup' phase. A function returned from useEffect is equivalent to using componentWillUnmount in Class Components. Hence this is the best time to do cleaning up as the function returned still has access to the current value of variables and state in the component just before unmounting.
-
+------
 E.g: 
 
 useEffect(() => {
@@ -922,17 +916,39 @@ useEffect(() => {
     	console.log('I run just before unmounting')
     }
   }, [term]);
-
+------
 More: https://reactjs.org/docs/hooks-effect.html
 ----------------
 3. useRef:
 
-Function that lets you create a 'ref' in a function component
+Function that lets you create a 'ref' in a function component.
+------
+Example:
 
+import React, {useRef} from 'react'
 
+const focusInput = () => {
+	const inputEl = useRef()
 
+	const setFocus = () => {
+		inputEl.current.focus()}
+	}
+
+	return (
+		<div>
+			<input type="text" ref={inputEl} />
+			<button type="button" onClick={() => setFocus }>Focus</button
+		</div>
+	)
+}
+
+export default focusInput;
+------
+In the simple example above, anytime the button is clicked on, focus is set to the input field.
 
 ----------------
+Other hooks:
+
 4. useContext
 5. useReducer
 6. useCallback
@@ -941,9 +957,25 @@ Function that lets you create a 'ref' in a function component
 9. useLayoutEffect
 10. useDebugValue
 
+More: https://reactjs.org/docs/hooks-intro.html
+----------------
 
 Custom Hooks:
+
 Custom Hooks let you extract component logic into reusable functions.
+
+They:
+- are the best way to create reusable code in a React project asides components
+- are created by extracting hook-related code out of a function component
+- always make use of at least one primitive hook internally
+- should have only 1 purpose.
+- are perfect for data fetching
+
+Process for creating Custom Hook:
+- Identify each line of code related to a single purpose
+- Identify the inputs of that code
+- Identify the outputs to that code
+- Extract all of the code into a separate function, receiving the inputs as arguments and returning the outputs
 
 More: https://reactjs.org/docs/hooks-intro.html
 ----------------------------------------------------------
@@ -974,13 +1006,28 @@ We can use sanitizer libraries like dompurify. https://github.com/cure53/DOMPuri
 More on this:
 https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb
 ----------------------------------------------------------
+Named vs Default  Import/Exports
+------
+Default:
 
-See Online for Course Number:
-138
-153
+//module file
+const namedModule = () => {
+	return 'bla bla bla'
+}
+export default namedModule
 
-Suits
+//file importing to
+import  namedModule from filelocation
+------
+Named:
 
+//module file
+export const namedModule = () => {
+	return 'bla bla bla'
+}
+
+//file importing to
+import { namedModule } from filelocation
 ----------------------------------------------------------
 REDUX! - MWAHAHAHAHAHAHA!
 
@@ -988,7 +1035,6 @@ Redux is a predictable state container for JavaScript apps, and a very valuable 
 
 What does Predictable State Container mean really?
 A State Container holds all the state of your application. It doesn't let you change that state directly, but instead forces you to describe changes as plain objects called "actions". Redux is a Predicatable State Container because Actions can be recorded and replayed later. You always know where the state comes from; the store, and who will be able to update it; Actions.
-
 
 WHEN TO USE REDUX?
 
@@ -1025,7 +1071,7 @@ const addToDo(task) {
 	}
 }
 
-In the example above, the function addToDo is the action creator and it returns an action object with type "ADD_TODO" and a payload object that holds information on the To Do item being added.
+In the example above, the function addToDo is the action creator and it returns an action object with type "ADD_TODO" and a payload object that holds information on the To-Do item being added.
 -------------
 Dispatch:
 
@@ -1040,7 +1086,7 @@ Reducer Example:
 const toDoReducer = (state = [], action) => {
 	switch (action.type) {
 		case 'ADD_TODO':
-			const newState = [...state, payload.task]
+			const newState = [...state, payload]
 			return newState
 
 		//we can add more cases here for different action types
@@ -1054,9 +1100,8 @@ In the example above, the state holds the list of To-Do Item. when the toDoReduc
 ----------------------------------------------------------
 GENERAL REACT-REDUX NOTE:
 
-Using the Redux to Manage State generally means very few class-based components and more functional components.
+Using Redux to Manage State generally means very few class-based components and more functional components.
 To learn more about how state conventions and if/when to manage state in components while using Redux: https://redux.js.org/faq/organizing-state
-
 
 Directory Structure in src for React-Redux Applications:
 
@@ -1066,42 +1111,166 @@ Directory Structure in src for React-Redux Applications:
 	/reducers 			- Contains files related to reducers
 	index.js 				- Set up both the react and redux sides of the app
 
-
 ----------------------------------------------------------
-Named vs Default  Import/Exports
-------
-Default:
+combineReducers(reducers)
 
-//module file
-const namedModule = () => {
-	return 'bla bla bla'
-}
-export default namedModule
+As your app grows more complex, you'll want to split your reducing function into separate functions, each managing independent parts of the state. The combineReducers helper function turns an object whose values are different reducing functions into a single reducing function you can pass to createStore.
 
-//file importing to
-import  namedModule from filelocation
-------
-Named:
+You can control state key names by using different keys for the reducers in the passed object.
+For example, you may call combineReducers({ todos: myTodosReducer, counter: myCounterReducer })
 
-//module file
-export const namedModule = () => {
-	return 'bla bla bla'
-}
+Example:
 
-//file importing to
-import { namedModule } from filelocation
+import { combineReducers } from 'redux'
+
+const songsReducer = () => {
+  return [
+    { title: "Joro", artist: "Wizkid", duration: "4:23" },
+    { title: "Risky ft. Popcaan", artist: "Davido", duration: "4:10" },
+    { title: "On The Low", artist: "Burna Boy", duration: "3:22" },
+    { title: "Who U Epp", artist: "Olamide", duration: "3:48" },
+  ];
+};
+
+const selectedSongReducer = (selectedSong = null, { type, payload }) => {
+  switch (type) {
+    case "SONG_SELECTED":
+      return payload;
+    default:
+      return selectedSong;
+  }
+};
+
+export default combineReducers({
+  songs: songsReducer,
+  selectedSong: selectedSongReducer,
+});
+
+-------
+More: https://redux.js.org/api/combinereducers
 
 ----------------------------------------------------------
 Provider
 
 The <Provider /> makes the Redux store available to any nested components that have been wrapped in the connect() function.
-
 Since any React component in a React Redux app can be connected, most applications will render a <Provider> at the top level, with the entire app’s component tree inside of it.
-
 Normally, you can’t use a connected component unless it is nested inside of a <Provider>.
 
+E.g:
+
+ReactDOM.render(
+  <Provider store={createStore(reducers)}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
+
+More: https://react-redux.js.org/api/provider
 ----------------------------------------------------------
-RESOURCES TO REVISIT:
+Accessing the Redux Store from a Component:
+
+Assuming we have an items called title in the redux store, and need to access it from a component, how do we do that?
+--------------
+CLASS COMPONENTS:
+
+import React, { Components } from 'react'
+import { connect } from 'react-redux'
+
+class TestComponent {
+	render() {
+		return (
+			<div>{this.props.title}</div>
+		)
+	}
+}
+
+const mapStateToProps = (state) = > {
+	return { list: state.list }
+}
+
+export default connect(mapStateToProps)(TestComponent);
+---
+Connect returns the component instance with a props property that can be accessed using this.props
+this.props in turn contains 2 properties:
+1. list - The value that is extracted from the store in mapStateToProps
+2. The dispatch function that can be used to dispatch an action and trigger state changes.
+--------------
+FUNCTIONAL COMPONENTS:
+
+There are  2 ways of accessing the store in Functional Components:
+------
+1. Using Connect:
+
+import React from "react";
+import { connect } from "react-redux";
+
+const TestComponent = (props) => {
+	return (
+		<div>{props.title}</div>
+	)
+}
+
+const mapStateToProps = (state) = > {
+	return { list: state.list }
+}
+
+export default connect(mapStateToProps)(TestComponent);
+---
+Just like in class components, the props contains the state variable returned in mapStateToProps and a dispatch function.
+------
+2. Using React Redux Hooks:
+
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+const list = useSelector((state) => state.list);
+const dispatch = useDispatch()
+
+const TestComponent () {
+	return (
+		<div>{this.props.title}</div>
+	)
+}
+
+export default TestComponent
+---
+Here, the useSelector & useDispatch hooks replace  connect.
+React-Redux also allows us to fetch the entire store using useStore. But this is not recommended as it is expensive.
+
+----------------------------------------------------------
+Redux Context System
+----------------------------------------------------------
+
+----------------------------------------------------------
+DEPLOYING REACT APPS
+------------------
+1. VERCEL (https://vercel.com/)
+
+Steps:
+- Login/Sign up
+- Install vercel in console using npm globally
+	npm install -g vercel
+- Login in Console
+	vercel login
+- To deploy a project the first time, navigate into the project dir in console and run:
+	vercel
+
+-  To deploy after updates:
+	vercel --prod
+
+2. NETLIFY (https://www.netlify.com/)
+
+Steps:
+- Login/Sign up
+- Deploy Project to Github
+- Connect Netlify to Github
+- Select Repository
+- Deploy site
+
+- To deploy after updates:
+	Commit and Push to the Github Remote Repo. It'll automatically deploy.
+----------------------------------------------------------
+USEFUL RESOURCES:
 
 Semantic UI:
 https://semantic-ui.com/
@@ -1119,12 +1288,45 @@ Folder Structure:
 https://reactjs.org/docs/faq-structure.html
 https://www.robinwieruch.de/react-folder-structure
 https://medium.com/@Charles_Stover/optimal-file-structure-for-react-applications-f3e35ad0a145
+
+Read about writing react requests in spearate folders. Good or bad practice.
+
+Learn more about create-react-app:
+https://create-react-app.dev/
+https://create-react-app.dev/docs/documentation-intro
+
+How big can a Redux Store Get - Best Practices - When to clear store etc
+
+React PWAs:
+https://www.infoq.com/news/2017/02/twitter-react-mobile-stack/
+https://blog.twitter.com/engineering/en_us/topics/open-source/2017/how-we-built-twitter-lite.html
+https://web.dev/progressive-web-apps/
+https://medium.com/better-programming/build-a-realtime-pwa-with-react-99e7b0fd3270
+https://blog.bitsrc.io/how-to-build-a-react-progressive-web-application-pwa-b5b897df2f0a
+https://koala42.com/build-a-pwa-app-with-react-js/
+
+Memoizing React Component:
+https://medium.com/@rossbulat/how-to-memoize-in-react-3d20cbcd2b6e
+https://dev.to/spukas/react-usememo-for-optimisation-5gna
+https://stackoverflow.com/questions/54023900/is-it-a-good-idea-to-memoize-all-of-my-react-components
 ----------------------------------------------------------
 
-1. POSSIBLE CHALLENGES:
+POSSIBLE CHALLENGES:
 
-Fun interview question.
-Build a minimal redux implementation having just the store and it's reducer.
-Even better if the candidate doesn't know what this is. You the interviewer can get to walk through problem scenarios until you both build out the implementation.
+1. Build a minimal redux implementation having just the store and it's reducer.
 
+----------------------------------------------------------
+BEST PRACTICE NOTEs:
+
+1. Always make sure to clean up when unmounting your components.
+	In functional components, use the cleaner function in useEffect.
+	In Class components, use componentWillUnmount.
+	
+	For example, if you add a vanilla js event listener to say the body to detect clicks that trigger an action in your component, ensure to remove the event listener in the cleaner function. Cleaning up before the component unmounts is especially important when 3rd party libraries interact with the component.
+
+2. Ensure that your application logic is not expensive for app performance. Monitor requests, optimize conditionals etc.
+
+3. Pay attention to all warnings and errors. Understand why they are logged in the console and eradicate them as much as possible.
+
+4. Memoize pure function components that are computation intensive to optimize the application. If a computation intensive component is not pure, it may be better to rewrite it.
 ----------------------------------------------------------
