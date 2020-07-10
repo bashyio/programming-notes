@@ -1276,8 +1276,40 @@ React Rules with Redux Thunk
 
 See practice blog project for example usage
 ----------------------------------------------------------
-Redux Context System
+Rules of Reducers:
+- Must return any value besides 'undefined'
+- Produces 'state' or data to be used inside of the app using only previous state and the action (reducers are pure)
+- Keep it Pure! It must not 'reach out of itself' to decide what value to return.
+	- No DOm queries, api calls, etc. just the old state passed to it.
+- Must not mutate its input 'state' argument directly. It should return a new one.
 ----------------------------------------------------------
+Lodash Memoize
+
+- Can be used to cache multiple network requests in a redux app to prevent overfetching (e.g in a timeline).
+- The memoized function is called only once - on first request and on the next call with the same argument, the previous data is sent. No matter how many times the request is made again. (until page refresh)
+---
+To Install:
+npm install --save lodash
+---
+Basic Example:
+
+We set it up in our actions file and use it to memoize the action creator.
+
+In (actions/index.js):
+
+export const fetchUser = (id) => (dispatch) => _fetchUser(id, dispatch);
+const _fetchUser = _.memoize(async (id, dispatch) => {
+  const response = await jsonPlaceholder.get(`/users/${id}`);
+
+  dispatch({ type: "FETCH_USER", payload: response.data });
+});
+---
+See blog practice project for a more extensive use
+
+More on Lodash: https://lodash.com/
+----------------------------------------------------------
+Redux Context System
+
 
 ----------------------------------------------------------
 DEPLOYING REACT APPS
@@ -1328,6 +1360,11 @@ CSS Modules or Styled Components
 
 ----------------------------------------------------------
 USEFUL RESOURCES:
+
+Redux DevTools
+https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd/related?hl=en
+https://medium.com/@samueldinesh/setting-up-redux-devtools-a-simple-guide-3b386a6254fa
+https://github.com/reduxjs/redux-devtools/blob/master/docs/Walkthrough.md#manual-integration
 
 Fake Online REST API for Testing and Prototyping:
 https://jsonplaceholder.typicode.com/
