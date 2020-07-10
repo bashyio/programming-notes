@@ -622,6 +622,14 @@ class SearchBar extends React.Component {
 In the example above, we pass the method onSearchSubmit as a props with key onSearch to the SearchBar child component. This method can then be invoked using this.props.onSearch in the SearchBar component
 
 ----------------------------------------------------------
+
+STATEFUL & STATELESS COMPONENTS
+
+Components in React can be stateful or stateless. Stateful components store information about the component’s state and provide the necessary context. In contrast, stateless components have no memory and cannot give context to other parts of the UI. They only receive props (inputs) from parent component and return you JSX elements. They are scalable and reusable, and similar to pure function in JavaScript.
+
+One of React best practices is to keep your stateful data-loading logic separate from your rendering stateless logic. It’s better to have one stateful component to load data and another stateless component to display that data. This reduces the complexity of the components.
+
+----------------------------------------------------------
 USING APIS & FETCHING DATA IN REACT
 
 Most Popularly Used:
@@ -1039,6 +1047,9 @@ A State Container holds all the state of your application. It doesn't let you ch
 WHEN TO USE REDUX?
 
 The bigger and more complex your app gets, the more likely it’s going to be that you’d benefit from using Redux. If you’re starting to work on an app and you anticipate that it’ll grow substantially, it can be a good idea to start out with Redux right off the bat so that as your app changes and scales you can easily implement those changes without refactoring a lot of your existing code.
+
+Install:
+npm i --save redux react-redux
 ----------------------------------------------------------
 
 Redux Cycle:
@@ -1171,7 +1182,7 @@ Accessing the Redux Store from a Component:
 
 Assuming we have an items called title in the redux store, and need to access it from a component, how do we do that?
 --------------
-CLASS COMPONENTS:
+Redux with Class Components:
 
 import React, { Components } from 'react'
 import { connect } from 'react-redux'
@@ -1195,7 +1206,7 @@ this.props in turn contains 2 properties:
 1. list - The value that is extracted from the store in mapStateToProps
 2. The dispatch function that can be used to dispatch an action and trigger state changes.
 --------------
-FUNCTIONAL COMPONENTS:
+Redux with Functional Components:
 
 There are  2 ways of accessing the store in Functional Components:
 ------
@@ -1237,6 +1248,33 @@ export default TestComponent
 Here, the useSelector & useDispatch hooks replace  connect.
 React-Redux also allows us to fetch the entire store using useStore. But this is not recommended as it is expensive.
 
+
+Note to self: See songs practice project for a better example with dispatch
+----------------------------------------------------------
+Async Actions with Redux Thunk:
+
+With a plain basic Redux store, you can only do simple synchronous updates by dispatching an action. Redux Thunk is a middleware that extend the store's abilities, and lets you write async logic that interacts with the store.
+
+https://github.com/reduxjs/redux-thunk
+
+Install:
+npm i --save redux-thunk
+
+General Data Loading Steps (for Class Components) with Redux:
+- Components get rendered onto the screen
+- componentDidMount lifecycle method gets called
+- We call action creator from 'cocomponentDidMount'
+- Action creator runs code to make an API request
+- API responds with data
+- Action creator returns an 'action' with the fetched daa on the 'payload' property.
+- Some reducer sees the action, returns the data off the 'payload'
+- Because we generated some new state object, redux/react-redix cause the app to be rerendered
+
+React Rules with Redux Thunk
+- Action Creators can return action object (usually mandatory)
+- Action Creators can return functions
+
+See practice blog project for example usage
 ----------------------------------------------------------
 Redux Context System
 ----------------------------------------------------------
@@ -1270,7 +1308,29 @@ Steps:
 - To deploy after updates:
 	Commit and Push to the Github Remote Repo. It'll automatically deploy.
 ----------------------------------------------------------
+CSS MODULES & REACT:
+
+https://www.javascriptstuff.com/css-modules-by-example/
+https://www.robinwieruch.de/create-react-app-css-modules
+
+:global(class-name) - When applying css globally
+
+
+How do you CSS in React
+
+Pure CSS
+SASS
+JSS
+CSS Modules or Styled Components
+
+----------------------------------------------------------
+
+
+----------------------------------------------------------
 USEFUL RESOURCES:
+
+Fake Online REST API for Testing and Prototyping:
+https://jsonplaceholder.typicode.com/
 
 Semantic UI:
 https://semantic-ui.com/
@@ -1328,5 +1388,14 @@ BEST PRACTICE NOTEs:
 
 3. Pay attention to all warnings and errors. Understand why they are logged in the console and eradicate them as much as possible.
 
-4. Memoize pure function components that are computation intensive to optimize the application. If a computation intensive component is not pure, it may be better to rewrite it.
+4. Keep your stateful data-loading logic separate from your rendering stateless logic. It’s better to have one stateful component to load data and another stateless component to display that data. This reduces the complexity of the components.
+
+5. Memoize components that are computation intensive to optimize the application. If a computation intensive component is not pure, it may be better to rewrite it. Memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. In React, memoized components will not re-render except the Component's props have changed. Memo only works by default when the component receives only strings and numbers as props. If it receives more complex arguments like objects, it'd require a custom equality function to specify what to memoize and what not to.
+More: https://reactjs.org/docs/react-api.html#reactmemo
+
+6. 
+
+
+
+More: https://www.codeinwp.com/blog/react-best-practices/
 ----------------------------------------------------------
