@@ -8,7 +8,7 @@ Generally, ReactJS  is split into 2 seperate libraries.
 The base 'React' library has the core tools intended to be shared by React on Different Platforms (e.g. React Native for Mobile Apps)
 while The 'ReactDOM' library is DOM-Specific. It's primary function is to render Components in the DOM.
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 Create React App
 
@@ -31,7 +31,7 @@ This command is used to install dependencies for your project in node.
 
 --save tells npm the dependency will be required in both development and production environment.
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 React uses JSX.
 JSX is an XML/HTML-like syntax used by React that extends ECMAScript(ES) so that XML/HTML-like text can co-exist with JavaScript/React code. The syntax is intended to be used by preprocessors (i.e. transpilers like Babel) to transform HTML-like text found in JavaScript files into standard JavaScript objects that a JavaScript Engine will parse.
@@ -71,7 +71,7 @@ becomes:
 
 The reason why we use className instead of class in JSX is to avoid collisions with JavaScript Classes which use the 'class' keyword for declaration.
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 Import Keyword
 
@@ -92,7 +92,7 @@ To import using path, the exact path of the module folder relative to the file c
 
 import MyModule from './my_module.js';
 
-----------------------------------------------------------
+------------------------------------------------------------
 React Components ***
 
 Components are the building blocks of any React app and a typical React app will have many of these. Simply put, a component is a JavaScript class or function that optionally accepts inputs i.e. properties(props) and returns a React element that describes how a section of the UI (User Interface) should appear. We can also use components to create an event handler. Event handlers are used to detect user interaction and respond to it.
@@ -114,7 +114,7 @@ class App extends React.Component {
 }
 
 Generally speaking, we should use functional components when creating simple content with not much application logic behind but class components should be used when creating complex components. Example of such complex components are components that make server requests, use event listeners etc.
-----------------------------------------------------------
+------------------------------------------------------------
 Three Tenets of React Components
 
 1. Component Nesting:
@@ -125,7 +125,7 @@ React components should be designed for easy reusability throughout the applicat
 
 3. Component Configuration
 Since components will be reused, they should be designed in a way that allows configuration on creation.
-----------------------------------------------------------
+------------------------------------------------------------
 
 Component Nesting
 
@@ -139,10 +139,10 @@ const OuterComponent = () => {
 	)	
 }
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 React's Props System
-----------
+------------
 It's a system of passing data from a parent component to a child/nested component. The main goal of the prop system is customizing and configuring child components to allow for multiple reuse.
 
 When passing properties from parent to child in JSX, we structure it like HTML Attributes. E.g:
@@ -180,7 +180,7 @@ const Student = (props) => {
 }
 
 Passing props in Class Components:
-----------
+------------
 When an instance of a class component is declared, the property props is defined and can be accessed in any method within the component. E.g:
 
 class Student extends React.Component {
@@ -192,7 +192,7 @@ class Student extends React.Component {
 }
 
 Passing a Component to Another Component:
-----------
+------------
 Asides passing data in the form of "HTML-like Attributes" to a React Component in JSX, we can also pass a component to another component.
 
 We basically insert the component that is to be passed like an "HTML Child Element". The component passed is then accessed in the parent component as props.children.
@@ -233,7 +233,7 @@ const Student = (props) => {
 	</div>
 </div>
 
-----------------------------------------------------------
+------------------------------------------------------------
 Components in Files
 
 React is all about re-using code, and it can be smart to insert some of your components in separate files.  To do that, we create a new file with a .js extension in our source folder. React Component Files are named like Classes. Each new word is written in Title Case with no space or character btw.  E.g: FileComponent.js, CommentSection.js
@@ -241,9 +241,8 @@ React is all about re-using code, and it can be smart to insert some of your com
 The files are saved in the src folder.
 
 Sample Component file content:
----------
+-----------
 import React from 'react'
-import ReactDom from 'react-dom'
 
 const CommentSection = () => {
 	return (
@@ -253,9 +252,9 @@ const CommentSection = () => {
 }
 
 export default CommentSection;
----------
+-----------
 Note that the file must start by importing React (as before), and end with exporting the Component as default.
-----------------------------------------------------------
+------------------------------------------------------------
 Class-Based Components
 
 The major differences between Class Based Components and Function Based Components are:
@@ -267,7 +266,7 @@ The major differences between Class Based Components and Function Based Componen
 3. Understand LifeCycle Events
 
 Reasons 2 and 3 are.... well... we'll touch on them as we proceed.
-----------------------------------------------------------
+------------------------------------------------------------
 React State
 
 In React,  “state” is an object that represents the parts of the app that can change. React components have a built-in state object. Each component can maintain its own state, which lives in an object called this.state. The state is where you store property values that belong to the component. When the state object changes, the component automatically re-renders.
@@ -301,7 +300,7 @@ class App extends React.Component {
     return <div>Latitude: {this.state.latitude}</div>;
   }
 }
-----------------------------------------------------------
+------------------------------------------------------------
 
 Component Lifecycle ***
 
@@ -314,7 +313,7 @@ A component lifecycle is a combination of all the stages a react component passe
 Throughout a component's lifecycle; we use lifecycle methods to monitor it's different stages. These methods are important as we can use them to execute specific actions everytime any of the methods are triggered by the component.
 
 Lifecycle Methods:
-----------------
+------------------
 
 - constructor: It is called when the instance of our component is created.
 
@@ -334,7 +333,7 @@ Lifecycle Methods:
 
 - getSnapshotBeforeUpdate
 
-----------------
+------------------
 
 When to use Lifecycle Methods in a Practical Application:
 
@@ -349,7 +348,7 @@ When to use Lifecycle Methods in a Practical Application:
 - componentWillUnmount: Good place to cleanup. (especially for non-react stuff like css etc)
 
 While initial data loading can be done in the constructor method, it is considered a React Best Practice to do it in the componentDidMount method as it makes the code more readable.
-----------------
+------------------
 
 Some lifecycle methods that were previously used in React have stopped beein supported in React 17.
 
@@ -365,7 +364,7 @@ https://reactjs.org/docs/react-component.html
 http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
 https://itnext.io/react17-or-how-to-get-rid-of-componentwillreceiveprops-c91f9a6f6f03
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 
 Alternate State Initialization:
@@ -384,12 +383,12 @@ class App extends React.Component {
 }
 
 This method of initializing the state works because Babel then transpiles this code and expands it to use the constructor method instead. Ultimately, it's just a faster way to get it done.
-----------------------------------------------------------
+------------------------------------------------------------
 defaultProps
 
 While most React components receive their props from a parent component, it's also possible to specify default props to ensure a clean fallback when the parent component doesn't specify it.
 
-----------------
+------------------
 Default Props for Functional Components
 
 There is only one way to define default props for functional components. Using object notation to define defaultProps as a property of that component. E.g:
@@ -402,7 +401,7 @@ DemoComponent.defaultProps = {
 	message: 'Welcome B*tches!'
 }
 
-----------------
+------------------
 Default Props for Class Components
 
 There are 2 ways to define default props for class components.
@@ -434,7 +433,7 @@ DemoComponent.defaultProps = {
 	message: 'Welcome B*tches!'
 }
 
-----------------------------------------------------------
+------------------------------------------------------------
 Event Handlers
 
 Event Handling in React components is similar to event handling with DOM Elements. But there are some syntax differences:
@@ -454,7 +453,7 @@ fetchData (e) {
 	e.preventDefault();
 	console.log('Fetch Data')
 }
-------------------------
+--------------------------
 
 Understanding 'this' in Class Components ***
 
@@ -501,19 +500,19 @@ Instead of writing the event handler function as an arow function, we can call c
 
 <button onClick={() => this.fetchData()}>Search</button>
 
-------------------------
+--------------------------
 
 We can also use arrow functions generally with a React Event Handler. E.g:
 <button onClick={(e) => console.log('test')}>Search</button>
 
-----------------------------------------------------------
+------------------------------------------------------------
 P.S:
 Never write conditional logic in the render method. 
 Use a helper function that is then called in render instead.
-----------------------------------------------------------
+------------------------------------------------------------
 Uncontrolled vs Controlled Components ***
 
-------------------------
+--------------------------
 Uncontrolled Elements
 
 By default when using Javascript, to know the value of form data, we have to access the DOM to fetch it. React Components that require you to fetch form Data from the DOM are called "Uncontrolled Components"
@@ -537,7 +536,7 @@ class SearchBar extends React.Component {
 }
 
 In the component SearchBar above, to fetch the content of the text input field in getSearch(), we had to access the DOM
-------------------------
+--------------------------
 Controlled Elements
 
 In Controlled Components, form data are handled by a React Component and not the DOM. To fetch data from a Controlled Component, you would not need to access the DOM but the Component's state object. 
@@ -572,11 +571,11 @@ class SearchBar extends React.Component {
 }
 
 Here, because the value of the input field is tied to the state, we can easily get the content of this field without having to access the DOM
-------------------------
+--------------------------
 
 In React, Controlled Components are recommended. An exception to this rule is the file input component "<input type='file' />" because its value can only be set by a user, and not programmatically.
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 Invoking Callbacks in Child Component.
 
@@ -621,7 +620,7 @@ class SearchBar extends React.Component {
 
 In the example above, we pass the method onSearchSubmit as a props with key onSearch to the SearchBar child component. This method can then be invoked using this.props.onSearch in the SearchBar component
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 STATEFUL & STATELESS COMPONENTS
 
@@ -629,20 +628,20 @@ Components in React can be stateful or stateless. Stateful components store info
 
 One of React best practices is to keep your stateful data-loading logic separate from your rendering stateless logic. It’s better to have one stateful component to load data and another stateless component to display that data. This reduces the complexity of the components.
 
-----------------------------------------------------------
+------------------------------------------------------------
 USING APIS & FETCHING DATA IN REACT
 
 Most Popularly Used:
 
 - fetch: Function built into Modern Browsers
 - axios: Stand Alone 3rd party package that can be built into a react app using the npm
--------
+---------
 Using Axios to make a request:
 
 Install
 npm install axios --save
 
--------
+---------
 axios.get
 
 We use axios.get to make get api requests.
@@ -658,7 +657,7 @@ axios.get("https://api.unsplash.com/search/photos", {
 	},
 });
 
--------
+---------
 axios.post
 
 We use axios.post to make get post requests.
@@ -676,7 +675,7 @@ axios.post('/user', {
 })
 
 Some apis may request that you send all data in your post request in the query object
--------
+---------
 
 axios returns a promise on completion of a request to there are 2 ways to get the request results:
 
@@ -719,7 +718,7 @@ axiosWrapper = async (term) => {
 More:
 https://www.npmjs.com/package/axios
 https://blog.logrocket.com/how-to-make-http-requests-like-a-pro-with-axios/
-----------------------------------------------------------
+------------------------------------------------------------
 The Purpose of Keys in Lists
 
 While working with a list of images in JSX, I got the following error: Each child in a list should have a unique "key" prop
@@ -727,20 +726,20 @@ While working with a list of images in JSX, I got the following error: Each chil
 When making updates to a list, adding key to each entry in the list makes it easier/faster for React to make render changes to that list.
 For example: If the items in a list didn't have unique keys and say if one of them were to change, React would have to re-create the whole list on re-render as against just altering the item that has changed.
 
-----------------------------------------------------------
+------------------------------------------------------------
 React Refs ***
 
 Refs provide a way to access DOM nodes or React elements created in the render method.
 However, The React documentation recommends to not use refs for anything that can be done declaratively.
 Refs are escape hatches for React developers, and we should try to avoid using them as much as possible.
--------
+---------
 When to Use Refs
 There are a few good use cases for refs:
 
 - Managing focus, text selection, or media playback.
 - Triggering imperative animations.
 - Integrating with third-party DOM libraries.
--------
+---------
 Creating Refs:
 Refs are created using React.createRef() and attached to React elements via the ref attribute.
 
@@ -755,7 +754,7 @@ class ImageCard extends React.Component {
     return <img ref={this.imageRef} alt={description} src={urls.regular} />
   }
 }
--------
+---------
 Accessing Refs:
 When a ref is passed to an element in render, a reference to the node becomes accessible. The ref itself is a JavaScript object that has a current property. And the current property references a DOM node.
 
@@ -767,7 +766,7 @@ componentDidMount() {
 	console.log(this.imageRef.current)
 }
 
-----------------------------------------------------------
+------------------------------------------------------------
 HIGHER-ORDER COMPONENTS
 
 Higher-order components (HOCs) in React were inspired by higher-order functions in JavaScript. A HOC is an advanced technique for reusing logic in React components. It is a pattern created out of React’s compositional nature.
@@ -805,7 +804,7 @@ const higherOrderComponent = (WrappedComponent) => {
 
 More: https://www.smashingmagazine.com/2020/06/higher-order-components-react/
 
-----------------------------------------------------------
+------------------------------------------------------------
 REACT HOOKS SYSTEM
 
 React hooks are a way to write reusable code instead of more classic techniques like Inheritance in Functional Components. They are in-built functions that allow React developers to use state and lifecycle methods inside functional components, they also work together with existing code, so they can easily be adopted into a codebase.
@@ -818,7 +817,7 @@ They allow React Developers to enjoy the following benefits:
 - Flexibility in moving up and down the components tree.
 
 Primitive Hooks (Hooks that Come Shipped with React):
-----------------
+------------------
 1. useState
 
 Function that lets you use state in a functional component
@@ -849,9 +848,9 @@ const itemList = ({items}) => {
 
 	return <div>{renderList()}</div>;
 }
----
+-----
 P.S: Yes, you can render an array of jsx "html" objects.
-----------------
+------------------
 2. useEffect
 
 Function that lets you use something like lifecycle methods in a functional component
@@ -874,7 +873,7 @@ How does this variable determine when the function is executed?
 - When it's an array with variables (they are usually state variable) [var1, var2]
 	Runs at initial render
 	Runs after every rerender only if the value of any of the variables in the array has changed.
-------
+--------
 E.g:
 
 import React, { useState, useEffect } from "react";
@@ -907,13 +906,13 @@ const Search = () => {
 export default Search;
 //P.S: An async function cannot be passed as useEffect argument. However we can have an async function inside of it or use promises.
 
-------
+--------
 Returning a Function from useEffect
 
 Every effect may return a function that cleans up after it.
 
 When we return a function from useEffect(), react executes that function when the component unmounts. This phase of a component is called the 'cleanup' phase. A function returned from useEffect is equivalent to using componentWillUnmount in Class Components. Hence this is the best time to do cleaning up as the function returned still has access to the current value of variables and state in the component just before unmounting.
-------
+--------
 E.g: 
 
 useEffect(() => {
@@ -924,13 +923,13 @@ useEffect(() => {
     	console.log('I run just before unmounting')
     }
   }, [term]);
-------
+--------
 More: https://reactjs.org/docs/hooks-effect.html
-----------------
+------------------
 3. useRef:
 
 Function that lets you create a 'ref' in a function component.
-------
+--------
 Example:
 
 import React, {useRef} from 'react'
@@ -951,10 +950,10 @@ const focusInput = () => {
 }
 
 export default focusInput;
-------
+--------
 In the simple example above, anytime the button is clicked on, focus is set to the input field.
 
-----------------
+------------------
 Other hooks:
 
 4. useContext
@@ -966,7 +965,7 @@ Other hooks:
 10. useDebugValue
 
 More: https://reactjs.org/docs/hooks-intro.html
-----------------
+------------------
 
 Custom Hooks:
 
@@ -986,7 +985,7 @@ Process for creating Custom Hook:
 - Extract all of the code into a separate function, receiving the inputs as arguments and returning the outputs
 
 More: https://reactjs.org/docs/hooks-intro.html
-----------------------------------------------------------
+------------------------------------------------------------
 DANGEROUSLY SET INNERHTML
 
 There are times when we may find ourself dealing with direct html code inside our react app. For example when working with 3rd party libraries or making API requests that return html code.
@@ -1004,7 +1003,7 @@ return (
 		<span dangerouslySetInnerHTML={{ __html: htmlstring }}></span>
 	</div>
 )
--------------
+---------------
 Now, there is a reason why this attribute is deliberately called dangerouslySetInnerHTML.
 Why? When injecting html code directly into a react app like this, we are creating a serious security loophole as we are vulnerable to cross-site scripting (XSS) attacks without proper sanitizing first.
 
@@ -1013,9 +1012,9 @@ We can use sanitizer libraries like dompurify. https://github.com/cure53/DOMPuri
 
 More on this:
 https://medium.com/@Jam3/how-to-prevent-xss-attacks-when-using-dangerouslysetinnerhtml-in-react-f669f778cebb
-----------------------------------------------------------
+------------------------------------------------------------
 Named vs Default  Import/Exports
-------
+--------
 Default:
 
 //module file
@@ -1026,7 +1025,7 @@ export default namedModule
 
 //file importing to
 import  namedModule from filelocation
-------
+--------
 Named:
 
 //module file
@@ -1036,7 +1035,7 @@ export const namedModule = () => {
 
 //file importing to
 import { namedModule } from filelocation
-----------------------------------------------------------
+------------------------------------------------------------
 REDUX! - MWAHAHAHAHAHAHA!
 
 Redux is a predictable state container for JavaScript apps, and a very valuable tool for organizing application state. It’s a popular library to manage state in React apps, but it can be used just as well with Angular, Vue.js or just plain old vanilla JavaScript.
@@ -1050,12 +1049,12 @@ The bigger and more complex your app gets, the more likely it’s going to be th
 
 Install:
 npm i --save redux react-redux
-----------------------------------------------------------
+------------------------------------------------------------
 
 Redux Cycle:
 Action Creator -> Action -> Dispatch -> Reducers -> State
 
-----------------------------------------------------------
+------------------------------------------------------------
 
 Action:
 Actions are plain JavaScript objects that send data from your application to your store. Actions have a type and an optional payload.
@@ -1066,7 +1065,7 @@ E.g: {
 	type: 'BLA_BLA_BLA',
 	payload: 'Optional Information Here'
 }
--------------
+---------------
 Action Creator:
 An action creator is a function that returns an Action object. The action object returned from an action creator is sent to all of the different reducers in the app.
 
@@ -1083,11 +1082,11 @@ const addToDo(task) {
 }
 
 In the example above, the function addToDo is the action creator and it returns an action object with type "ADD_TODO" and a payload object that holds information on the To-Do item being added.
--------------
+---------------
 Dispatch:
 
 dispatch is a function of the Redux store used to dispatch an action and trigger state changes to the store. It is part of the Redux library itself.
--------------
+---------------
 Reducers:
 
 A reducer is a function that determines changes to an application’s state. It uses the action it receives to determine this change. Redux relies heavily on reducer functions that take the previous state and an action in order to execute the next state.
@@ -1108,7 +1107,7 @@ const toDoReducer = (state = [], action) => {
 }
 
 In the example above, the state holds the list of To-Do Item. when the toDoReducer receives the state with action 'ADD_TODO', it updates it with a new task passed in the payload and returns the newly updated state.
-----------------------------------------------------------
+------------------------------------------------------------
 GENERAL REACT-REDUX NOTE:
 
 Using Redux to Manage State generally means very few class-based components and more functional components.
@@ -1122,7 +1121,7 @@ Directory Structure in src for React-Redux Applications:
 	/reducers 			- Contains files related to reducers
 	index.js 				- Set up both the react and redux sides of the app
 
-----------------------------------------------------------
+------------------------------------------------------------
 combineReducers(reducers)
 
 As your app grows more complex, you'll want to split your reducing function into separate functions, each managing independent parts of the state. The combineReducers helper function turns an object whose values are different reducing functions into a single reducing function you can pass to createStore.
@@ -1157,10 +1156,10 @@ export default combineReducers({
   selectedSong: selectedSongReducer,
 });
 
--------
+---------
 More: https://redux.js.org/api/combinereducers
 
-----------------------------------------------------------
+------------------------------------------------------------
 Provider
 
 The <Provider /> makes the Redux store available to any nested components that have been wrapped in the connect() function.
@@ -1177,11 +1176,11 @@ ReactDOM.render(
 );
 
 More: https://react-redux.js.org/api/provider
-----------------------------------------------------------
+------------------------------------------------------------
 Accessing the Redux Store from a Component:
 
 Assuming we have an items called title in the redux store, and need to access it from a component, how do we do that?
---------------
+----------------
 Redux with Class Components:
 
 import React, { Components } from 'react'
@@ -1200,16 +1199,16 @@ const mapStateToProps = (state) = > {
 }
 
 export default connect(mapStateToProps)(TestComponent);
----
+-----
 Connect returns the component instance with a props property that can be accessed using this.props
 this.props in turn contains 2 properties:
 1. list - The value that is extracted from the store in mapStateToProps
 2. The dispatch function that can be used to dispatch an action and trigger state changes.
---------------
+----------------
 Redux with Functional Components:
 
 There are  2 ways of accessing the store in Functional Components:
-------
+--------
 1. Using Connect:
 
 import React from "react";
@@ -1226,9 +1225,9 @@ const mapStateToProps = (state) = > {
 }
 
 export default connect(mapStateToProps)(TestComponent);
----
+-----
 Just like in class components, the props contains the state variable returned in mapStateToProps and a dispatch function.
-------
+--------
 2. Using React Redux Hooks:
 
 import React from 'react'
@@ -1244,13 +1243,13 @@ const TestComponent () {
 }
 
 export default TestComponent
----
+-----
 Here, the useSelector & useDispatch hooks replace  connect.
 React-Redux also allows us to fetch the entire store using useStore. But this is not recommended as it is expensive.
 
 
 Note to self: See songs practice project for a better example with dispatch
-----------------------------------------------------------
+------------------------------------------------------------
 Async Actions with Redux Thunk:
 
 With a plain basic Redux store, you can only do simple synchronous updates by dispatching an action. Redux Thunk is a middleware that extend the store's abilities, and lets you write async logic that interacts with the store.
@@ -1266,7 +1265,7 @@ General Data Loading Steps (for Class Components) with Redux:
 - We call action creator from 'cocomponentDidMount'
 - Action creator runs code to make an API request
 - API responds with data
-- Action creator returns an 'action' with the fetched daa on the 'payload' property.
+- Action creator returns an 'action' with the fetched data on the 'payload' property.
 - Some reducer sees the action, returns the data off the 'payload'
 - Because we generated some new state object, redux/react-redix cause the app to be rerendered
 
@@ -1275,22 +1274,22 @@ React Rules with Redux Thunk
 - Action Creators can return functions
 
 See practice blog project for example usage
-----------------------------------------------------------
+------------------------------------------------------------
 Rules of Reducers:
 - Must return any value besides 'undefined'
 - Produces 'state' or data to be used inside of the app using only previous state and the action (reducers are pure)
 - Keep it Pure! It must not 'reach out of itself' to decide what value to return.
 	- No DOm queries, api calls, etc. just the old state passed to it.
 - Must not mutate its input 'state' argument directly. It should return a new one.
-----------------------------------------------------------
+------------------------------------------------------------
 Lodash Memoize
 
 - Can be used to cache multiple network requests in a redux app to prevent overfetching (e.g in a timeline).
 - The memoized function is called only once - on first request and on the next call with the same argument, the previous data is sent. No matter how many times the request is made again. (until page refresh)
----
+-----
 To Install:
 npm install --save lodash
----
+-----
 Basic Example:
 
 We set it up in our actions file and use it to memoize the action creator.
@@ -1303,17 +1302,87 @@ const _fetchUser = _.memoize(async (id, dispatch) => {
 
   dispatch({ type: "FETCH_USER", payload: response.data });
 });
----
+-----
 See blog practice project for a more extensive use
 
 More on Lodash: https://lodash.com/
-----------------------------------------------------------
+------------------------------------------------------------
+REACT ROUTER
+
+To Install:
+mpm i --save react-router-dom
+
+https://www.npmjs.com/package/react-router-dom
+------
+To Import:
+
+import { BrowserRouter, Route, Link } from "react-router-dom";
+------
+Key Points:
+
+1. React Router's <Route /> allows you to assign multiple components to the same route. Even when you're deeply nested within a component. Unlike in most server-side frameworks where you usually assign one route to one component React Router allows you to be more flexible. E.g:
+
+	const App = () => {
+	  return (
+	    <div>
+	      <BrowserRouter>
+	        <div>
+	          	<Main>
+	          		<Route path="/" exact component={PageOne} />
+	          		<Route path="/pagetwo" exact component={PageTwo} />
+	          	</Main
+	          	<SideBar>
+	          		<Latest />
+	          		<Route path="/" exact component={signup} />
+	          		<Route path="/" exact component={ad} />
+	          		<Route path="/pagetwo" exact component={profile} />
+	          	</SideBar>
+	        </div>
+	      </BrowserRouter>
+	    </div>
+	  );
+	};
+
+Notice the multiple Route tags passed with the same path.
+
+2. The exact keyword:
+	Without the exacr keyword, Route paths can match multiple urls.
+	Why? Any given url would match all defined paths that they contain.
+
+	E.g 1:
+	<Route path="/" component={PageOne} />
+	
+	http://webaddress.com/
+	http://webaddress.com/about/
+	http://webaddress.com/welcome/
+
+	Because they all contain the path '/', this path will match all the urls
+
+	E.g 2:
+	<Route path="/list" component={list} />
+
+	http://webaddress.com/list/
+	http://webaddress.com/list/1
+	http://webaddress.com/list/1/new
+
+	Because they all contain the path '/list', this path will match all the urls
+	---
+	When we want to match a url exactly we use the exact keyword. E.g:
+	<Route path="/" exact component={PageOne} />
+
+3. Don't use anchor tags with React Router!!!!!
+	Why? This will make a brand new page browser request and the entire page will be re-rendered again with all state data dumped. You'd lose the current state of your application instead of having React-Router load the matching components asynchronously.
+	
+	Instead we use:
+	<Link to="/route">Text Here</Link>
+
+------------------------------------------------------------
 Redux Context System
 
 
-----------------------------------------------------------
+------------------------------------------------------------
 DEPLOYING REACT APPS
-------------------
+--------------------
 1. VERCEL (https://vercel.com/)
 
 Steps:
@@ -1339,7 +1408,7 @@ Steps:
 
 - To deploy after updates:
 	Commit and Push to the Github Remote Repo. It'll automatically deploy.
-----------------------------------------------------------
+------------------------------------------------------------
 CSS MODULES & REACT:
 
 https://www.javascriptstuff.com/css-modules-by-example/
@@ -1347,18 +1416,10 @@ https://www.robinwieruch.de/create-react-app-css-modules
 
 :global(class-name) - When applying css globally
 
-
-How do you CSS in React
-
-Pure CSS
-SASS
-JSS
-CSS Modules or Styled Components
-
-----------------------------------------------------------
+------------------------------------------------------------
 
 
-----------------------------------------------------------
+------------------------------------------------------------
 USEFUL RESOURCES:
 
 Redux DevTools
@@ -1406,13 +1467,17 @@ Memoizing React Component:
 https://medium.com/@rossbulat/how-to-memoize-in-react-3d20cbcd2b6e
 https://dev.to/spukas/react-usememo-for-optimisation-5gna
 https://stackoverflow.com/questions/54023900/is-it-a-good-idea-to-memoize-all-of-my-react-components
-----------------------------------------------------------
+
+Htaccess config for deploying React App with Browser-Router to Apache Server
+https://www.andreasreiterer.at/fix-browserrouter-on-apache/
+
+------------------------------------------------------------
 
 POSSIBLE CHALLENGES:
 
 1. Build a minimal redux implementation having just the store and it's reducer.
 
-----------------------------------------------------------
+------------------------------------------------------------
 BEST PRACTICE NOTEs:
 
 1. Always make sure to clean up when unmounting your components.
