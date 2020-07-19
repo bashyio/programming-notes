@@ -453,6 +453,34 @@ let color = demo.color, size = demo.size;
 We can do:
 let {color, size} = demo
 ------------------------------------------------------------------------
+Object.values()
+
+This is a built-in javsacript function that can take an object list and map its unique values into an array.
+
+E.g 1:
+
+const obj = {id: 1, name: 'Tunde'}
+console.log(Object.values(obj))
+
+//This will return: [1, "Tunde"]
+
+
+E.g 2:
+
+const object = {
+	1: {
+		id: 1,
+		name: 'Tunde'
+	},
+	2: {
+		id: 2,
+		name: 'Segun'
+	}
+}
+console.log(Object.values(object))
+
+//This will return: [{id: 1, name: "Tunde"}, {id: 2, name: "Segun"]
+------------------------------------------------------------------------
 Number/Maths Methods
 num.toFixed(decimalPlaces) - Takes a fixed integer as argument and returns a rounded up number. It rounds up the number it is called upon to a certain number of decimal places. When no argument is supplied, it defaults to 0 and rounds up to the nearest whole number. Number of decimal places must be btw 0 and 100. 
 
@@ -613,12 +641,39 @@ This is still based on the concept of "expanding". Basically, the spread operato
 
 E.g 3: Copying/Combining Object Properties
 
-let object1 = {'name':'Yemi', age:'27'}
-let object2 = {'sex':'Male', 'weight':'75kg', 'age':'28'};
-let object = {...object1, ...object2}
-//Result: {name: "Yemi", age: "28", sex: "Male", weight: "75kg"}
+const object1 = {'name':'Yemi', age:'27'}
+const object2 = {'sex':'Male', 'weight':'75kg', 'age':'28'};
 
-The spread operator can also be used to shallow copy and paste object's value and properties into another. Like in the example above, when there are duplicate properties, the property of the last object in the operation supercedes as it overrides the existing one.
+const object3 = {...object1, ...object2}
+//Result: {name: 'Yemi', age: '28', sex: 'Male', weight: '75kg'}
+
+const object4 = {...object1, age: '20'}
+//Result: {name: 'Yemi', age: '20'}
+
+const object5 = {...object1, class: 'Light Weight'}
+//Result: {name: 'Yemi', age: '27', class: 'Light Weight'}
+
+The spread operator can also be used to shallow copy and paste object's value and properties into another. It can also be used to combine objects. Like in the example above, when there are duplicate properties, the property of the last object in the operation supercedes as it overrides the existing one.
+
+E.g4: Combining with Shorthand Computer Property Names
+
+In cases of property names that are computed. ES6 allows you to wrap them in square brackets to represent the value that they may hold.
+If we wanted to create an object with an unknown property, we can do this:
+
+const property = 'name'
+const object1 = {[property]: 'Amaka', age: 18}
+//Result: {name: 'Amaka', age: 18}
+
+We can combine this syntax with a spread operator like this:
+
+const property = 'name'
+const object1 = {name: 'Amaka', age: 18}
+const object2 = {...object1, [property]: 'Emeka'}
+//Result: {name: 'Emeka', age: 18}
+const property2 = 'skill'
+const value = 'Playing football'
+const object3 = {...object1, [property2]: value}
+//Result: {name: 'Amaka', age: 18, skill: 'Playing football'}
 
 ------------------------------------------------------------------------
 Destructuring Javascript Objects
@@ -665,6 +720,12 @@ const facebook = person.links.social.facebook
 
 We do:
 const {twitter, facebook} = person.links.social
+------------------------------------------------------------------------
+Object Key Interpolation
+
+
+
+
 ------------------------------------------------------------------------
 Object "Equality"
 
@@ -2174,6 +2235,218 @@ console.log(ask.next('Bashy').value);
 
 In the example above, the function will continue yielding 'Wrong Answer! Try again' until the right name is guessed. We pass the value to the generator using the next() method.
 ------------------------------------------------------------------------
+LODASH UTILITY LIBRARY
+
+Lodash is the most widely used utility library in the world as it provides a lot of methods that make coding easy and fast.
+
+Using CDN:
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+
+Using NPM:
+npm install --save lodash
+
+import _ from 'lodash'
+------------------------------------------------------------
+1. isEqual:
+
+The isEqual method performs a deep comparison between two objects.
+
+Syntax:
+_.isEqual(value, other)
+
+E.g:
+const obj1 = {
+  name: 'Ram',
+  age: 20,
+  location: {
+    city: 'NY',
+    state: 'NY'
+  }
+};
+
+const obj2 = {
+  name: 'Ram',
+  age: 20,
+  location: {
+    city: 'NY',
+    state: 'NY'
+  }
+};
+
+console.log(_.isEqual(obj1, obj2)); // true
+
+Real world use case:
+- Comparing 2 user account objects to see if the signed in user has changed.
+
+
+NB: isEqual is much faster than other alternatives when comparing two deeply nested objects. The other ways of comparing two objects are manually comparing each property or using JSON.stringify method.
+
+-------------------------------
+2.  _.debounce
+
+_.debounce will invoke a function after a certain amount of time since the last time it was invoked.
+
+E.g:
+function validateEmail() {
+    // Validate email here and show error message if not valid
+}
+
+var emailInput = document.getElementById("email-field");
+emailInput.addEventListener("keyup", _.debounce(validateEmail, 500));
+
+In this example, the function validateEmail will be invoked after 500ms so the error message won’t show instantly. The 500ms timer will reset on each keyup. This way, the user won’t see an error message until he stops typing.
+
+-------------------------------
+3.  _.deburr
+
+This one is pretty simple. It removes all “combining diacritical marks”, so “é” becomes “e”.
+
+E.g:
+_.deburr("déjà vu");
+// -> deja vu
+_.deburr("Juan José");
+// -> Juan Jose
+
+It’s a good habit to deburr text for a search function when there is internationalization and localization.
+
+-------------------------------
+4. _.keyBy
+
+We use this to fetch an object with a specific key value from an array of objects.
+
+E.g:
+
+//Let’s say we have several posts in an array and we want to get the post with Id “34abc”. 
+
+const posts = [
+    { id: "1abc", title: "First blog post", content: "..." },
+    { id: "2abc", title: "Second blog post", content: "..." },
+    // more blog posts
+    { id: "34abc", title: "The blog post we want", content: "..." }
+    // even more blog posts
+];
+
+const post = _.keyBy(posts, "id")["34abc"]
+
+When a server returns an object collection as an array, this function can help to search through.
+
+-------------------------------
+5.  _.cloneDeep
+
+_.cloneDeep will fully clone an object. The new object will also have a new address in memory so you won’t crush a property from the original object.
+
+const original = { foo: "bar" };
+const copy = _.cloneDeep(original);
+copy.foo = "new value";
+// copy -> { foo: "new value" } Yeah!
+// original -> { foo: "new value" } Oops!
+
+Unlike regular assignment operator that just assigns the same object to both variables and links them such that a change in one will be reflected in the other. _.cloneDeep creates a real stand-alone clone.
+
+-------------------------------
+6.  _.omit
+
+This method is used for omitting properties from an object
+
+E.g:
+
+const obj = {
+    index: 0,
+    x: 5,
+    y: 12,
+    z: 3
+};
+
+console.log(_.omit(obj, ['index', 'z']));
+// { x: 5, y: 12 }
+
+This is very useful when working with libraries that involve manipulating objects e.g: state management libraries.
+
+-------------------------------
+7.   _.mapKeys
+
+This function can be used to do many things.
+
+E.g: transform an array of similar objects into an object list with a defined key
+
+const users = [
+  { id: 1, name: 'barney', age: 36, active: true },
+  { id: 2, name: 'fred',  age: 40, active: false },
+  { id: 3, name: 'travis', age: 37, active: true}
+];
+
+const result = _.mapKeys(users, 'id')
+
+This will transform the array users to this:
+
+{
+   "1": {
+      "id": 1,
+      "name": "barney",
+      "age": 36,
+      "active": true
+   },
+   "2": {
+      "id": 2,
+      "name": "fred",
+      "age": 40,
+      "active": false
+   },
+   "3": {
+      "id": 3,
+      "name": "travis",
+      "age": 37,
+      "active": true
+   }
+}
+
+Now we can identify each individual object using the key as identifier.
+E.g: users[1]
+
+-------------------------------
+8.   _.pick
+
+We can use this function to make a shallow clone of an object while specifying the values that we want to pick from it.
+
+E.g:
+
+const object = {
+	name: 'Bashy',
+	height: '6 ft',
+	race: 'Black African',
+	nationality: 'Nigerian'
+}
+
+const shallowClone = _.pick(object, ['name', 'nationality'])
+// {name: 'Bashy', nationality: 'Nigerian'}
+
+-------------------------------
+9. Lodash Memoize (Redux Use Case)
+
+- Can be used to cache multiple network requests in a redux app to prevent overfetching (e.g in a timeline).
+- The memoized function is called only once - on first request and on the next call with the same argument, the previous data is sent. No matter how many times the request is made again. (until page refresh)
+
+-----
+Basic Example:
+
+We set it up in our actions file and use it to memoize the action creator.
+
+In (actions/index.js):
+
+export const fetchUser = (id) => (dispatch) => _fetchUser(id, dispatch);
+const _fetchUser = _.memoize(async (id, dispatch) => {
+  const response = await jsonPlaceholder.get(`/users/${id}`);
+
+  dispatch({ type: "FETCH_USER", payload: response.data });
+});
+-----
+See blog practice project for a more extensive use
+-------------------------------
+
+More on Lodash: https://lodash.com/
+------------------------------------------------------------------------
+
+
 
 9ff2ea1c1882e7
 //https://ipinfo.io/json?token=9ff2ea1c1882e7

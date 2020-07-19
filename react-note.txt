@@ -849,7 +849,9 @@ const itemList = ({items}) => {
 	return <div>{renderList()}</div>;
 }
 -----
-P.S: Yes, you can render an array of jsx "html" objects.
+P.S:
+- Yes, you can render an array of jsx "html" objects.
+- React.Fragment lets you group a list of children without adding extra nodes to the DOM.
 ------------------
 2. useEffect
 
@@ -1194,7 +1196,8 @@ class TestComponent {
 	}
 }
 
-const mapStateToProps = (state) = > {
+const mapStateToProps = (state, ownProps) = > {
+	//we use ownProps to access the props of the component here
 	return { list: state.list }
 }
 
@@ -1282,31 +1285,6 @@ Rules of Reducers:
 	- No DOm queries, api calls, etc. just the old state passed to it.
 - Must not mutate its input 'state' argument directly. It should return a new one.
 ------------------------------------------------------------
-Lodash Memoize
-
-- Can be used to cache multiple network requests in a redux app to prevent overfetching (e.g in a timeline).
-- The memoized function is called only once - on first request and on the next call with the same argument, the previous data is sent. No matter how many times the request is made again. (until page refresh)
------
-To Install:
-npm install --save lodash
------
-Basic Example:
-
-We set it up in our actions file and use it to memoize the action creator.
-
-In (actions/index.js):
-
-export const fetchUser = (id) => (dispatch) => _fetchUser(id, dispatch);
-const _fetchUser = _.memoize(async (id, dispatch) => {
-  const response = await jsonPlaceholder.get(`/users/${id}`);
-
-  dispatch({ type: "FETCH_USER", payload: response.data });
-});
------
-See blog practice project for a more extensive use
-
-More on Lodash: https://lodash.com/
-------------------------------------------------------------
 REACT ROUTER
 
 To Install:
@@ -1344,7 +1322,7 @@ Key Points:
 	};
 
 Notice the multiple Route tags passed with the same path.
-
+------
 2. The exact keyword:
 	Without the exacr keyword, Route paths can match multiple urls.
 	Why? Any given url would match all defined paths that they contain.
@@ -1369,15 +1347,226 @@ Notice the multiple Route tags passed with the same path.
 	---
 	When we want to match a url exactly we use the exact keyword. E.g:
 	<Route path="/" exact component={PageOne} />
-
+------
 3. Don't use anchor tags with React Router!!!!!
 	Why? This will make a brand new page browser request and the entire page will be re-rendered again with all state data dumped. You'd lose the current state of your application instead of having React-Router load the matching components asynchronously.
 	
 	Instead we use:
 	<Link to="/route">Text Here</Link>
+------
+4. Implementing Programmatic Navigation using Router
+	
+	When we use the <BrowserRouter>, <HashRouter>, <MemoryRouter>, and <NativeRouter>, a history object is automatically created. This is convenient, and the history object is readily accessible from within React components; but it can be a pain to use it outside of them. To access a history object outside of components, we need to create a own history object (in its own module) and import it throughout the project.
+
+	Programmatic Navigation is when you want to load a page yourself. It is similar to how one uses header('Location: ') in php after performing an action.
+	To implement programmatic navigation outside of a component; we need to do 4 things:
+
+	i. import createBrowserHistory into a file named history.js in the base src folder:
+
+		import { createBrowserHistory } from "history";
+		export default createBrowserHistory();
+
+	ii. Import the history in the base component where we set up routing:
+
+		import history from "../history";
+
+	iii. Switch from BrowserRouter to Router
+
+		import { Router, Route } from "react-router-dom"; //Make sure Router and not BrowserRouter is imported
+		<Router history={history}>
+		.
+		.
+		.
+
+		Doing this allows us to access the history object outsides of components. E.g: redirect after dispatching an action e.g submitting a form
+
+	iv. Push history:
+
+	history.push("/");
+
+	This navigates us to the root URL programmatically. We can navigate anywhere within the app.
+------
+5. Dynamic Routes
+	
+	Dynamic Routes are defined using ':params'
+	E.g:
+	<Route path="/user/:userId" component={UserPage} />
+	
+	The route above will macth urls like:
+	app.com/user/1
+	app.com/user/john
+	app.com/user/2
+	app.com/user/bash
+
+	These urls will all route to the UserPage component.
+
+	Accessing route params in the component:
+	React router passes 3 props to the component - history, location and match.
+	To access the user params in the component, we use the match props.
+	In the example above, it'd be match.params.user
+	
+	E.g:
+
+	const UserPage = ({match, location}) => {
+		return (
+			<p>User is: {match.props.userId}
+		)
+	}
+
+	To verify validity, we can then wire up custom methods that validate the type of value passed and fetch data from the store or an API.
+------
+
+
+
+
+
+
+
+
+
 
 ------------------------------------------------------------
-Redux Context System
+REDUX DEV TOOLS
+
+https://github.com/zalmoxisus/redux-devtools-extension
+
+Setup:
+
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+
+P.S: Adding applyMiddleware is optional. If the project doesn't use one, we do not need to pass it the function as an argument
+------------------------------------------------------------
+REDUX FORMS
+
+https://redux-form.com/8.3.0/
+
+To install:
+npm i --save redux-form
+
+----------------
+Random Notes:
+------
+1. Destructuring Input Fields:
+
+Instead of:
+
+renderInput(formProps) {
+    return (
+      <input
+        onChange={formProps.input.onChange}
+        value={formProps.input.value}
+      />
+    );
+  }
+
+We can do:
+
+renderInput({ input }) {
+    return <input {...input} />;
+}
+
+We're doing double destructuring here:
+First we destructure the formProps value to extract {input}
+Then we destruct the input jsx to assign onChange and value attributes. 
+	We can do this here because these values have the exact name.
+
+------------------------------------------------------------
+REST-FUL CONVENTIONS:
+
+Action 															Method 			Route
+List all Records 										GET 					/path
+Get 1 particular record 							GET 					/path/:id
+Create Record 											POST 				/path
+Update all values of a Record 			PUT 					/path/:id
+Update some values of a Record 		PATCH 					/path/:id
+Delete a Record 										DELETE 			/path/:id
+------------------------------------------------------------
+JSON Server
+https://www.npmjs.com/package/json-server
+
+Can be used to setup a quick fake REST API that can be used by front-end developers for  prototyping and mocking.
+
+Setup:
+- npm init -y
+- Install Package:
+	npm i --save json-server
+- Customize the package.json 
+	"main": "index.js",
+  "scripts": {
+    "start": "json-server -p 3001 -w db.json"
+  },
+ - Create a db.json file to setup the api endpoints.
+ 	This json file stands as an object database.
+ 	For default, each endpoint will be a json property with an empty array as value.
+ 	The values of the array will be updated based on the requests made to endpoint.
+
+ 	E.g:
+ 	{
+	  "users": [],
+	  "posts": []
+	}
+
+	In the example above, users/ and posts/ will become available endpoints for api requests. Their values will be automatically updated based on the requests made to them.
+ 	We can also setup default values if we like. E.g:
+
+ 	{
+	  "users": [
+	  	{
+	      "name": "Bash",
+	      "id": 1
+	    },
+	    {
+	      "name": "Joseph",
+	      "id": 2
+	    }
+	  ],
+	  "posts": []
+	}
+
+------------------------------------------------------------
+REACT PORTALS
+
+Portals provide a first-class way to render children into a DOM node that exists outside the DOM hierarchy of the parent component.
+
+ReactDOM.createPortal(child, container)
+
+The first argument (child) is any renderable React child, such as an element, string, or fragment. The second argument (container) is a DOM element.
+
+A typical use case for portals is when a parent component has an overflow: hidden or z-index style, but you need the child to visually “break out” of its container. For example, modal popups, menus, hovercards and tooltips.
+
+Example of a Component using React Portal:
+
+Modal.js
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+const Modal = (props) => {
+  return ReactDOM.createPortal(
+    <div className="ui dimmer modals visible active">
+      <div className="ui standard modal visible active">
+        <p>{props.content}</p>
+      </div>
+    </div>,
+    document.getElementById("modal")
+  );
+};
+
+export default Modal;
+----
+
+Unlike regular components that follow the component hierarchy to determine where they appear on render; regardless of where Modal is positioned in the component hierarchy, it will be rendered specifically in the DOM element with id of modal as specified in the second argument above. - document.getElementById("modal")
+
+
+More: https://reactjs.org/docs/portals.html
+------------------------------------------------------------
+REDUX CONTEXT SYSTEM
+
+
 
 
 ------------------------------------------------------------
@@ -1415,9 +1604,6 @@ https://www.javascriptstuff.com/css-modules-by-example/
 https://www.robinwieruch.de/create-react-app-css-modules
 
 :global(class-name) - When applying css globally
-
-------------------------------------------------------------
-
 
 ------------------------------------------------------------
 USEFUL RESOURCES:
@@ -1471,6 +1657,14 @@ https://stackoverflow.com/questions/54023900/is-it-a-good-idea-to-memoize-all-of
 Htaccess config for deploying React App with Browser-Router to Apache Server
 https://www.andreasreiterer.at/fix-browserrouter-on-apache/
 
+React Transitions/Animations:
+https://github.com/FormidableLabs/react-animations
+https://github.com/reactjs/react-transition-group
+Others: https://medium.com/@dmitrynozhenko/5-ways-to-animate-a-reactjs-app-in-2019-56eb9af6e3bf
+
+Greensock (GSAP) for Complex Animations:
+https://greensock.com/react/
+https://www.google.com/search?q=gsap+react
 ------------------------------------------------------------
 
 POSSIBLE CHALLENGES:
