@@ -1415,6 +1415,16 @@ Notice the multiple Route tags passed with the same path.
 
 	To verify validity, we can then wire up custom methods that validate the type of value passed and fetch data from the store or an API.
 ------
+6. Switch
+
+	There are cases when multiple routes might match a link.
+	To avoid this, we use Switch to wrap our Routes. This ensures that at any given time, only one component matches a route.
+	E.g:
+	<Route path="/streams/new" exact component={StreamCreate} />
+	<Route path="/streams/:id" exact component={StreamShow} />
+
+	If I visit: 'appurl/streams/new', the StreamCreate and StreamShow component will both appear because technically, 'new' maches ':id'.
+	Using switch however nullifies this and enforces that when I visit 'appurl/streams/new', only StreamCreate is displayed.
 
 
 
@@ -1665,6 +1675,10 @@ Others: https://medium.com/@dmitrynozhenko/5-ways-to-animate-a-reactjs-app-in-20
 Greensock (GSAP) for Complex Animations:
 https://greensock.com/react/
 https://www.google.com/search?q=gsap+react
+
+Streamer App Modules:
+https://github.com/illuspas/Node-Media-Server
+http://npmjs.com/package/flv.js
 ------------------------------------------------------------
 
 POSSIBLE CHALLENGES:
@@ -1689,9 +1703,14 @@ BEST PRACTICE NOTEs:
 5. Memoize components that are computation intensive to optimize the application. If a computation intensive component is not pure, it may be better to rewrite it. Memoization is an optimization technique used primarily to speed up computer programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. In React, memoized components will not re-render except the Component's props have changed. Memo only works by default when the component receives only strings and numbers as props. If it receives more complex arguments like objects, it'd require a custom equality function to specify what to memoize and what not to.
 More: https://reactjs.org/docs/react-api.html#reactmemo
 
-6. 
+6. Separate View Logic from Business Logic
+Business logic deals with the processing that takes place in the background whose results may affect multiple parts of an application while presentation logic mainly deals with visual appeal and user experience. It is a best practice for React Components to only contain View Logic. The proper integration of state containers like redux amd middleware like redux-thunk into a react app is one of the ways to ensure this.
+
+https://labcodes.com.br/blog/articles/decoupling-logic-from-react-components.html
 
 
 
-More: https://www.codeinwp.com/blog/react-best-practices/
+More:
+https://www.codeinwp.com/blog/react-best-practices/
+https://hackernoon.com/lessons-learned-common-react-code-smells-and-how-to-avoid-them-f253eb9696a4
 ----------------------------------------------------------
