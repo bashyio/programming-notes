@@ -1,0 +1,15 @@
+Optimise SVG using OMGSVG:
+https://jakearchibald.github.io/svgomg/
+http://bit.ly/OMGSVG
+
+
+Styling Options in Corel Draw
+- Presentation Attributes: Uses inlinehtml attributes to style the svg directly.
+	E.g: <rect fill="none" stroke="#373435" stroke-width="6" x="100" y="100" width="800" height="800"/>
+Internal Stylesheet: Styles the svg using css classes.
+	E.g: <rect class="fil0 str0" x="100" y="100" width="800" height="800"/>
+		.str0 {stroke:#373435;stroke-width:6}
+		.fil0 {fill:none}
+
+
+CARGO 

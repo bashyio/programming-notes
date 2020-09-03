@@ -43,12 +43,12 @@ Download here - https://www.mongodb.com/try/download/community
 (zip or msi version)
 Community Version is Free. Enterprise is Paid.
 
-Zip Installation Procedure (WIndows):
-- Extract zip to folder named mongodb in C:\Program Files
-- Create folder named mongodb-data in C:\Program Files
+Zip Installation Procedure (Windows):
+- Extract zip to folder named mongodb in C:\
+- Create folder named mongodb-data in C:\
 
 To run Mongo DB in  CMD/Powershell (as administrator) and run the following command:
-C:\Progra~1\mongodb\bin\mongod.exe --dbpath=C:\Progra~1\mongodb-data
+C:\mongodb\bin\mongod.exe --dbpath=C:\mongodb-data
 
 Some lines to the end you should see: waiting for connections on port 27017. That's the MongoDB default port.
 (Keep in running in console)
@@ -242,6 +242,14 @@ db.collection('users').deleteMany({
 This example uses a comparison query operator to fetch the documents that will be deleted. Instead of setting a direct value to age, an object with operator $gt which means "greter than" that then holds the value is passed. This means that all documents with age greater than 38 will be deleted.
 
 ------------------------------------------------------------------
+P.S:
+Leaving the first object argument in a db.collection Read, Update or Delete action empty means "match all".
+
+E.g:
+db.collection('users').find({}) - Would find all
+db.collection('tasks').updateMany({}, { completed: false}) - Would update all and set completed to galse
+db.collection('users').deleteMany({}) - Would delete all
+------------------------------------------------------------------
 MongoDB GUID
 
 MongoDB Documents have an automated id field '_id' called GUID.
@@ -384,6 +392,8 @@ Mongoose Validation Method
 
 Mongoose built-in validation is not enough to fully validate a model. We can however set up custom validation for a model while defining the model schema
 
+
+
 The format is: 
 
 const sampleSchema = new mongoose.Schema({
@@ -400,10 +410,41 @@ const sampleSchema = new mongoose.Schema({
 ------
 Using the npm validator package
 
-https://www.npmjs.com/package/mongoose
+https://www.npmjs.com/package/validator
 
+npm i validator
+
+E.g:
+
+const validator = require('validator')
+
+const User = mongoose.model('User', {
+  name: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true,
+    validate(value) {
+      if (!validator.iseEmail(value)) {
+        throw new Error('E-mail is invalid')
+      }
+    }
+  }
+})
+
+Above, we use the validator module in the validate method to return an error if email is invalid.
 --------------------------------------------------------------------------------------------------------------------
 
+REST APIs and Mongoose
+-----------------------
+Postman
+Postman is a collaboration platform for API development. Postman's features simplify each step of building an API and streamline collaboration so you can create better APIs—faster.
+
+Download: https://www.postman.com/downloads/
+To revisit how Postman works, Course 88
+-----------------------
 
 
 --------------------------------------------------------------------------------------------------------------------

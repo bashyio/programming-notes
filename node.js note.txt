@@ -24,7 +24,7 @@ https://www.freecodecamp.org/news/node-js-what-when-where-why-how-ab8424886e2/
 --------------------------------------------------------------------------------------------------------------------
 Modules
 
-Module in Node.js is a simple or complex functionality organized in single or multiple JavaScript files which can be reused throughout the Node.js application.
+A Module in Node.js is a simple or complex functionality organized in single or multiple JavaScript files which can be reused throughout the Node.js application.
 Each module in Node.js has its own context, so it cannot interfere with other modules or pollute global scope. Also, each module can be placed in a separate .js file under a separate folder.
 
 Node.js includes three types of modules:
@@ -69,7 +69,7 @@ Lists out the exact version of all of the dependencies in the project
 Lists out the different files and folders that git should ignore when tracking a project and monitoring changes
 
 npm start
-“npm start” is a run command from your scripts located in your package.json file. Usually “npm start” runs your server file. If you don't have a “start” script in your package. json file this command will run the default “node server.
+“npm start” is a run command from your scripts located in your package.json file. Usually “npm start” runs your server file. If you don't have a “start” script in your package. json file, this command will run the default “node server.
 
 Ctrl + C
 To stop the application running in the terminal
@@ -120,6 +120,8 @@ require()
 Used to load modules or other files. The require module is available on the global scope — so; no need to require('require').
 Node Modules that are not available on the global scope by default have to be required.
 
+The basic functionality of require is that it reads a JavaScript file, executes the file, and then proceeds to return the exports object. An example module:
+
 How to require a Node module:
 ----------
 1. Without specifying a path
@@ -131,7 +133,7 @@ When we require a 'find-me' module, without specifying a path:
 
 - If it's not, Node will look for find-me.js in all the paths specified by module.paths — in order. The paths list is basically a list of node_modules directories under every directory from the current directory upwards to the root directory. 
 
-- In a case where multiple directories within a project have the a find-me.js file in their node_module directory, node will prioritise by loading the file in the directory closest to the current directory. It basically checks the current directory first, then continues upwards.
+- In a case where multiple directories within a project have a find-me.js file in their node_module directory, node will prioritise by loading the file in the directory closest to the current directory. It basically checks the current directory first, then continues upwards.
 
 - Asides checking for a find-me.js file, Node will also check for a find-me directory. Why? Modules can also be folders and not files. In the same manner it checks for a find-me.js file, it looks for a 'find-me' folder in the node_modules directories. When it finds the closest one; by default, it uses the folder's index.js file. However, we can control what file name to start with under the folder using the main property in package.json within that folder.
 
@@ -354,7 +356,7 @@ app.get('/', (req, res) => {
   res.send('Hello express!')
 }) //req - request, rep - response
 
-//Simple route method to set up to set up a /help endpoint
+//Simple route method to set up a /help endpoint
 app.get('/help', (req,res) => {
   res.send('Help Page!')  
 })
@@ -377,7 +379,7 @@ In the setup example above, we serve direct text to the browser when these endpo
 ---
 To serve html code:
 app.get('/', (req, res) => {
-  res.send('<h1>Welcome!</h1><p>You are the right place Chief!</p>')
+  res.send('<h1>Welcome!</h1><p>You are at the right place Chief!</p>')
 })
 Express auto-detects that we're sending html code and sends back an html response.
 ---
@@ -581,7 +583,6 @@ hbs.registerPartials(partialsPath)
 
 Full Example (app.js):
 
-
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
@@ -690,7 +691,7 @@ In the example above, when we access a page not found under the 'help/' uri, the
 --------------------------------------------------------------------------------------------------------------------
 ACCESSING API FROM THE BROWSER
 
-To make an external api call from endpoints in our app from  the browser, it's simple; we create an endpoint for that api, set up a query string (or strings) make the request from the backend and then send back the result.
+To make an external api call from endpoints in our app from  the browser, it's simple; we create an endpoint for that api, set up a query string (or strings), make the request from the backend and then send back the result.
 
 app.get('/location', (req, res) => {
   const address = req.query.address
@@ -735,8 +736,7 @@ fetch(urlHere, {}).then((response) => {
   //print error here
 })
 
-------------------------------------------------------------
 
---------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------
 
 Good resource that talks about Introduction to Node, testing, hosting etc. - https://medium.com/javascript-scene/introduction-to-node-express-90c431f9e6fd
