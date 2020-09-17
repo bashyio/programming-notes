@@ -392,8 +392,6 @@ Mongoose Validation Method
 
 Mongoose built-in validation is not enough to fully validate a model. We can however set up custom validation for a model while defining the model schema
 
-
-
 The format is: 
 
 const sampleSchema = new mongoose.Schema({

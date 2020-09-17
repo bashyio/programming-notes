@@ -452,6 +452,7 @@ let color = demo.color, size = demo.size;
 
 We can do:
 let {color, size} = demo
+
 ------------------------------------------------------------------------
 Object.values()
 

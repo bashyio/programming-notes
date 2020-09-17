@@ -1,3 +1,163 @@
+------------------------------------------------------------------------
+FLEXBOX NOTES:
+--------------
+
+Terminology: 
+	Flex Container - Parent Element (usually a div)
+	Flex Items - Immediate Child Elements in a flex container (usually a div)
+
+	Main Axis - Left to Right
+		Main Start - left
+		Main Size - width
+		Main End - right
+
+	Cross Axis - Top to Bottom
+		Cross Start - Top
+		Cross Size - Length
+		Cross End - Bottom
+
+	P.S: The Main Axis and Cross Axis switch when the flex-direction is set to column.
+
+--------------
+
+Flex Container Properties:
+
+	display:
+		defines the flex container as in mandatory to work with flexbox
+		- values:
+			flex: behaves like a block display as it fills 100% of the width available.
+			inline-flex: only fills the amount of width required to accomodate it's child items.
+	
+	flex-direction:
+		defines the direction in which the flex items are placed in the container.
+		- values:
+			row: displays the items from left to right (default)
+			row-reverse: displays the items from right to left
+			column: stacks the items on each other from the first  to last (top to bottom)
+			column-reverse: stacks the items on each other from the last to first (bottom to top)
+	
+	flex-wrap:
+	 	controls the wrapping of items within a container.
+	 	- values:
+	 		no-wrap: the flex items are not wrapped and will get smaller when the parent element shrinks. (default)
+	 		wrap: the flex items are wrapped and instead of resizing, will drop to row below when the parent element shrinks.
+	 		wrap-reverse: instead of the items dropping to the row below, the items will climb to the row above when the parent element shrinks.
+
+	 		P.S: wrap and wrap-reverse also have an affect when you set flex-direction to column. If the parent container has a defined height, instead of the items in it to overflow when the height get's filled; they get wrapped and are displayed on a new column within the item. 
+	
+	flex-flow:
+	 	a shorthand for the combination of flex-direction and flex-wrap.
+	 	E.g:
+	 	flex-flow: row-reverse wrap;
+	 	flex-flow: row wrap-reverse;
+	 
+	 justify-content:
+	 	defines the alignment of the items along the main axis
+	 	- values:
+	 		flex-start: The default value. Aligns the item from left-to-right
+	 			P.S: When flex-direction is set to column, the items will be aligned from top-to-bottom.
+	 		flex-end: Aligns the item from right-to-left
+	 			P.S: When flex-direction is set to column, the items will be aligned from bottom-to-top.
+	 		center: Aligns the item in the center of the main axis
+	 		space-between: Leaves a space in between each item
+	 		space-around: Leaves a space in between each item with half of that space at the beginning and at the end.
+	 		space-evenly: Leaves an equal amount of space between each item, at the beginning and at the end.
+
+	 		P.S: justify-content aligns the items to the x-axis when flex-direction is set to row (default) and to the y-axis when flex-direction is set to column.
+	 
+	 align-items:
+	 	defines the alignment of the items along the cross axis
+	 	- values:
+	 		stretch: The default value. The items are stretched to fit the height of the container. 
+	 		flex-start: Positions the item at the top (left if flex-direction is set to column)
+	 		flex-end: Positions the item at the bottom (right if flex-direction is set to column)
+	 		base-line: Aligns the item on the baseline of the text inside. (only works when flex-direction is set to row)
+	 		center: Centers the items vertically within the container (horizontally if flex-direction is set to column)
+
+	 		P.S: justify-content aligns the items to the y-axis when flex-direction is set to row (default) and to the x-axis when flex-direction is set to column.
+	 
+	 align-content:
+	 	similar to justify-content but aligns along the cross axis. It only works when there are multiple rows of items in a flex container
+	 	-values:
+	 		stretch:  The default value. The rows of items are stretched to fit the container.
+	 		 flex-start: Positions the item at the top
+	 		 flex-end: Positions the items to the bottom
+	 		 center: Positions the items at the middle.
+	 		 space-between: Places the extra space between the rows.
+	 		 space-around: Places the extra space between the rows with half of that space at the top and bottom.
+	 		 space-evenly: Even space between the rows and at the top and bottom.
+
+--------------
+
+Flex Item Properties:
+
+	order:
+		Controls the order in which the items appear in the flex container.
+		The orders are arranged from smallest to biggest.
+		E.g:
+			.item1 {
+				order: 1;
+			}
+			.item2 {
+				order: 2;
+			}
+			
+			P.S: All items have a default order value of 0.
+	
+	flex-grow:
+		Defines the ability for the item to grow if necessary.
+		What does it  mean to grow?
+		Sometimes, flex items in a container may not fill in the height/width of that container and leave whitespace remaining.
+		Setting a flex grow value to an item indicates that the item should fill up the remaining whitespace in the conainer.
+		When flex-grow is assigned to multiple items in a container, they are each assigned whitespace using this formula:
+			whitespace = (item flex-grow/total flex-grow) * total whitespace
+
+		P.S: All items have a default flex-grow value of 0.
+
+	flex-shrink:
+		Defines the ability for the item to shrink if necessary.
+		This is the direct opposite of flex-grow. Sometimes the combined width or height of flex-items may exceed the container.
+		When this happens, by default; the items equally shrink to fit. Why? all flex items in the container have a default shrink value of 1.
+		Setting the flex-shrink value of an item  0 disables its shrink behaviour.
+		Setting the flex-shrink value to an item asides 1, allows it to shrink by the multiple of that value.
+		Just like flex-grow, the shrinking space is relative to the "total flex-shrink value."
+			shrinkspace = (item flex-shrink/total flex-shrink) * total shrinkspace
+
+	flex-basis:
+		Specifies the initial width/height of a flex-item.
+		By default, this value is set to 0. Meaning the item's default width/height is dependent on it's content.
+		To set a defined value, we  use flex-basis.
+
+		The value can be in: px, vh, vw, em, rem etc.
+
+	flex:
+		Shorthand for flex-grow, flex-shrink and flex-basis in the specific order.
+		Default:
+			.item {
+				flex: 0 1 auto;
+			}
+		Example: 
+			.item {
+				flex: 1 1 100px;
+			}
+
+	align-self:
+		Allows the alignment of individual flex items.
+		While align-items sets alignment for all flex items in a container, align-self can be
+		used to override it and specify a custom alignment property for a specific element.
+		- Values:
+			stretch:  The item is stretched to fit the container.
+	 		 flex-start: Positions the item at the top
+	 		 flex-end: Positions the item to the bottom
+	 		 center: Positions the item at the middle.
+	 		 auto: Whatever value "align-items" is set to in the parent container (default value)
+
+------------------------------------------------------------------------
+Difference between em and rem:
+
+While em is relative to the font-size of its direct or nearest parent, rem is relative to the html (root) font-size.
+------------------------------------------------------------------------
+
 Optimise SVG using OMGSVG:
 https://jakearchibald.github.io/svgomg/
 http://bit.ly/OMGSVG
@@ -11,5 +171,5 @@ Internal Stylesheet: Styles the svg using css classes.
 		.str0 {stroke:#373435;stroke-width:6}
 		.fil0 {fill:none}
 
+------------------------------------------------------------------------
 
-CARGO 
