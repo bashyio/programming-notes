@@ -27,11 +27,11 @@ HOW DATA IS STORED
   Data is stored in a collection and the database can have as many collections as possible. They look like JSON objects.
   E.g:
   [
-    {
-      "id": "1",
-      "name": "Bashy",
-      "email": "email@email.com"
-    }
+	{
+	  "id": "1",
+	  "name": "Bashy",
+	  "email": "email@email.com"
+	}
   ]
   In NoSQL, a data entry is known as a document. The fields are known as "fields".
 
@@ -92,7 +92,7 @@ MongoClient.connect(connectionURL, {
   useUnifiedTopology: true
 }, (error, client) => {
   if (error) {
-    return console.log('Unable to Connect to DB')
+	return console.log('Unable to Connect to DB')
   }
   const db = client.db(databaseName)
 
@@ -109,7 +109,7 @@ db.collection('users').insertOne({
   age: 28
 }, (error, result) => {
   if (error) {
-    return console.log('Unable to Insert user')
+	return console.log('Unable to Insert user')
   }
   console.log(result.ops)
 })
@@ -128,7 +128,7 @@ db.collection('tasks').insertMany([{
   completed: false
 }], (error, result) => {
   if (error) {
-    console.log('Unable to insert documents')
+	console.log('Unable to insert documents')
   }
   console.log(result.ops)
 })
@@ -181,15 +181,15 @@ UPDATING
 Update One:
 
 db.collection('users').updateOne({
-    _id: new ObjectID('5efbe6a191436f266090b529')
+	_id: new ObjectID('5efbe6a191436f266090b529')
   }, {
-    $set: {
-      name: 'Dammy'
-    }
+	$set: {
+	  name: 'Dammy'
+	}
   }).then((result) => {
-    console.log(result.modifiedCount)
+	console.log(result.modifiedCount)
   }).catch((error) => {
-    console.log(error)
+	console.log(error)
   })
 
 P.S:
@@ -203,15 +203,15 @@ More: https://docs.mongodb.com/manual/reference/operator/update/index.html
 Update Many:
 
 db.collection('users').updateMany({
-    age: 30
+	age: 30
   }, {
-    $inc: {
-      age: 1
-    }
+	$inc: {
+	  age: 1
+	}
   }).then((result) => {
-    console.log(result.modifiedCount)
+	console.log(result.modifiedCount)
   }).catch((error) => {
-    console.log(error)
+	console.log(error)
   })
 
 ------------------------------------------------------------------  
@@ -231,7 +231,7 @@ Delete Many:
 
 db.collection('users').deleteMany({
   age: {
-    $gt: 38
+	$gt: 38
   }
 }).then((result) => {
   console.log(result.deletedCount)
@@ -310,14 +310,14 @@ mongoose.connect(`mongodb://${server}/${database}`, {
 To do this, we use the mongoose.model method and pass it 2 arguments:
   - The name of the model
   - The model schema
-    The schema describes the organization of data we want the module to handle by defining each field and specifying its data type. We use the schema to set up type casting, data validation etc. That way, we don't pass have models with boolean fields storing string values etc. 
+	The schema describes the organization of data we want the module to handle by defining each field and specifying its data type. We use the schema to set up type casting, data validation etc. That way, we don't pass have models with boolean fields storing string values etc. 
 
 const userSchema = new mongoose.Schema({
   name: {
-    type: String
+	type: String
   },
   age: {
-    type: Number
+	type: Number
   }
 })
 
@@ -327,10 +327,10 @@ Alternatively, we can use this shorthand Method where the schema is passed direc
 
 const User = mongoose.model('User', {
   name: {
-    type: String
+	type: String
   },
   age: {
-    type: Number
+	type: Number
   }
 })
 
@@ -373,15 +373,15 @@ Example Usage:
 
 const userSchema = new mongoose.Schema({
   name: {
-    type: String,
-    required: true,
-    minLength: 2,
-    maxLength: 300
+	type: String,
+	required: true,
+	minLength: 2,
+	maxLength: 300
   },
   age: {
-    type: Number,
-    required: true,
-    min: 18
+	type: Number,
+	required: true,
+	min: 18
   }
 })
 
@@ -396,12 +396,12 @@ The format is:
 
 const sampleSchema = new mongoose.Schema({
   field: {
-    type: Number,
-    validate(value) {
-      if (value < 0) {
-        throw new Error('Number must be positive')
-      }
-    }
+	type: Number,
+	validate(value) {
+	  if (value < 0) {
+		throw new Error('Number must be positive')
+	  }
+	}
   }
 })
 
@@ -418,33 +418,79 @@ const validator = require('validator')
 
 const User = mongoose.model('User', {
   name: {
-    type: String,
-    required: true
+	type: String,
+	required: true
   },
   email: {
-    type: String,
-    required: true,
-    validate(value) {
-      if (!validator.iseEmail(value)) {
-        throw new Error('E-mail is invalid')
-      }
-    }
+	type: String,
+	required: true,
+	validate(value) {
+	  if (!validator.iseEmail(value)) {
+		throw new Error('E-mail is invalid')
+	  }
+	}
   }
 })
 
 Above, we use the validator module in the validate method to return an error if email is invalid.
 --------------------------------------------------------------------------------------------------------------------
-
 REST APIs and Mongoose
------------------------
+----------------------
+REST API - Representational State Transfer - Application Programming Interface (REST API or RESTful API)
+------
+
+REST-FUL CONVENTIONS:
+
+Action 															Method 			Route
+List all Records 										GET 					/path
+Get 1 particular record 							GET 					/path/:id
+Create Record 											POST 				/path
+Update all values of a Record 			PUT 					/path/:id
+Update some values of a Record 		PATCH 					/path/:id
+Delete a Record 										DELETE 			/path/:id
+
+SAMPLE REST API:
+
+Create:     POST  /tasks
+Read:        GET  /tasks
+Read:        GET  /tasks/:id
+Update:   PATCH  /tasks/:id
+Delete:     DELETE  /tasks/:id
+
+----------------------
+To access the JSON body in Express (v4), it's important to use express.json()
+
+Sample How to Use:
+
+const express = require('express')
+const app = express()
+app.use(express.json()); //major key
+
+app.post('/users', (req, res) => {
+  console.log(req.body)
+  res.send('testing')
+})
+----------------------
 Postman
 Postman is a collaboration platform for API development. Postman's features simplify each step of building an API and streamline collaboration so you can create better APIs—faster.
 
 Download: https://www.postman.com/downloads/
 To revisit how Postman works, Course 88
 -----------------------
+REST Notes:
 
+- When sending a POST Request, the values are sent in the request body.
 
+- HTTP Status Code List: https://httpstatuses.com/
+--------------------------------------------------------------------------------------------------------------------
+Mongoose Notes
+
+- When using middleware before saving in the schema, don't use "findByIdAndUpdate" as it will bypass the middleware and update directly.
+	Instead, manually fetch the document using "findById" and update it by calling save after mutating. 
+
+- userSchema.statics.methodName - General Model methods
+
+- userSchema.methods.methodName - Methods that apply directly to Model Instances
 --------------------------------------------------------------------------------------------------------------------
 
 Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download

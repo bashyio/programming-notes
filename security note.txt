@@ -1,0 +1,12 @@
+Implement Client-Side Hashing
+
+Do not send passwords in plain text to the API. Whether over SSL or not.
+- Do Light weight Password Hashing to Encrypt the password on the client side
+- Send the encrypted password to the server and hash a second time before comparing it to what is stored on the server.
+
+While the password strength rules of validation can be stored on the server to ensure uniformity, all validation should be done on the client side.
+The server should never have to decrypt the password sent from the client.
+
+Use sha256 with CryptoJS for Client Side  - https://www.npmjs.com/package/crypto-js
+		Example: https://stackoverflow.com/questions/47766755/using-crypto-js-in-react
+Use bcryptjs for Server Side Password Hashing - https://www.npmjs.com/package/bcryptjs

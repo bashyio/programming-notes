@@ -454,6 +454,27 @@ We can do:
 let {color, size} = demo
 
 ------------------------------------------------------------------------
+delete operator
+
+The JavaScript delete operator removes a property from an object
+
+E.g:
+
+const Employee = {
+  firstname: 'John',
+  lastname: 'Doe'
+};
+
+console.log(Employee.firstname);
+// expected output: "John"
+
+delete Employee.firstname;
+
+console.log(Employee.firstname);
+// expected output: undefined
+
+
+------------------------------------------------------------------------
 Object.values()
 
 This is a built-in javsacript function that can take an object list and map its unique values into an array.
@@ -722,10 +743,20 @@ const facebook = person.links.social.facebook
 We do:
 const {twitter, facebook} = person.links.social
 ------------------------------------------------------------------------
-Object Key Interpolation
+Extracting Keys from an Object
 
+We use the Object.keys() method. It returns an array of the object's property names, iterated in the same order that a normal loop would.
 
+E.g:
 
+const object1 = {
+  a: 'somestring',
+  b: 42,
+  c: false
+};
+
+console.log(Object.keys(object1));
+// expected output: Array ["a", "b", "c"]
 
 ------------------------------------------------------------------------
 Object "Equality"
