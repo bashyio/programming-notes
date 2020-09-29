@@ -1195,6 +1195,14 @@ let nick = 'Big Madame Cash'
 console.log(nick.substring(4)) //Would Print 'Madame Cash'
 console.log(nick.substring(4,6 )) //Would Print 'Madame'
 ------------------------------------------------------------------------
+.endsWith() method
+
+This is a string method that determines whether a string ends with the characters of a specified string. It returns true or false as response. E.g:
+
+let name = 'Babatunde'
+console.log(name.endsWith('tunde')) //Would Print out True
+console.log(name.endsWith('shy')) //Would Print out False
+------------------------------------------------------------------------
 Date()
 
 This method creates a JavaScript Date instance that represents an exact moment in time. The object created is based on a time value that is the number of milliseconds since the Unix Epoch 1 January  1970 UTC .

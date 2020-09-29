@@ -492,6 +492,8 @@ Mongoose Notes
 
 - userSchema.methods.methodName - Methods that apply directly to Model Instances
 --------------------------------------------------------------------------------------------------------------------
+To see how to store files as Buffer, lecture 127 NodeJS Course.
+--------------------------------------------------------------------------------------------------------------------
 
 Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download
 Github API Doc: https://mongodb.github.io/node-mongodb-native/

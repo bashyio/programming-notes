@@ -447,6 +447,16 @@ Also, all other files in that public folder will be accessible from the browser.
 
 
 ------------------------------------------------------------------
+Serving Up Directories in Node:
+
+//Setup static directory to serve
+const publicDirectoryPath = path.join(__dirname, '../public')
+app.use(express.static(publicDirectoryPath))
+
+//Setup store directory to serve
+const storeDirectoryPath = path.join(__dirname, '../store')
+app.use('/store', express.static(storeDirectoryPath))
+------------------------------------------------------------------
 Template/View Engine for NodeJs/Express
 
 hbs - https://www.npmjs.com/package/hbs
@@ -737,6 +747,67 @@ fetch(urlHere, {}).then((response) => {
 })
 
 
+------------------------------------------------------------
+
+FILE UPLOADS
+
+Using the Multer NPM Package
+Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency.
+https://www.npmjs.com/package/multer
+
+npm i multer
+
+How to Use - Simple:
+
+const multer = require('multer')
+const upload = multer({
+  dest: 'images'
+})
+app.post('/upload', upload.single('upload'), (req, res) => {
+  res.status(200).send()
+})
+
+
+How to Use - Advanced:
+
+const storage = multer.diskStorage({
+  destination: './images',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname).toLowerCase());
+  }
+})
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1000000 //1MB SIZE LIMIT
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(png|gif|jpeg|jpg)+$/i)) {
+      return cb(new Error('Please upload a valid image. Only JPG, PNG and GIF files are allowed.'))
+    }
+
+    cb(undefined, true)
+  }
+})
+------------------------------------------------------------
+Image Manipulation
+
+Using the Sharp NPM Package
+
+Learn more: https://www.npmjs.com/package/sharp
+
+See Video 129 for more details in NodeJS Course
+------------------------------------------------------------
+Working with mime-types
+
+Use package: https://www.npmjs.com/package/mime-types
+------------------------------------------------------------
+SMTP Emails:
+
+To work with SMTP e-mails, use the nodemailer package.
+
+Learn more: https://nodemailer.com/about/
 ------------------------------------------------------------
 
 Good resource that talks about Introduction to Node, testing, hosting etc. - https://medium.com/javascript-scene/introduction-to-node-express-90c431f9e6fd
