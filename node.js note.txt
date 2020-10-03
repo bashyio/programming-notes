@@ -104,7 +104,7 @@ Installs a module globally and not into the project directory. The module is dow
 --save
 This saves the module as a dependency. It is updated in the package.json file. P.S: This is enabled by default.
 
---savedev
+--save-dev
 This saves the module as a dev dependency.
 
 -save-optional
@@ -809,5 +809,17 @@ To work with SMTP e-mails, use the nodemailer package.
 
 Learn more: https://nodemailer.com/about/
 ------------------------------------------------------------
+env-cmd for dealing with environment variables
 
+https://www.npmjs.com/package/env-cmd
+
+npm i env-cmd --save-dev
+------------------------------------------------------------
+1000.
+300 ( x 2)
+800
+3,755 (+ 1875 + 940)
+
+------------------------------------------------------------
 Good resource that talks about Introduction to Node, testing, hosting etc. - https://medium.com/javascript-scene/introduction-to-node-express-90c431f9e6fd
+

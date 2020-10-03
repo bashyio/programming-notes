@@ -495,6 +495,9 @@ Mongoose Notes
 To see how to store files as Buffer, lecture 127 NodeJS Course.
 --------------------------------------------------------------------------------------------------------------------
 
-Use Robo3T or RoboMongo as GUI for MongoDB - https://robomongo.org/download
+MongoDB GUI Tools:
+Compass (Official MongoDb Tool) - https://www.mongodb.com/try/download/compass
+Robo3T (formally known as RoboMongo) - https://robomongo.org/download
+
 Github API Doc: https://mongodb.github.io/node-mongodb-native/
 MongoDB Manual: https://docs.mongodb.com/manual/

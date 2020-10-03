@@ -16,7 +16,7 @@ heroku login
 Conncets you to the heroku cli using the browser.
 
 
-VERSION CONTROL WITH GIT
+VERSION CONTROL WITH GIT (AND OTHER GIT COMMANDS)
 --------------------------------------------
 Pro-Git (free book that explains how git works)
 https://git-scm.com/book
@@ -53,6 +53,9 @@ Commits the tracked files to the repo
 git rm -r --cached .
 Clears the repository
 (This is useful when you want to remove gitignore files already added to the repo. It should be followed by the add and commit command)
+
+Removing a Git Remote Origin from a Repo
+git remote rm origin
 
 SETTING UP SSH
 --------------------------------------------
@@ -106,15 +109,18 @@ cat ~/.ssh/id_rsa.pub
 This will paste the ssh string to the console. It's really long. Highlight, Copy and Paste in github.
 Complete the adding process (it may ask for password confirmation)
 
-git remote add origin git@github.com:username/project-name.git
+git remote add origin  https://username@github.com/username/project-name.git
 Connects an existing local repository to a remote repository
 
 ssh -T git@github.com
 This will test the ssh with github servers. If it works, it has been setup successfully.
 P.S: Enter yes when asked to continue connecting.
 
-git push -u origin master
-Pushes our latest commits in the local repository to the remote origin (github) master branch
+git branch -M main
+Creates the main github branch
+
+git push -u origin main
+Pushes our latest commits in the local repository to the remote origin (github) main branch
 
 ------------
 DEPLOYING TO HEROKU
@@ -132,6 +138,16 @@ Examples:
 To test start script
 npm run start
 
-git push heroku master
+git push heroku main
 Pushes our latest commits in the local repository to the heroku remote repository
 
+Setting Heroku Configuration for App Deployment:
+
+heroku config
+This will list all configured heroku variables
+
+heroku config:set key="value"
+Template to set heroku configuration variables. Key is the name of the config variable and value is the variable content.
+
+heroku config:unsetset key
+Unsets a heroku configuration variable
