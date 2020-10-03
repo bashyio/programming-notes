@@ -1,2 +1,3 @@
 # programming-notes
-I decided to unlearn and re-learn JS from scratch in 2019. Since then, I've been taking notes as I proceed. I've decided to share these notes on github. Learning will be a continuous process for me and in time; these notes will extend beyond just JavaScript.
+Javascript and Beyond. I like to take notes.
+Decided to Share Them
