@@ -1943,6 +1943,63 @@ aTest().catch((error) => {
 	console.log('Error: ' + error);
 })
 ------------------------------------------------------------------------
+Promise.all()
+
+While async/await functions make dealing with asynchronous code easier as we can write them in "synchronous" fashion.
+It's important to not have too many await calls in a function especially when they are not dependent on one and other as await function calls block code.
+
+To  avoid this, we use the Promise.all() method.
+
+What is Promise.all?
+-----
+Promise.all is actually a promise that takes an array of promises as an input (an iterable). Then it gets resolved when all the promises get resolved or any one of them gets rejected.
+
+How to use?
+-----
+We save Promises from async function calls to variables, combine them to an array and await them all at once.
+
+Please note: We can't use Promise.all() on await functions that are dependent on one and other.
+If we need the response of an await call to make another one, it's fine to just do it the traditional way.
+
+Example:
+
+const testPromiseAll = async () => {
+  const promise1 = callService1();
+  const promise2 = callService2();
+  const promise3 = callService3();
+  
+  const allResults = await Promise.all([promise1, promise2, promise3]); //Returns: [result1, result2, result3]
+}
+
+The result of a successful Promise.all call is an array of values that were resolved from all the promises.
+
+Error Handling with Promise.all
+-----
+The Gotcha that most people don’t realize with Promise.all is what happens when one of the multiple promises being executed reject. If anyone of the promises passed into Promise.all rejects, then the whole Promise.all will reject. if multiple promises fail, the error rejected is the error from the first promise to fail.
+
+To catch the rehected error from an await Promise.all call, we use the try catch block.
+
+E.g:
+
+const testPromiseAll = async () => {
+  try {
+    const allResults = await Promise.all([promise1, promise2, promise3])
+    console.log(allResults)
+  } catch(e) {
+    console.log(e)
+  }
+}
+
+More:
+https://medium.com/front-end-weekly/async-await-is-not-about-making-asynchronous-code-synchronous-ba5937a0c11e
+https://www.freecodecamp.org/news/promise-all-in-javascript-with-example-6c8c5aea3e32/
+https://tomduffytech.com/promise-all-error-handling/
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
+https://codepen.io/bashy_io/pen/bGeGdpY?editors=0010
+------------------------------------------------------------------------
+
+
+
 return false - unique usage
 
 You can use return false to exit a function on an edge condition instead of nesting code in an if/else statement.

@@ -151,3 +151,9 @@ Template to set heroku configuration variables. Key is the name of the config va
 
 heroku config:unsetset key
 Unsets a heroku configuration variable
+
+
+EXTRA GIT COMMANDS:
+
+rm -rf .git
+Remove all of the repository, leaving only the working directory

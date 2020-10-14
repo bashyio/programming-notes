@@ -797,7 +797,7 @@ Using the Sharp NPM Package
 
 Learn more: https://www.npmjs.com/package/sharp
 
-See Video 129 for more details in NodeJS Course
+See Lecture 129 for more details in NodeJS Course
 ------------------------------------------------------------
 Working with mime-types
 
@@ -814,12 +814,37 @@ env-cmd for dealing with environment variables
 https://www.npmjs.com/package/env-cmd
 
 npm i env-cmd --save-dev
-------------------------------------------------------------
-1000.
-300 ( x 2)
-800
-3,755 (+ 1875 + 940)
+This installs it at a developer dependency.
+
+Example of "dev" code in package.json to run the application with environment variables:
+
+"scripts": {
+  "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
+}
+
+In the example above, the application is initialized with nodemon and an environment variable file: dev.env in the folder specified.
+
+To initialize it:
+npm run dev
 
 ------------------------------------------------------------
-Good resource that talks about Introduction to Node, testing, hosting etc. - https://medium.com/javascript-scene/introduction-to-node-express-90c431f9e6fd
+Testing with JEST
 
+https://jestjs.io/
+
+npm i test --save-dev
+This installs it at a developer dependency.
+
+Example of "dev" code in package.json to test an application:
+"scripts": {
+  "test": "jest"
+}
+
+The code above simply tells npm to use jest for testing.
+
+To initialize it:
+npm run test
+OR
+npm test
+
+------------------------------------------------------------
