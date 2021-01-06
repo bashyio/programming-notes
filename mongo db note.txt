@@ -33,7 +33,7 @@ HOW DATA IS STORED
 	  "email": "email@email.com"
 	}
   ]
-  In NoSQL, a data entry is known as a document. The fields are known as "fields".
+  In NoSQL, a data entry is known as a document. The fields are known as well... "fields".
 
 More on SQL vs NoSQL - https://www.xplenty.com/blog/the-sql-vs-nosql-difference/
 
@@ -161,7 +161,7 @@ db.collection('users').find({
   console.log(users)
 })
 
-Note: find itself doesn't return an array of the results directly. Instead it returns a cursor for a query that can be used to iterate over the results. This is because the next action after running a fins is not always to fetch the array of results directly. There are several other things that can be done like count the result. We can even run 2 actions on a find cursor. E.g:
+Note: find itself doesn't return an array of the results directly. Instead it returns a cursor for a query that can be used to iterate over the results. This is because the next action after running find is not always to fetch the array of results directly. There are other things that can be done; like count the result. We can even run 2 actions on a find cursor. E.g:
 
 let users = db.collection('users').find({
   age: 28
@@ -310,7 +310,7 @@ mongoose.connect(`mongodb://${server}/${database}`, {
 To do this, we use the mongoose.model method and pass it 2 arguments:
   - The name of the model
   - The model schema
-	The schema describes the organization of data we want the module to handle by defining each field and specifying its data type. We use the schema to set up type casting, data validation etc. That way, we don't pass have models with boolean fields storing string values etc. 
+	The schema describes the organization of data we want the module to handle by defining each field and specifying its data type. We use the schema to set up type casting, data validation etc. That way, we don't have models with boolean fields storing string values etc. 
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -354,7 +354,7 @@ me.save().then(() => {
 })
 
 P.S:
-On saving a model instance to the database, mongodb auto adds a __v field that stores the version of the document.
+On saving a model instance to the database, mongoose auto adds a __v field that stores the version of the document.
 --------------------------------------------------------------------------------------------------------------------
 Mongoose Built-in Validation
 
@@ -425,7 +425,7 @@ const User = mongoose.model('User', {
 	type: String,
 	required: true,
 	validate(value) {
-	  if (!validator.iseEmail(value)) {
+	  if (!validator.isEmail(value)) {
 		throw new Error('E-mail is invalid')
 	  }
 	}

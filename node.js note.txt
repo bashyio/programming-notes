@@ -69,7 +69,7 @@ Lists out the exact version of all of the dependencies in the project
 Lists out the different files and folders that git should ignore when tracking a project and monitoring changes
 
 npm start
-“npm start” is a run command from your scripts located in your package.json file. Usually “npm start” runs your server file. If you don't have a “start” script in your package. json file, this command will run the default “node server.
+“npm start” is a run command from your scripts located in your package.json file. Usually “npm start” runs your server file. If you don't have a “start” script in your package.json file, this command will run the default node server "node server. js".
 
 Ctrl + C
 To stop the application running in the terminal
@@ -114,7 +114,6 @@ To uninstall a module from a project
 
 npm uninstall projectname
 --------------------------------------------------------------------------------------------------------------------
-
 require()
 
 Used to load modules or other files. The require module is available on the global scope — so; no need to require('require').
@@ -141,7 +140,7 @@ If Node can’t find a matching file or folder, it will throw a “cannot find m
 
 ----------
 2. Specifying a path:
-const config = require('/path/to/file');
+const example = require('/path/to/module');
 
 Besides resolving modules from within the node_modules directories, we can also place the module anywhere we want and require it with either relative paths (./ and ../) or with absolute paths starting with /. The require statement simply fetches the file required from the path specified.
 
@@ -164,7 +163,6 @@ module.exports = {
   getNotes: getNotes,
   addNote: addNote
 }
-
 ------------------------------------------------------------------
 Ctrl+C - to terminate running applications (batch job) in command prompt
 ------------------------------------------------------------------
@@ -261,7 +259,7 @@ How To Use:
   Under "Sources > Filesystem", Click on the plus icon to add the folder. (It'll ask for permission, accept)
 - When we click on the play button, the app runs and pauses at any point we add the statement. 
   There we can go through the Scope and Call Stack to see the scope of the application at that point.
-- If we class the inspect tab, and want to go back to debugging again, we can run "restart" in the terminal while the debug application (debug>) is running.
+- If we close the inspect tab, and want to go back to debugging again, we can run "restart" in the terminal while the debug application (debug>) is running.
 - To end debugging, Ctrl + C - twice.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -366,14 +364,14 @@ app.listen(3000, () => {
   console.log('Server is up on port 3000.')
 })
 ---------------
-Now run in console:
+Now, run in console:
 node src/app.js
 
 To keep server running while making changes:
 nodemon src/app.js
 
 To allow nodemon to monitor extensions asides the default (js) and auto-restart on changes, we add the e flag (extensions)
-nodemon src/app.js -e js,hbs
+nodemon src/app.js -e js, hbs
 ---------------
 In the setup example above, we serve direct text to the browser when these endpoints are accessed in the Web Server. But we can do a lot more like render html, serve images, other files etc. It's something like configuring htaccess reWRITES on an Apache Web Server.
 ---
@@ -381,6 +379,7 @@ To serve html code:
 app.get('/', (req, res) => {
   res.send('<h1>Welcome!</h1><p>You are at the right place Chief!</p>')
 })
+
 Express auto-detects that we're sending html code and sends back an html response.
 ---
 To serve an object using json
@@ -460,7 +459,7 @@ app.use('/store', express.static(storeDirectoryPath))
 Template/View Engine for NodeJs/Express
 
 hbs - https://www.npmjs.com/package/hbs
-hbs is an express.js vie engine for handlebars.js
+hbs is an express.js view engine for handlebars.js
 (We use hbs instead of handlebars.js because  handlebars.js doesn't support express)
 
 ---------------
@@ -667,7 +666,7 @@ Full Example (index.hbs):
 
 </html>
 
-In more advanced examples, we can use partials to load page resources (css,js etc); or display: top-menus, footers, sidebars etc.
+In more advanced examples, we can use partials to load page resources (css, js etc); or display: top-menus, footers, sidebars etc.
 
 ---------------
 Setting up 404 error page:
@@ -745,7 +744,6 @@ fetch(urlHere, {}).then((response) => {
 }).catch((error) => {
   //print error here
 })
-
 
 ------------------------------------------------------------
 

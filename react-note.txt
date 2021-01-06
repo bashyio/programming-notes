@@ -69,13 +69,13 @@ const pStyle = {color:'red', lineHeight:'2em'}
 becomes:
 <label className="label">
 
-The reason why we use className instead of class in JSX is to avoid collisions with JavaScript Classes which use the 'class' keyword for declaration.
+The reason why we use className instead of class in JSX is to avoid a syntax error because JavaScript Classes use the 'class' keyword for declaration.
 
 ------------------------------------------------------------
 
-Import Keyword
+Import Statement
 
-node.js doesn't currently support import-export statements by default (still in experimental stages) and requires a module bundler like webpack.
+node.js doesn't currently support import-export statements by default (still in experimental stages). Instead, it requires a module bundler like webpack.
 
 Breakdown of the Import Statement:
 E.G:
@@ -225,6 +225,8 @@ const Student = (props) => {
 	)
 }
 
+
+Output:
 <div className="popup">
 	<p>Title: Student Data</p>
 	<div>
