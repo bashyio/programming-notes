@@ -236,7 +236,7 @@ Output:
 </div>
 
 ------------------------------------------------------------
-Components in Files
+Components in Files:
 
 React is all about re-using code, and it can be smart to insert some of your components in separate files.  To do that, we create a new file with a .js extension in our source folder. React Component Files are named like Classes. Each new word is written in Title Case with no space or character btw.  E.g: FileComponent.js, CommentSection.js
 
@@ -255,7 +255,7 @@ const CommentSection = () => {
 
 export default CommentSection;
 -----------
-Note that the file must start by importing React (as before), and end with exporting the Component as default.
+Note that the file starts by importing React (as before), and ends with exporting the Component as default.
 ------------------------------------------------------------
 Class-Based Components
 
@@ -275,7 +275,7 @@ In React,  “state” is an object that represents the parts of the app that ca
 
 State Rules:
 - Usually only usable with class components but technically can be used with functional components using the 'hooks' system.
-- It is a JS Object that contains data relevenat to a component
+- It is a JS Object that contains data relevant to a component
 - State must be initialized when a component is created (constructor).
 - State can only be updated using the function 'setState'
 - Updating state on a component causes the component to (almost) instantly re-render.
@@ -287,7 +287,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       latitude: null,
-    };cd
+    };
     this.fetchLocation();
   }
   fetchLocation() {
@@ -339,7 +339,7 @@ Lifecycle Methods:
 
 When to use Lifecycle Methods in a Practical Application:
 
-- constructor: Good place to do one-time component setup.
+- constructor: Good place to do a one-time component setup.
 
 - render: Avoid doing anything here besides returning JSX.
 
@@ -498,7 +498,7 @@ fetchData = () => {
 
 3. Using Arrow Functions - Method b
 
-Instead of writing the event handler function as an arow function, we can call call it as an arrow function instead. This will also automatically bind the value of this to the originating context, which again is the  SearchBar instance E.g:
+Instead of writing the event handler function as an arow function, we can call it as an arrow function instead. This will also automatically bind the value of this to the originating context, which again is the  SearchBar instance E.g:
 
 <button onClick={() => this.fetchData()}>Search</button>
 
@@ -1429,14 +1429,6 @@ Notice the multiple Route tags passed with the same path.
 	Using switch however nullifies this and enforces that when I visit 'appurl/streams/new', only StreamCreate is displayed.
 
 
-
-
-
-
-
-
-
-
 ------------------------------------------------------------
 REDUX DEV TOOLS
 
@@ -1709,7 +1701,6 @@ More: https://reactjs.org/docs/react-api.html#reactmemo
 Business logic deals with the processing that takes place in the background whose results may affect multiple parts of an application while presentation logic mainly deals with visual appeal and user experience. It is a best practice for React Components to only contain View Logic. The proper integration of state containers like redux amd middleware like redux-thunk into a react app is one of the ways to ensure this.
 
 https://labcodes.com.br/blog/articles/decoupling-logic-from-react-components.html
-
 
 
 More:

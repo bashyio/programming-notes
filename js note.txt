@@ -177,7 +177,23 @@ P.s: Anonymous functions are functions that don't have a name. They can be used 
 
 Note: Always remember to declare your variables.
 ------------------------------------------------------------------------
+Primitive Values
+
+- A primitive value or primitive data type is data that is not an object and has no method or property. In JS, there are 6 primitive data types: string, number, boolean, null, undefined, symbol (new in ES6).
+- All primitive values are immutable. I.e: they cannot be altered... but they can be reassigned.
+- Primitive values like "Bashiru Ismail" cannot have properties or methods; but with JavaScript, built-in methods and properties are also available to primitive values, because JavaScript treats them as objects when executing built-in methods and properties.
+------------------------------------------------------------------------
+Each condition in an if statement returns a true or false value that determines whether the block of code in the if statement is run or not. The same way we use those conditions in an if statement, we can use them to create boolean values directly.
+- Instead of:
+if (var1 <= var2)
+	return true
+else
+	return false
+- We can just write:
+return var1 <= var2 //returns true or false depending on their value
+------------------------------------------------------------------------
 Objects
+
 - To create an object, we just open and close a set of curly braces. - {}
 - When creating an object, we use commas to separate the properties like we do when creating a function with parameters. E.g:
 let myBook = {
@@ -266,14 +282,46 @@ demoObject[`${this.name.length % 2 ? 'odd' : 'even'}Method`]();
 
 The code above fetches the length of the object demoObject, checks whether it is odd or even; then calls the respective method. It calculates length%2 whose result will always be 0 or 1. It's 0 when it's an even number and 1 when it's odd. 1 is truthy and 0 is falsy.
 ------------------------------------------------------------------------
-Each condition in an if statement returns a true or false value that determines whether the block of code in the if statement is run or not. The same way we use those conditions in an if statement, we can use them to create boolean values directly.
-- Instead of:
-if (var1 <= var2)
-	return true
-else
-	return false
-- We can just write:
-return var1 <= var2
+Dynamic Property Keys
+
+Object keys can be dynamically assigned in ES6 by placing an expression in [ square brackets ].
+
+For example:
+
+const key1 = 'one';
+const  obj = {
+    [key1]: 1,
+    two: 2,
+    three: 3
+  };
+
+// obj.one = 1, obj.two = 2, obj.three = 3
+
+This can also be combined with the spread operator for more advanced syntax. E.g:
+
+const person = {
+	id: 2,
+	name: 'Timi',
+	age: 28
+}
+
+const obj = {
+	1: {
+		id: 1,
+		name:'Segun',
+		age: 38
+	},
+	2: {
+		id: 2,
+		name: 'Tosin',
+		age: 25
+	}
+}
+
+const newObj = {...obj, [person.id]: person}
+newObj[person.id] = person
+
+console.log(newObj)
 ------------------------------------------------------------------------
 Context
 
@@ -416,11 +464,8 @@ In the example above; when the function printHeight() is called, the value of 't
 
 However, if we try the same thing in strict mode, the value of 'this' defaults to undefined and we get the error: Cannot read property 'innerHeight' of undefined.
 ------------------------------------------------------------------------
-Primitive Value
-- A primitive value or primitive data type is data that is not an object and has no method or property. In JS, there are 6 primitive data types: string, number, boolean, null, undefined, symbol (new in ES6).
-- All primitive values are immutable. I.e: they cannot be altered... but they can be reassigned.
-- Primitive values like "Bashiru Ismail" cannot have properties or methods; but with JavaScript, built-in methods and properties are also available to primitive values, because JavaScript treats them as objects when executing built-in methods and properties.
-------------------------------------------------------------------------
+Primitive Values sometimes get treated like Objects in JS
+
 How are they treated like objects?
 Every primitive value has a 'read-only wrapper object'. Whenever we try to access the property or method of a primitive, the wrapper object is used. This is why these properties can be accessed but not changed. For example:
 str = 'My name'
